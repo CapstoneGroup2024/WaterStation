@@ -6,6 +6,7 @@
     <title>Bootstrap demo</title>
     <! --------------- BOOTSTRAP CSS --------------- >
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/navbar.css">
   </head>
   <body>
   
