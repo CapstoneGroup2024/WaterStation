@@ -1,7 +1,8 @@
 <?php include('includes/header.php');?>
 <?php include('includes/navbar.php');?>
-    <h1>Hello, world!</h1>
+<div class="content" style="position: relative; top: 60px;">
+    <h1">Hello, world!</h1>
     <button class="btn btn-primary">Testing</button>
-    
+</div>
 
 <?php include('includes/footer.php');?>
