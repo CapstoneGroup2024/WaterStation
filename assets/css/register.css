@@ -1,0 +1,126 @@
+/* ------------------- FONTS ------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Suez+One&family=Sumana:wght@400;700&display=swap');
+* {
+    font-family: "Sumana", serif;
+    font-family: "Suez One", serif;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* ------------------- Body ------------------- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(../images/regwater.png);
+    background-color: #C2E6FE; /* Adjusted background color for a softer look */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+@media (min-width: 768px) {
+    body {
+        overflow-y: hidden; /* Hide scrollbar on larger devices */
+    }
+}
+/* ------------------- CONTAINER ------------------- */
+.Register {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 1080px;
+    background: transparent;
+    border: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 15px 30px;
+}
+@media all and (max-width: 991px) {
+    .Register {
+        margin-top: 40px;
+        margin-bottom: 100px;
+        width: 1080px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 20px;
+        padding: 30px 40px;
+    }
+}
+/* ------------------- HEADING ------------------- */
+.heading {
+    margin-top: 5px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #013D67;
+    font-family: "Suez One";
+}
+/* --------------- REGISTRATION FORM --------------- */
+.regform {
+    width: 100%;
+    position: relative;
+    font-size: large;
+    font-weight: bolder;
+    color: #013D67;
+}
+.regform input {
+    width: 95%;
+    height: 100%;
+    background: transparent;
+    border: 1px solid #9dbed6; /* Set initial border to transparent */
+    border-radius: 20px;
+    font-size: 14px;
+    color: #013D67;
+    padding: 20px 45px 20px 20px;
+    outline: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
+    margin-top: 10px;
+    margin-bottom: 14px;
+}
+.regform input:hover {
+    transform: scale(1.04);
+    border-color: #013D67; /* Change border color on hover */
+}
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #013D67;
+    font-weight: 600;
+}
+.register-link a {
+    color: #013D67;
+    text-decoration: none;
+    font-weight: 800;
+}
+.register-link a:hover {
+    text-decoration: underline;
+    color: white;
+}
+/* ------------------- SUBMIT BUTTON ------------------- */
+.btn-container {
+    text-align: center; /* Align the button container's content center */
+    margin: 0 auto; /* Center the button container horizontally */
+    background-color: #AAD7F6;
+    width: 340px;
+    height: 45px;
+    background: white;
+    border: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-weight: bolder;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
+    background-color: #AAD7F6;
+}
+.button-text {
+    color: #013D67;
+    font-weight: bold;
+    border: none;
+    margin-top: 10px;
+    background-color: #AAD7F6;
+}
+.btn-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+}

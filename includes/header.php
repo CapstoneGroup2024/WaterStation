@@ -8,6 +8,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <! --------------- CSS FILES --------------- >
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/register.css">
 
   </head>
   <body>
