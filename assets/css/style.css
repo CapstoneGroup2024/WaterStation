@@ -25,7 +25,6 @@ section {
 .content {
     padding-top: 40px; /* Adjust the value to match the height of the navbar */
 }
-
 a.navbar-brand {
     font-family:'Suez One';
     font-weight: bolder;
@@ -39,7 +38,6 @@ a.navbar-brand:hover {
 #navbg{
     background-color: #AAD7F6;
 }
-
 #aquaflowtext{
     font-family: 'Suez one';
     font-weight: bolder;
