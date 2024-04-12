@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "waterDb";
+$dbname = "aquaflowdb";
 
 //Create Connection to Database
 $con = mysqli_connect($servername, $username, $password, $dbname);
