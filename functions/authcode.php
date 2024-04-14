@@ -3,7 +3,7 @@
 // START SESSIONN
 session_start();
 include('../config/dbconnect.php');
-
+            
 if(isset($_POST['reg_button'])){
     // GET USER DATA
     $name = htmlspecialchars(mysqli_real_escape_string($con, $_POST["name"]));
@@ -13,21 +13,22 @@ if(isset($_POST['reg_button'])){
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
 
+    // CHECK IF DATA INPUTTED IS EMPTY
     if(empty($name) || empty($email) || empty($phone) || empty($address) || empty($password) || empty($confirm_password)) {
         $_SESSION['message'] = "Please fill in all fields";
         header("Location: ../register.php");
         exit();
     }
-
+    
     // CHECK IF EMAIL IS ALREADY REGISTERED ON THE DATABASE
     $check_email_query = "SELECT email FROM users WHERE email='$email'";
     $check_email_query_run = mysqli_query($con, $check_email_query);
 
+    // IF A ROW WAS RETURNED BY THE SQL QUERY WHICH IS GREATER THAN ZERO, EMAIL ALREADY EXIST
     if(mysqli_num_rows($check_email_query_run) > 0){
         $_SESSION['message'] = "Email alreasy registered";
         header("Location: ../register.php");
-    } else {
-        // CHECK IF PASSWORD IS THE SAME WITH CONFIRM PASSWORD
+    } else { // CHECK IF PASSWORD IS THE SAME WITH CONFIRM PASSWORD
         if($password == $confirm_password){
             // HASH THE PASSWORD
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -49,7 +50,7 @@ if(isset($_POST['reg_button'])){
                 header("Location: ../register.php");
                 exit();
             }
-        } else {
+        } else { // IF PASSWORD DONT MATCH
             $_SESSION['message'] = "Passwords do not match";
             header("Location: ../register.php");
             exit();
