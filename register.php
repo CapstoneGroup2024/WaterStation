@@ -1,9 +1,23 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
+<?php
+session_start();
+?>
 <!--------------- REGISTER FORM --------------->
 <div class="Register">
+    <?php if(isset($_SESSION['message']))
+    {
+        ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hey!</strong> <?= $_SESSION['message'] ?>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php 
+        unset($_SESSION['message']);
+    }
+    ?>
     <h1 class="heading">Register Here!</h1>
-    <form action="functions/authcode.php" method="POST">
+    <form action="functions/authcode.php" method="POST" onsubmit="return checkPasswordStrength()">
         <!--------------- FIRST ROW --------------->
         <div class="regform">
             <div class="row">
@@ -41,8 +55,11 @@
                     <div class="mb-3">
                         <label for="pw" class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" id="pw" placeholder="Enter your password">
+                        <p id="message"><span id="strenght"></span></p>
                     </div>
                 </div>
+
+
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="type" class="form-label">Re-Type Password</label>
@@ -65,6 +82,5 @@
         </div>
     </form>
 </div>
-
-<!--------------- FOOTER --------------->
+ <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>
