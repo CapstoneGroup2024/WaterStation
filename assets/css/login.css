@@ -1,0 +1,158 @@
+/* --------------- FONTS --------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Suez+One&family=Sumana:wght@400;700&display=swap');
+*{
+    font-family: "Sumana", serif;
+    font-family: "Suez One", serif;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* --------------- BODY ---------------*/
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(../images/waterlogin.jpg);
+    background-color: #000000;
+    background-size: cover;
+    background-position: center;
+}
+/* --------------- CONTAINER ---------------*/
+.wrapper {
+    width: 530px;
+    background: transparent;
+    border: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 50px 60px; /* Increased padding */
+}
+
+.wrapper h1 {
+    font-size: 50px; /* Increased font size */
+    text-align: center;
+    color: #013D67;
+    letter-spacing: 2px;
+    font-family: "Suez One"!important;
+}
+
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    height: 60px; /* Increased height */
+    margin: 40px 0; /* Increased margin */
+    transition: transform 0.3s ease;
+}
+@media all and (max-width: 991px) {
+    .wrapper {
+        width: 530px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 20px;
+        padding: 50px 60px; /* Increased padding */
+    }    
+}
+/* --------------- INPUT TAGS ---------------*/
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 1px solid #9dbed6;
+    padding: 25px 50px 25px 30px; /* Increased padding */
+    border-radius: 20px;
+    font-size: 18px;
+    color: #013D67;
+    outline: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
+    margin-top: 10px;
+    margin-bottom: 14px;
+}
+.input-box:hover {
+    transform: scale(1.05);
+}
+.input-box input:focus {
+    background-color: white;
+}
+.input-box input::placeholder {
+    color: #013D67;
+}
+.input-box i {
+    position: absolute;
+    right: 30px; /* Adjusted position */
+    top: 70%;
+    transform: translateY(-50%);
+    font-size: 24px; /* Increased font size */
+    color: #013D67;
+}
+/* --------------- REMEMBER ---------------*/
+.wrapper .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px; /* Increased font size */
+    margin: -25px 0 25px; /* Increased margin */
+    color: #013D67;
+}
+.remember-forgot label input {
+    accent-color: #013D67;
+    margin-right: 5px; /* Adjusted margin */
+}
+.remember-forgot a {
+    color: #013D67;
+    text-decoration: none;
+}
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+/* --------------- OR DIVIDER ---------------*/
+.divider-content-center {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-left: 0.8rem; /* Increased padding */
+    padding-right: 0.8rem; /* Increased padding */
+    background-color: #cae3f4;
+    font-size: 1rem; /* Increased font size */
+    font-weight: 500;
+    color: #013D67;
+}
+/* --------------- SUBMIT BUTTON ---------------*/
+.wrapper .btn {
+    width: 380px; /* Increased width */
+    height: 55px; /* Increased height */
+    background: white;
+    border: none;
+    border-radius: 50px; /* Increased border radius */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+    cursor: pointer;
+    font-size: 20px; /* Increased font size */
+    color: white;
+    font-weight: 600;
+    font-family: "Poppins";
+    transition: transform 0.3s ease;
+    background-color: #61A5C2;
+    
+}
+.wrapper .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.2); /* Adjusted shadow */
+    
+}
+/* --------------- REGISTER LINK ---------------*/
+.wrapper .register-link {
+    font-size: 18px; /* Increased font size */
+    text-align: center;
+    margin-top: 30px; /* Increased margin */
+    color: #013D67;
+    font-weight:600;    
+}
+.register-link p a {
+    color: #013D67;
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.register-link p a:hover {
+    text-decoration: underline;
+}

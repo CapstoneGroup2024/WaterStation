@@ -71,7 +71,7 @@
             <div class="row">
                 <div class="col">
                     <div class="register-link">
-                        <p id="loginlink">Already have an account? <a href="index.html" id="link">Log in Here</a></p>
+                        <p id="loginlink">Already have an account? <a href="index.php" id="link">Log in Here</a></p>
                     </div>
                 </div>
             </div>

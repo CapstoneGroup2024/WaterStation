@@ -26,7 +26,7 @@ if(isset($_POST['reg_button'])){
 
     // IF A ROW WAS RETURNED BY THE SQL QUERY WHICH IS GREATER THAN ZERO, EMAIL ALREADY EXIST
     if(mysqli_num_rows($check_email_query_run) > 0){
-        $_SESSION['message'] = "Email alreasy registered";
+        $_SESSION['message'] = "Email already registered";
         header("Location: ../register.php");
     } else { // CHECK IF PASSWORD IS THE SAME WITH CONFIRM PASSWORD
         if($password == $confirm_password){
@@ -43,7 +43,7 @@ if(isset($_POST['reg_button'])){
             // CHECK IF REGISTRATION IS SUCCESSFUL
             if(mysqli_stmt_execute($stmt)){
                 $_SESSION['message'] = "Registered Successfully";
-                header("Location: ../login.php");
+                header("Location: ../homepage.php");
                 exit();
             } else {
                 $_SESSION['message'] = "Something went wrong";
@@ -55,5 +55,32 @@ if(isset($_POST['reg_button'])){
             header("Location: ../register.php");
             exit();
         }
+    }
+} else if(isset($_POST['log_button'])){
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $password = mysqli_real_escape_string($con, $_POST['password']);
+
+    $login_query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $login_query_run = mysqli_query($con, $login_query);
+
+    if(mysqli_num_rows($login_query_run) > 0){
+        $_SESSION['auth'] = true;
+
+        $userdata = mysqli_fetch_array($login_query_run);
+        $username = $userdata['name'];
+        $useremail = $userdata['email'];
+
+        $_SESSION['auth_user'] = [
+            'name' => $username,
+            'email' => $useremail
+        ];
+
+        $_SESSION['message'] = "Logged in Successfully";
+        header('Location: .../homepage.php');
+
+
+    } else {
+        $_SESSION['message'] = "Invalid Credentials";
+        header('Location: .../index.php');
     }
 }
