@@ -17,11 +17,11 @@
     <h1>Login</h1>
     <form action="functions/authcode.php" method="POST">
     <div class="input-box">
-        <input type="text" placeholder="Email" name="email"required>
+        <input type="text" placeholder="Email" name="email" required>
         <i class='bx bxs-user'></i>
     </div>
     <div class="input-box">
-        <input type="password" placeholder="Password" name="password"required>
+        <input type="password" placeholder="Password" name="password" required>
         <i class='bx bxs-lock-alt' ></i>
     </div>
     <div class="remember-forgot">
@@ -36,7 +36,8 @@
         <p>Login using <a href="Register.html">Contact Number</a></p>
     </div><br>
     
-    <button type="submit" name="log_button" class="btn">Login</button>
+    
+    <button type="submit" name="logButton" class="btn">Login</button>
                 
     <div class="register-link">
         <p>Don't have an account? <a href="register.php">Register</a></p>

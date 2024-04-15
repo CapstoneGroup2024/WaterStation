@@ -4,7 +4,7 @@
 session_start();
 include('../config/dbconnect.php');
             
-if(isset($_POST['reg_button'])){
+if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
     // GET USER DATA
     $name = htmlspecialchars(mysqli_real_escape_string($con, $_POST["name"]));
     $email = htmlspecialchars(mysqli_real_escape_string($con, $_POST["email"]));
@@ -56,31 +56,46 @@ if(isset($_POST['reg_button'])){
             exit();
         }
     }
-} else if(isset($_POST['log_button'])){
+}else if(isset($_POST['logButton'])){ // IF FORM SUBMIT IS FROM logButton
+    // GET USER DATA EMAIL AND PASSWORD
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
-    $login_query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-    $login_query_run = mysqli_query($con, $login_query);
+    // HASHED THE PASSWORD TO MATCH WITH THE ONE IN THE DATABASE
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if(mysqli_num_rows($login_query_run) > 0){
-        $_SESSION['auth'] = true;
+    $login_query = "SELECT * FROM users WHERE email='$email'"; // SELECT EMAIL FROM USER TABLE
+    $login_query_run = mysqli_query($con, $login_query); // QUERYING THE DATABASE
 
-        $userdata = mysqli_fetch_array($login_query_run);
-        $username = $userdata['name'];
-        $useremail = $userdata['email'];
+    // IF A ROW WAS RETURNED BY THE SQL QUERY WHICH IS GREATER THAN ZERO, EMAIL ALREADY EXIST
+    if(mysqli_num_rows($login_query_run) > 0){ //
+        $userdata = mysqli_fetch_array($login_query_run); // RETURNS AN ARRAY THAT CORRESPONDS TO THE FETCHED ROW
+        $stored_password = $userdata['password']; // HOLDS THE HASHED PASSWORRRD
 
-        $_SESSION['auth_user'] = [
-            'name' => $username,
-            'email' => $useremail
-        ];
+        // VERIFY THE HASHED PASSWORD
+        if(password_verify($password, $stored_password)){
+            $_SESSION['auth'] = true;
 
-        $_SESSION['message'] = "Logged in Successfully";
-        header('Location: .../homepage.php');
+            $username = $userdata['name'];
+            $useremail = $userdata['email'];
 
+            $_SESSION['auth_user'] = [
+                'name' => $username,
+                'email' => $useremail
+            ];
 
+            $_SESSION['message'] = "Logged in Successfully";
+            header('Location: ../homepage.php');
+            exit();
+        } else {
+            $_SESSION['message'] = "Invalid Credentials";
+            header('Location: ../index.php');
+            exit();
+        }
     } else {
         $_SESSION['message'] = "Invalid Credentials";
-        header('Location: .../index.php');
+        header('Location: ../index.php');
+        exit();
     }
 }
+

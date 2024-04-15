@@ -2,6 +2,7 @@
 <?php include('includes/header.php');?>
 <?php include('includes/navbar.php');?>
 
+<?php session_start(); ?>
 <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
     {
         ?>  <!-- SHOW ALERT --> 
