@@ -1,5 +1,6 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
+<link rel="stylesheet" href="assets/css/login.css">    
 <?php session_start(); ?> <!-- Start Session -->
 <!--------------- LOGIN FORM --------------->
 <div class="wrapper"> 

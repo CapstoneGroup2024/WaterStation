@@ -84,6 +84,7 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
                 'email' => $useremail
             ];
 
+            // IF LOGIN SUCCESSFUL
             $_SESSION['message'] = "Logged in Successfully";
             header('Location: ../homepage.php');
             exit();

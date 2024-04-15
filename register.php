@@ -1,7 +1,10 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
+<link rel="stylesheet" href="assets/css/register.css">
 <?php session_start(); ?> <!-- Start Session -->
 <!--------------- REGISTER FORM --------------->
+
+
 <div class="Register">
     <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
     {
