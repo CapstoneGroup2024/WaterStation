@@ -5,10 +5,10 @@ $username = "root";
 $password = "";
 $dbname = "aquaflowdb";
 
-//Create Connection to Database
+// CREATE CONNECTION TO DATABASE
 $con = mysqli_connect($servername, $username, $password, $dbname);
 
-//Check Database Connection
+// CHECK DATABASE CONNECTION
 if(!$con){
     die("Connection Failed ". mysqli_connect_error());
 }
