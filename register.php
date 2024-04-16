@@ -1,10 +1,14 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
 <link rel="stylesheet" href="assets/css/register.css">
-<?php session_start(); ?> <!-- Start Session -->
+<?php session_start(); // START SESSION
+    if(isset($_SESSION['auth'])){
+        $_SESSION['message'] = "You are already logged in";
+        header('Location: homepage.php');
+        exit();
+    }
+?> 
 <!--------------- REGISTER FORM --------------->
-
-
 <div class="Register">
     <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
     {

@@ -1,7 +1,14 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
 <link rel="stylesheet" href="assets/css/login.css">    
-<?php session_start(); ?> <!-- Start Session -->
+
+<?php session_start(); // START SESSION
+    if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
+        $_SESSION['message'] = "You are already logged in";
+        header('Location: homepage.php');
+        exit();
+    }
+?>
 <!--------------- LOGIN FORM --------------->
 <div class="wrapper"> 
     <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
@@ -36,10 +43,9 @@
     <div class="register-link">
         <p>Login using <a href="Register.html">Contact Number</a></p>
     </div><br>
-    
-    
-    <button type="submit" name="logButton" class="btn">Login</button>
-                
+    <!--------------- SUBMIT BUTTON --------------->
+    <button type="submit" name="logButton" class="btn">Login</button>      
+    <!--------------- TO REGISTER PAGE --------------->     
     <div class="register-link">
         <p>Don't have an account? <a href="register.php">Register</a></p>
     </div>
