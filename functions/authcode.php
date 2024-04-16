@@ -3,6 +3,7 @@
 // START SESSIONN
 session_start();
 include('../config/dbconnect.php');
+include('../functions/myAlerts.php');
             
 if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
     // GET USER DATA
@@ -15,9 +16,7 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
 
     // CHECK IF DATA INPUTTED IS EMPTY
     if(empty($name) || empty($email) || empty($phone) || empty($address) || empty($password) || empty($confirm_password)) {
-        $_SESSION['message'] = "Please fill in all fields";
-        header("Location: ../register.php");
-        exit();
+        redirect("../register.php", "Please fill in all fields");
     }
     
     // CHECK IF EMAIL IS ALREADY REGISTERED ON THE DATABASE
@@ -42,18 +41,12 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
 
             // CHECK IF REGISTRATION IS SUCCESSFUL
             if(mysqli_stmt_execute($stmt)){
-                $_SESSION['message'] = "Registered Successfully";
-                header("Location: ../homepage.php");
-                exit();
+                redirect("../homepage.php", "Registered Successfully");
             } else {
-                $_SESSION['message'] = "Something went wrong";
-                header("Location: ../register.php");
-                exit();
+                redirect("../register.php", "Something went wrong");
             }
         } else { // IF PASSWORD DONT MATCH
-            $_SESSION['message'] = "Passwords do not match";
-            header("Location: ../register.php");
-            exit();
+            redirect("../register.php", "Password do not match");
         }
     }
 }else if(isset($_POST['logButton'])){ // IF FORM SUBMIT IS FROM logButton
@@ -92,19 +85,13 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
                 header('Location: ../admin/index.php');
             } else {
                 // IF USER LOGIN SUCCESSFUL
-                $_SESSION['message'] = "Logged in Successfully";
-                header('Location: ../homepage.php');
-                exit();
+                redirect("../homepage.php", "Logged in Successfully");
             }
         } else {
-            $_SESSION['message'] = "Invalid Credentials";
-            header('Location: ../index.php');
-            exit();
+            redirect("../index.php", "Invalid Credentials");
         }
     } else {
-        $_SESSION['message'] = "Invalid Credentials";
-        header('Location: ../index.php');
-        exit();
+        redirect("../index.php", "Invalid Credentials");
     }
 }
 
