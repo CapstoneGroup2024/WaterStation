@@ -1,7 +1,7 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
 <link rel="stylesheet" href="assets/css/register.css">
-<?php session_start(); // START SESSION
+<?php 
     if(isset($_SESSION['auth'])){
         $_SESSION['message'] = "You are already logged in";
         header('Location: homepage.php');

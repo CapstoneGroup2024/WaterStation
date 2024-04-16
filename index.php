@@ -2,7 +2,7 @@
 <?php include('includes/header.php');?>
 <link rel="stylesheet" href="assets/css/login.css">    
 
-<?php session_start(); // START SESSION
+<?php 
     if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
         $_SESSION['message'] = "You are already logged in";
         header('Location: homepage.php');

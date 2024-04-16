@@ -1,3 +1,5 @@
+<?php session_start(); ?> <!----- START SESSION ----->
+
 <!doctype html>
 <html lang="en">
   <head>

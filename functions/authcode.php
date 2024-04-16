@@ -78,16 +78,24 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
 
             $username = $userdata['name'];
             $useremail = $userdata['email'];
+            $role = $userdata['role'];
 
             $_SESSION['auth_user'] = [
                 'name' => $username,
                 'email' => $useremail
             ];
 
-            // IF LOGIN SUCCESSFUL
-            $_SESSION['message'] = "Logged in Successfully";
-            header('Location: ../homepage.php');
-            exit();
+            $_SESSION['role'] = $role;
+
+            if($role == 1){ // CHECK IF ADMIN WHICH EQUAL TO 1 IN ROLE COLUMN
+                $_SESSION['message'] = "Welcome to Admin Dashboard";
+                header('Location: ../admin/index.php');
+            } else {
+                // IF USER LOGIN SUCCESSFUL
+                $_SESSION['message'] = "Logged in Successfully";
+                header('Location: ../homepage.php');
+                exit();
+            }
         } else {
             $_SESSION['message'] = "Invalid Credentials";
             header('Location: ../index.php');
