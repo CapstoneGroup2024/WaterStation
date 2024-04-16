@@ -28,6 +28,21 @@
             <a class="nav-link px-lg-2" id="contact" href="#">Contact</a>
           </li>
         </ul>
+        <?php
+          if(isset($_SESSION['auth'])){
+            ?>
+            <div class="dropdown">
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown link</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+            <?php
+          }
+        ?>
+        
       </div>
     </div>
   </div>
