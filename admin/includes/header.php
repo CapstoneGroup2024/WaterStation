@@ -22,6 +22,7 @@
         padding: 8px 10px;
         background-color: #DEEFF5 !important;
         border-radius: 8px;
+        margin-bottom: 5px;
     }
 
   </style>
