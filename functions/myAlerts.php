@@ -1,7 +1,7 @@
 <?php
-    function redirect($url, $message){
-        $_SESSION['message'] = $message;
-        header('Location: '.$url);
+    function redirect($url, $message){ // PASS URL AND MESSAGE PARAMETERS
+        $_SESSION['message'] = $message; // MESSAGE
+        header('Location: '.$url); // REDIRECT
         exit();
     }
 

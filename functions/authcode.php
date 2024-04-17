@@ -1,9 +1,8 @@
 <?php
-
 // START SESSIONN
 session_start();
 include('../config/dbconnect.php');
-include('../functions/myAlerts.php');
+include('myAlerts.php');
             
 if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
     // GET USER DATA

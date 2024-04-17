@@ -15,6 +15,16 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="assets/css/material-dashboard.min copy.css" rel="stylesheet" />
+  <style>
+    /* --------------- ADD CATEGORY ---------------*/
+    .form-control{
+        border: 1px solid #6A6A66 !important;
+        padding: 8px 10px;
+        background-color: #DEEFF5 !important;
+        border-radius: 8px;
+    }
+
+  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">

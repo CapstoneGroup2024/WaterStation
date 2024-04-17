@@ -3,7 +3,6 @@
     include('../middleware/adminMid.php');
 ?>
 
-
 <div class="container">
     <div class="row">
         <div class="col-lg-8 position-relative z-index-2">
