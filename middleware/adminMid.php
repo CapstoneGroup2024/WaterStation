@@ -1,6 +1,5 @@
 <?php
 include('../functions/myAlerts.php');
-session_start(); // SESSION START
 
     if(isset($_SESSION['auth'])){ //CHECKS IF USER IS LOGGED IN
         if($_SESSION['role'] != 1){ //CHECK IF USER IS NOT ADMIN

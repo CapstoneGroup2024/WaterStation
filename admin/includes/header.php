@@ -9,6 +9,7 @@
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap">
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
@@ -23,6 +24,12 @@
         background-color: #DEEFF5 !important;
         border-radius: 8px;
         margin-bottom: 5px;
+    }
+    .addCategSave{
+        color: red;
+    }
+    h4{
+      margin-bottom: -20px;
     }
 
   </style>
