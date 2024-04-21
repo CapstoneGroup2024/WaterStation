@@ -13,7 +13,7 @@
     <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
     {
         ?>  <!-- SHOW ALERT --> 
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <?= $_SESSION['message'] ?>.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

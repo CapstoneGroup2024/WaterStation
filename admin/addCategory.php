@@ -12,7 +12,7 @@
             </div>
                 <div class="card-body">
                     <!--------------- FORM--------------->
-                    <form action="" method="POST" enctype="multiple/form-data"></form>
+                    <form action="codes.php" method="POST" enctype="multiple/form-data">
                         <div class="row">
                             <div class="col-md-6"> 
                                 <div class="form-group">
@@ -70,7 +70,7 @@
                             </div>
                             <!--------------- SAVE BUTTON--------------->
                             <div class="col-md-12">
-                                <button class="btn bg-primary mt-2 md-w-10 text-white" name="addCateg_button" id="addCategSave">Save</button>
+                                <button type="submit" class="btn bg-primary mt-2 md-w-10 text-white" name="addCateg_button" id="addCategSave">Save</button>
                             </div>
                         </div>
                     </form>

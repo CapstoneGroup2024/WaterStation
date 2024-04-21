@@ -112,3 +112,7 @@ a.navbar-brand:hover {
         transition: background 0.4s, box-shadow 0.4s, color 0.4s;
     }
 }
+
+#custom-alert{
+    background-color: red;
+}

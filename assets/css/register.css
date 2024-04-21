@@ -14,11 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(../images/regwater.png);
-    background-color: #C2E6FE; /* Adjusted background color for a softer look */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #FFFFFF;/* Adjusted background color for a softer look */
 }
 @media (min-width: 768px) {
     body {
@@ -27,10 +23,10 @@ body {
 }
 /* ------------------- CONTAINER ------------------- */
 .Register {
-    margin-top: 20px;
+    margin-top: 40px;
     margin-bottom: 10px;
     width: 1080px;
-    background: transparent;
+    background-color: #FFFFFF;
     border: none;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
@@ -40,14 +36,14 @@ body {
     .Register {
         margin-top: 40px;
         margin-bottom: 100px;
-        width: 1080px;
-        background: transparent;
+        width: 1080px;  
         border: none;
         box-shadow: none;
         border-radius: 20px;
         padding: 30px 40px;
     }
 }
+
 /* ------------------- HEADING ------------------- */
 .heading {
     margin-top: 5px;
@@ -67,8 +63,8 @@ body {
 .regform input {
     width: 95%;
     height: 100%;
-    background: transparent;
-    border: 1px solid #9dbed6; /* Set initial border to transparent */
+    background-color: #DEEFF5;
+    border: 2px solid rgba(0, 0, 0, 0.2);/* Set initial border to transparent */
     border-radius: 20px;
     font-size: 14px;
     color: #013D67;
@@ -95,30 +91,27 @@ body {
 }
 .register-link a:hover {
     text-decoration: underline;
-    color: white;
 }
 /* ------------------- SUBMIT BUTTON ------------------- */
 .btn-container {
     text-align: center; /* Align the button container's content center */
     margin: 0 auto; /* Center the button container horizontally */
-    background-color: #AAD7F6;
+    background: #61A5C2;
     width: 340px;
     height: 45px;
-    background: white;
     border: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-weight: bolder;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
-    background-color: #AAD7F6;
 }
 .button-text {
-    color: #013D67;
+    color: #FFFFFF;
     font-weight: bold;
     border: none;
     margin-top: 10px;
-    background-color: #AAD7F6;
+    background-color: #61A5C2;;
 }
 .btn-container:hover {
     transform: scale(1.05);
@@ -131,4 +124,86 @@ body {
     color: #fff;
     font-size: 15px;
     display: none;
+}
+
+@media (min-width: 500px)  {
+    .Register {
+        margin-top: 400px;
+        margin-bottom: 10px;
+        width: 1080px;
+        background-color: #FFFFFF;
+        border: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 15px 30px;
+    }
+    .regform input {
+        width: 95%;
+        height: 100%;
+        border-radius: 20px;
+        font-size: 14px;
+        padding: 20px 45px 20px 20px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
+        margin-top: 10px;
+        margin-bottom: 14px;
+        margin-left: 10px;
+    }
+    .heading {
+       font-size: 36px;
+    }
+}
+
+@media (min-width: 768px) {
+    .Register {
+        margin-top: 400px;
+        margin-bottom: 10px;
+        width: 1080px;
+        background-color: #FFFFFF;
+        border: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 15px 30px;
+    }
+    .regform input {
+        width: 95%;
+        height: 100%;
+        border-radius: 20px;
+        font-size: 14px;
+        padding: 20px 45px 20px 20px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
+        margin-top: 10px;
+        margin-bottom: 14px;
+        margin-left: 10px;
+    }
+    .heading {
+       font-size: 36px;
+    }
+}
+
+
+@media (min-width: 768px){
+    .Register {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 1080px;
+        background-color: #FFFFFF;
+        border: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 15px 30px;
+    }
+    .regform input {
+        width: 95%;
+        height: 100%;
+        border-radius: 20px;
+        font-size: 14px;
+        padding: 20px 45px 20px 20px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
+        margin-top: 10px;
+        margin-bottom: 14px;
+        margin-left: 10px;
+    }
+    .heading {
+       font-size: 36px;
+    }
 }

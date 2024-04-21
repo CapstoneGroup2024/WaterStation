@@ -25,15 +25,14 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
     // IF A ROW WAS RETURNED BY THE SQL QUERY WHICH IS GREATER THAN ZERO, EMAIL ALREADY EXIST
     if(mysqli_num_rows($check_email_query_run) > 0){
         $_SESSION['message'] = "Email already registered";
-        header("Location: ../register.php");
+        header("Location: ../register.php"); 
     } else { // CHECK IF PASSWORD IS THE SAME WITH CONFIRM PASSWORD
         if($password == $confirm_password){
             // HASH THE PASSWORD
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             // PREPARED STATEMENT FOR SECURITY
-            $insert_query = "INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)";
-
+            $insert_query = "INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)"; 
             // PLACEHOLDER FOR THE PREPARED STATEMENT
             $stmt = mysqli_prepare($con, $insert_query); 
             mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $phone, $address, $hashed_password); // FIVE (s) FOR FIVE STRINGS
@@ -74,7 +73,7 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
 
             $_SESSION['auth_user'] = [
                 'name' => $username,
-                'email' => $useremail
+                  'email' => $useremail
             ];
 
             $_SESSION['role'] = $role;
