@@ -12,7 +12,7 @@
             </div>
                 <div class="card-body">
                     <!--------------- FORM--------------->
-                    <form action="codes.php" method="POST" enctype="multiple/form-data">
+                    <form action="codes.php" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-6"> 
                                 <div class="form-group">
