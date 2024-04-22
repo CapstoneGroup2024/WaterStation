@@ -33,5 +33,46 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("addCategory.php", "Something went wrong"); 
     }
+} else if(isset($_POST['editCateg_button'])){
+    $category_id = $_POST['category_id'];
+    $name = $_POST['name'];
+    $slug = $_POST['slug'];  
+    $description = $_POST['description'];
+    $image = $_POST['image'];
+    $meta_title = $_POST['meta_title'];
+    $meta_description = $_POST['meta_description'];
+    $meta_keywords = $_POST['meta_keywords'];
+    $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
+    $popular = isset($_POST['popular']) ? '1':'0'; // IF THE POPULAR IS SET AND NOT NULL
+
+    $new_image = $_FILES['image']['name']; // GET THE ORIGINAL NAME OF THE UPLOADED FILE 
+    $old_image = $_POST['old_image'];
+
+    if($new_image != ""){
+        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION); // GET THE FILE EXTENSION OF THE UPLOADED IMAGE 
+        $update_filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
+    } else{
+        $update_filename = $old_image;
+    }
+
+    $path = "../uploads";
+
+    $update_query = "UPDATE categories SET name='$name', slug='$slug', description='$description', 
+    meta_title='$meta_title', meta_description='$meta_description', meta_keywords='$meta_keywords', 
+    status='$status', popular='$popular', image='$update_filename' WHERE id='$category_id' ";
+
+    $update_query_run = mysqli_query($con, $update_query);
+
+    if($update_query_run){
+        if($_FILES['image']['name'] != ""){
+            move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$update_filename);
+            if(file_exists("../uploads/".$old_image)){
+                unlink("../uploads/".$old_image);
+            }
+        }
+        redirect("editCategory.php?id=$category_id","Category Updated Successfully");
+    } else{
+        redirect("editCategory.php?id=$category_id","Something went wrong");
+    }
 }
 ?>

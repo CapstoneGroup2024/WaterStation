@@ -58,13 +58,13 @@
                             </div>
                             <div class="col-md-6"> 
                                 <div class="form-group">
-                                    <label for="">Status</label>
+                                    <label for="">Status (Check if Available) </label>
                                 <input type="checkbox" name="status">
                                 </div>
                             </div>
                             <div class="col-md-6"> 
                                 <div class="form-group">
-                                    <label for="">Popular</label>
+                                    <label for="">Popular </label>
                                 <input type="checkbox" name="popular">
                                 </div>
                             </div>
