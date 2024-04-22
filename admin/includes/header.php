@@ -37,7 +37,22 @@
       margin-bottom: -20px;
     }
     #side-bar-title{
-      color: green;
+      color: #013D67;
+      font-family: 'Suez One', sans-serif; 
+      font-size: 18px;
+    }
+    
+    #side-bar-sub-title{
+      color: #6A6A66;
+      font-weight: bold;
+      font-size: 12px;
+      font-family: 'Poppins', sans-serif;
+    }
+    #side-bar-icon{
+      font-size: 22px;
+    }
+    #side-bar-link-box:hover{
+      background-color: #6DB9F0; 
     }
 
   </style>

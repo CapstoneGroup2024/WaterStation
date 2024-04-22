@@ -6,33 +6,108 @@
       </p>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main" style="overflow-x: hidden !important;">
       <ul class="navbar-nav">
+        <!--------------- MARKETING --------------->
+        <li class="nav-item" style="margin-left: 15px">
+            <span class="nav-link-text ms-1" id="side-bar-sub-title">MARKETING</span>
+        </li>
         <!--------------- DASHBOARD --------------->
         <li class="nav-item">
           <a class="nav-link text-dark-blue font-weight-bold bg-primary" href="index.php">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10" style="font-size: 24px;">dashboard</i>
+              <i class="material-icons opacity-10" id="side-bar-icon">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1" style="font-family: 'Suez One', sans-serif; font-size: 20px;">Dashboard</span>
+            <span class="nav-link-text ms-1" id="side-bar-title">Dashboard</span>
           </a>
         </li>
         <!--------------- ADD CATEGORY --------------->
         <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="category.php">
+          <a class="nav-link text-dark-blue " href="category.php" id="side-bar-link-box">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10" id="side-bar-title">category</i>
+              <i class="material-icons opacity-10" id="side-bar-icon">category</i>
             </div>
-            <span class="nav-link-text ms-1">Categories</span>
+            <span class="nav-link-text ms-1" id="side-bar-title">Categories</span>
           </a>
         </li>
         <!--------------- ADD CATEGORY --------------->
         <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="addCategory.php">
+          <a class="nav-link text-dark-blue " href="addCategory.php" id="side-bar-link-box">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">add</i>
+              <i class="material-icons opacity-10" id="side-bar-icon">add</i>
             </div>
-            <span class="nav-link-text ms-1">Add Category</span>
+            <span class="nav-link-text ms-1" id="side-bar-title">Add Category</span>
+          </a>
+        </li>
+        <!--------------- PRODUCTS --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">local_drink</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Products</span>
+          </a>
+        </li>
+        <!--------------- ADD PRODUCTS --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">add</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Add Products</span>
+          </a>
+        </li>
+        <!--------------- ORDERS --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">shopping_bag</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Orders</span>
+          </a>
+        </li>
+        <!--------------- CUSTOMER --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">people_alt</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Customer</span>
+          </a>
+        </li>
+        <!--------------- PAYMENTS --------------->
+        <li class="nav-item" style="margin-left: 15px">
+            <span class="nav-link-text ms-1" id="side-bar-sub-title" >PAYMENTS</span>
+        </li>
+        <!--------------- ONLINE PAYMENT --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">payment</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Online Payment</span>
+          </a>
+        </li>
+        <!--------------- CASH ON DELIVERY --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">payments</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Cash on Delivery</span>
+          </a>
+        </li>
+        <!--------------- SYSTEM --------------->
+        <li class="nav-item" style="margin-left: 15px">
+            <span class="nav-link-text ms-1" id="side-bar-sub-title">SYSTEM</span>
+        </li>
+        <!--------------- SETTINGS --------------->
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">settings</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Settings</span>
           </a>
         </li>
       </ul>
