@@ -16,6 +16,10 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="assets/css/material-dashboard.min copy.css" rel="stylesheet" />
+  <!-- Alertify JS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
   <style>
     /* --------------- ADD CATEGORY ---------------*/
     .form-control{

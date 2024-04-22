@@ -5,7 +5,7 @@ include('../functions/myAlerts.php');
 
 if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $name = $_POST['name'];
-    $slug = $_POST['slug'];
+    $slug = $_POST['slug'];  
     $description = $_POST['description'];
     $image = $_POST['image'];
     $meta_title = $_POST['meta_title'];
