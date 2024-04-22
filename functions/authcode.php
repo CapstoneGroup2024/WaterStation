@@ -1,6 +1,4 @@
 <?php
-// START SESSIONN
-session_start();
 include('../config/dbconnect.php');
 include('myAlerts.php');
             

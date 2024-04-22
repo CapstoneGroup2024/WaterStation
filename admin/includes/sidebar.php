@@ -19,9 +19,18 @@
         </li>
         <!--------------- ADD CATEGORY --------------->
         <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="category.php">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-title">category</i>
+            </div>
+            <span class="nav-link-text ms-1">Categories</span>
+          </a>
+        </li>
+        <!--------------- ADD CATEGORY --------------->
+        <li class="nav-item">
           <a class="nav-link text-dark-blue " href="addCategory.php">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">add</i>
             </div>
             <span class="nav-link-text ms-1">Add Category</span>
           </a>

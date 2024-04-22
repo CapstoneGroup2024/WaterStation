@@ -1,5 +1,6 @@
 <!--------------- HEADER --------------->
 <?php include('includes/header.php');?>
+<?php session_start(); ?>
 <link rel="stylesheet" href="assets/css/register.css">
 <?php 
     if(isset($_SESSION['auth'])){

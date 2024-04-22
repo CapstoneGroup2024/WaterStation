@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card mt-4">
             <div class="card-header">
                 <h4 style="font-family: 'Suez One', sans-serif; font-size: 35px;">Add Category</h4>
             </div>

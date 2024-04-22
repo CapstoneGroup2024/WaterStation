@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,6 +35,9 @@
     }
     h4{
       margin-bottom: -20px;
+    }
+    #side-bar-title{
+      color: green;
     }
 
   </style>
