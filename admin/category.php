@@ -20,6 +20,7 @@
                                 <th>Image</th>
                                 <th>Status</th>
                                 <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,12 @@
                                             </td>
                                             <td>
                                                 <a href="editCategory.php?id=<?= $item['id']; ?>" class="btn bg-primary text-white">Edit</a>
+                                            </td>
+                                            <td>
+                                                <form action="codes.php" method="POST">
+                                                    <input type="hidden" name="category_id" value="<?= $item['id'];?>">
+                                                    <button type="submit" class="btn btn-danger text-white" name="deleteCategory_button">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                             <?php
