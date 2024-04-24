@@ -1,0 +1,695 @@
+@import url('https://fonts.googleapis.com/css2?family=Suez+One&display=swap');
+/*--------------- BODY AND SECTION ---------------*/
+*{
+    margin: 0;
+    padding: 0;  
+}
+.section {
+    min-height: 200vh;
+    position: absolute;
+}
+body{
+    background-color: #DCF1FF;
+}
+/*--------------- NAVBAR ---------------*/
+.navbar-brand{
+    font-family: 'Suez One';
+}
+.navbar{
+    background-color: #AAD7F6;
+}
+/*-----Home-----*/
+.home{
+    height: 95vh;
+    background-color: #AAD7F6;
+}
+.img-fluid{
+    margin-top: 70px;
+    padding-right: 60px;
+    width: 60%;
+    height: 80vh;
+}
+.aquaflow{
+    margin-top: 50px;
+    font-family: 'Suez One';
+    font-size: 80px;
+    color: #013D67;
+}
+/*--------------- QUOTE ---------------*/
+.quote{
+    padding-left: 60px;
+}
+.water{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    color: azure;
+    font-size: 14px;
+}
+.when{
+    font-family: 'Poppins', sans-serif;
+    color: #085372;
+    font-weight: bold;
+    font-size: 14px;
+}.water_drop {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background: #A9D6E5;
+    border-radius: 55% 45% 66% 34% / 53% 59% 41% 47%;
+    box-shadow: inset 17px 30px 26px 0px #A9D6E5, inset 1px 4px 32px 4px #ffffff, 15px 20px 25px 1px #c9d8e0;
+    animation: water 3s infinite ease-in-out;
+}
+
+.water_drop::before,
+.water_drop::after {
+    content: "";
+    position: absolute;
+    background-color: white;
+}
+
+.water_drop::before {
+    top: 25px;
+    left: 40px;
+    height: 20px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+.water_drop::after {
+    top: 16px;
+    left: 71px;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+
+@keyframes water {
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-1deg);
+    }
+    50% {
+        transform: translateY(0) rotate(1deg);
+    }
+    75% {
+        transform: translateY(-5px) rotate(0deg);
+    }
+}
+
+.order {
+    padding-top: 85px;
+    padding-left: 25px;
+    font-family: 'Poppins';
+    font-size: x-large;
+    font-weight: 700;
+    color: #013D67;
+}
+
+.water_drop:hover {
+    transform: translateY(-15px);
+    transition: transform 0.3s ease;
+    background-color: #b0d2e8;
+}
+
+/*-------Services------*/
+.ser{
+    padding-left: 5%;
+    padding-right: 5%;
+
+}
+
+.services{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #013D67;
+    font-family: 'Suez One';
+    font-size: 60px;
+    font-weight: bold;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.card-img-top{
+    border-radius: 30px;
+}
+
+.col{
+    margin-bottom: 6px;
+}
+
+.card{
+    border-radius: 30px;
+}
+
+.card-title{
+    color: #013D67;
+    font-family: 'Suez One';
+}
+
+/*-------About Us------*/
+.wrapper{
+    padding: 5px;
+    max-width: 3000px;
+    width: 95%;
+    margin: 20px auto;
+}
+
+.wrapper h1{
+    font-family: 'Suez One';
+    color: #013D67;
+    font-size: 60px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.header{
+    padding: 0 15px;
+    text-align: center;
+}
+
+.columns{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.column{
+    flex: 1;
+    border: 1px solid #666;
+    height: 59vh;
+    margin: 10px;
+    border-radius: 20px;
+    padding: 10px;
+    background: #3af4d5;
+    transition: 0.3s;
+}
+
+.column h2{
+    font-family: 'Suez One';
+    color: #013D67;
+}
+
+.coulumn p{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#column1{
+    background-color: #AAD7F6;
+}
+
+#column2{
+    background-color: #C7D5F3;
+}
+
+#column3{
+    background-color: #3af4d5;
+}
+
+@media screen and (max-width: 980px) {
+    .columns .column{
+        margin-bottom: 5px;
+        flex-basis: 40%;
+    }
+    .coumns .column:last-child{
+        flex-basis: 100%;
+        margin: 0;
+    }
+    .coumns .column:nth-last-child(2){
+        margin: 0;
+    }
+}
+@media screen and (max-width: 680px) {
+    .columns .column{
+        flex-basis: 100%;
+        margin: 0 0 5px 0;
+    }
+}
+
+/*-------Contact------*/
+footer{
+    background-color: #9cc5eb;
+}
+.first-container{
+    margin-top: -20px;
+}
+.contact-title{
+    margin-top: 20px;
+    color: #013D67;
+    font-family: 'Suez One';
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 25px;
+}
+.svg-container{
+    display: flex;
+    align-items: center;
+    background-color: #D9D9D9;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.contact-info div {
+    display: flex;
+    align-items: center;
+}
+
+.contact-text{
+    color: #013D67;
+    font-family: 'Times New Roman', Times, serif;
+}
+#contact-header{
+    font-family: 'Times New Roman', Times, serif;
+    color: #414833;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.contact-info{
+    display: flex;
+    justify-content: space-between;
+}
+.contact-ul {
+    list-style: none;
+    padding: 0;
+}
+.contact-ul li {
+    display: flex;
+    align-items: center;
+}
+.footer-logo {
+    display: flex;
+    color: white;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+ 
+#footer-column {
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+#footer-container{
+    margin-left: 100px;
+}
+#contact-items-container{
+    padding-left: 0px;
+}
+#items-container{
+    width: 100%;;
+}
+.form-container {
+    background: #013D67;
+    border: none;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(255, 255, 255, 0.1);
+}
+.form-container .input-box {
+    position: relative;
+}
+.input-box input,textarea {
+    background: #fff;
+    border: 1px solid transparent; /* Add a thin border */
+    outline: none;
+    border-radius: 10px;
+    color: #000000;
+    padding: 20px 20px; /* Adjust padding to your preference */
+    transition: background-color 0.3s ease-in, color 0.3s ease-in-out, border-color 0.3s ease-in, transform 0.3s ease-in-out; /* Add transform transition */
+}  
+.input-box input:hover {
+    border-color: #000000;
+    transform: scale(1.05);  /* Change border color on hover */
+}
+.input-box textarea:hover {
+    border-color: #000000;
+    transform: scale(1.05);  /* Change border color on hover */
+}
+.input-box input::placeholder {
+    color: #020202;
+}
+.input-box textarea::placeholder {
+    color: #000000;
+}
+.form-container #loginbtn {
+    background: #AAD7F6;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in, color 0.3s ease-in-out, border-color 0.3s ease-in, transform 0.3s ease-in-out; /* Add transform transition */
+}
+.form-container #loginbtn:hover {
+    transform: scale(1.06);
+}
+
+
+a.contact-link{
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    color: black;
+}
+
+a.contact-link:hover{
+    text-decoration: underline;
+    transform: scale(1.1);
+}
+.footer-svg-container{
+    transition: transform 0.3s ease;
+    color: rgb(6, 5, 5);
+}
+.footer-svg-container:hover{
+    transform: scale(1.1);
+}
+/* ------------------- Larger Screens ------------------- */
+@media all and (min-width: 1020px) {
+    footer{
+        border-top-left-radius: 280px;
+        border-top-right-radius: 280px;
+        padding-top: 0px;
+    }
+    #contact-container-box{
+        padding-left: 100px!important;
+        padding-right: 20px;
+        margin-top: 35px;
+        flex: 1;
+    }
+    #contact-items-container{
+        margin-left: 70px;
+        margin-right: -40px;
+    }
+    #paragraph-text{
+        font-size: 16px;
+    }
+    #contact-info-text{
+        font-size: 14px;
+    }
+    .contact-text{
+        margin-top: 10px;
+    }
+    .contact-ul {
+        margin-top: 10px;
+    }
+    .contact-ul li {
+        margin-bottom: 15px;
+    }
+    hr{
+        opacity: 0.9;
+        border: 1px solid #432054; /* Set the thickness and color of the hr element */
+        margin-left: 100px;
+        margin-top: 25px;
+        margin-right: 100px;
+    }
+    .footer-logo {
+        font-size: 20px;
+        margin-left: 20px!important;
+      }
+       
+    .form-container {
+        width: 320px;
+        height: 400px;
+        margin-left: 15%!important;
+        padding: 20px 25px;
+    }
+    .form-container .input-box {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px
+    }
+    #message{
+        width: 100%;
+        height: 150px;
+    }
+    .input-box input,textarea {
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        padding: 20px 20px;
+    }
+    .form-container #loginbtn {
+        width: 50%;
+        height: 45px;
+        margin-top: 103px;
+        font-size: 16px;
+    }
+    .footer-svg-container{
+        display: inline-block;
+        color: white;
+        margin-top:-10px;
+        margin-left: 10px;
+        transition: 0.5s;
+    }
+    .icon-container{
+        margin-right: 100px;
+        margin-top: -15px;
+    }
+   
+}
+/* ------------------- Medium Screens ------------------- */
+@media all and (min-width: 768px){
+    #contact-container-box {
+        padding-left: 50px;
+        padding-right: 0px;
+        margin-top: 0px;
+        flex: 1;
+    }
+    #paragraph-text {
+        margin-top: 0px;
+        font-size: 16px;
+        text-align: left;
+    }
+    #contact-header {
+        font-size: 19px;
+        text-align: left;
+    }
+    hr {
+        opacity: 0.9;
+        border: 1px solid #432054;
+        margin-top: 25px;
+    }
+    .footer-logo {
+        font-size: 20px;
+        margin-left: -90px;
+    }
+
+
+    .form-container {
+        width: 300px!important;
+        height: 400px;
+        margin-top: 20px;
+        margin-left: 30%!important;
+        padding: 20px 25px;
+    }
+}
+@media all and (min-width: 992px){
+    footer {
+        border-top-left-radius: 200px;
+        border-top-right-radius: 200px;
+        padding-top: 0px;
+    }
+    #contact-container-box {
+        padding-left: 50px;
+        padding-right: 0px;
+        margin-top: 0px;
+        flex: 1;
+    }
+    #contact-items-container {
+        margin-left: 25px;
+    }
+    #paragraph-text {
+        margin-top: 0px;
+        font-size: 16px;
+        text-align: left;
+    }
+    #contact-header {
+        font-size: 19px;
+        text-align: left;
+    }
+    #contact-info-text {
+        font-size: 14px;
+    }
+    .contact-text {
+        margin-top: 10px;
+    }
+    .contact-ul {
+        margin-top: 10px;
+    }
+    .contact-ul li {
+        margin-bottom: 15px;
+    }
+    hr {
+        opacity: 0.9;
+        border: 1px solid #432054;
+        margin-top: 25px;
+    }
+    .footer-logo {
+        font-size: 20px;
+        margin-left: -90px;
+    }
+
+
+    .form-container {
+        width: 300px;
+        height: 400px;
+        margin-top: 20px;
+        margin-left: 10%!important;
+        padding: 20px 25px;
+    }
+    .form-container .input-box {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+    #message {
+        width: 100%;
+        height: 150px;
+    }
+    .input-box input,
+    textarea {
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        padding: 20px 20px;
+    }
+    .form-container #loginbtn {
+        width: 50%;
+        height: 45px;
+        margin-top: 103px;
+        font-size: 16px;
+    }
+    .footer-svg-container {
+        display: inline-block;
+        color: white;
+        margin-top: 10px;
+        margin-left: 5px;
+        transition: 0.5s;
+    }
+}
+/* ------------------- Smaller Screens ------------------- */
+@media all and (max-width: 992px) {
+    footer {
+        border-top-left-radius: 200px;
+        border-top-right-radius: 200px;
+        padding-top: 0px;
+    }
+    #contact-container-box {
+        padding-left: 0px;
+        padding-right: 50px;
+        margin-top: 0px;
+        flex: 1;
+    }
+    #contact-items-container {
+        margin-left: 25px;
+    }
+    #paragraph-text {
+        margin-top: 0px;
+        font-size: 16px;
+        text-align: center;
+    }
+    #contact-header {
+        font-size: 19px;
+        text-align: center;
+    }
+    #contact-info-text {
+        font-size: 14px;
+    }
+    .contact-text {
+        margin-top: 10px;
+    }
+    .contact-ul {
+        margin-top: 10px;
+    }
+    .contact-ul li {
+        margin-bottom: 15px;
+    }
+    hr {
+        opacity: 0.9;
+        border: 1px solid #432054;
+        margin-top: 25px;
+    }
+    .footer-logo {
+        font-size: 20px;
+        margin-left: -90px;
+    }
+
+
+    .form-container {
+        width: 400px;
+        height: 400px;
+        margin-top: 20px;
+        margin-left: 10%;
+        padding: 20px 25px;
+    }
+    .form-container .input-box {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+    #message {
+        width: 100%;
+        height: 150px;
+    }
+    .input-box input,
+    textarea {
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        padding: 20px 20px;
+    }
+    .form-container #loginbtn {
+        width: 50%;
+        height: 45px;
+        margin-top: 103px;
+        font-size: 16px;
+    }
+    .footer-svg-container {
+        display: inline-block;
+        color: white;
+        margin-top: 10px;
+        margin-left: 5px;
+        transition: 0.5s;
+    }
+    .icon-container {
+        margin-top: -50px;
+    }
+    footer svg{
+        width: 20px;
+    }
+    .contact-title{
+        padding-left: 70px;
+    }
+}
+@media only screen and (max-width: 640px){
+    .footer-logo {
+        font-size: 15px;
+        margin-left: -90px;
+    }
+    footer svg{
+        width: 18px;
+    }
+    .icon-container {
+        margin-top: -40px;
+    }
+}
+
+.copyright{
+    margin-bottom: 20px;
+    width: 100%;
+    height: 11vh;
+    text-align: center;
+    padding: 20px 0;
+
+    font-weight: 350;
+    margin-top: 20px;
+}
+.copyright i{
+    color: #080808;
+}
+
+

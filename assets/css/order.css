@@ -1,0 +1,237 @@
+
+*{
+    margin: 0;
+    padding: 0;  
+}
+
+.section {
+    min-height: 200vh;
+    position: absolute;
+}
+
+body{
+    background-color: #A9D6E5;
+}
+#sizes{
+    margin-top: 50px;
+    text-align: center;
+    font: bolder;
+    font-size: larger;
+   
+
+}
+.sizehead{
+    text-align: center;
+    font-weight: bolder;
+  
+}
+hr{
+    height:1px;
+    width: 80%;
+    border-width:0;
+    color:gray;
+    background-color:gray;
+    margin-left:10% !important; 
+    margin-right:10% !important;
+}
+
+.gallons{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    
+}
+
+.price{
+    font-weight: bolder;
+    font-size: larger;
+    font-family:'Poppins';
+ 
+}
+.text-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 10px;
+  
+}
+#blockquote{
+color: #013D67;
+font-weight: lighter;
+padding-top:2px;
+}
+
+/* ------------------- Category ------------------- */
+h4#category-card-title-header{
+    font-size:30px;
+    color: #013D67;
+}
+p#category-card-texxt-header{
+    font-size: 18px;
+    padding-top: 4px;
+}
+#category-header h3{
+    text-align: center;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+.category{
+    margin-top: 50px;
+    text-align: center;
+    font: bolder;
+    font-size: larger;
+    padding-top: 90px;
+}
+#categ.category{
+    margin-bottom: 50px;
+}
+#purified{
+    background-color: #DDEFF5;
+     
+}
+#mineral{
+    background-color: #CBE6EF;
+    
+}
+#alkaline{
+    background-color: #A9D6E5;
+    
+}
+
+.card-title{
+    font-size:25px;
+}
+
+h5.card-title{
+    color: #013D67;
+
+}
+
+.card-text{
+    font-size: 20px;
+    text-align: justify;
+    padding-top: 5px;
+}
+
+
+
+
+/* ------------------- Quantity ------------------- */
+.qty .count {
+    color: #000000;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30px;
+    padding: 0 2px;
+    min-width: 35px;
+    text-align: center;
+}
+.qty .plus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    }
+.qty .minus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    background-clip: padding-box;
+}
+.qty {
+    text-align: right;
+    padding-left: 10px;
+
+}
+.minus:hover{
+    background-color: #717fe0 !important;
+}
+.plus:hover{
+    background-color: #717fe0 !important;
+}
+/*Prevent text selection*/
+span{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+input{  
+    border: 0;
+    width: 2%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input:disabled{
+    background-color:white;
+}
+
+#minus{
+    background-color: #AAD7F6;
+}
+
+#plus{
+    background-color: #AAD7F6;
+}
+
+#quantitybox{
+    margin-top: 100px;
+   
+    
+}
+
+.addqty{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: #000000;
+}
+
+#quantityhead{
+    margin-top: 200px;
+    margin-left: 190px;
+}
+
+#textqty{
+    margin-left: 40px;
+}
+
+/* ------------------- Submit ------------------- */
+
+
+#submit{
+    width: 1300px;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 30px;
+    margin-left: 0px ;
+
+}
+
+.submit{
+    color: white;
+    font-weight: bolder;
+    font-size: larger;
+    background-size: 10px;
+}
+
+.order-here{
+    padding-left: 60px;
+    padding-top: 40px;
+    font-family: 'suez one';
+    color: #013D67;
+
+}
