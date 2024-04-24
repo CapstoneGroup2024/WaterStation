@@ -4,7 +4,7 @@ body, html {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
-    background-color: #FFFFFF;
+    background-color: #FFFFFF!important;
     scroll-behavior: smooth;
   }
 section {

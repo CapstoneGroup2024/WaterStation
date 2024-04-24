@@ -120,7 +120,7 @@ body {
 /* ------------------- PASSWORD INDICATOR ------------------- */
 #message{
     position: absolute;
-    bottom: -30px;
+    bottom: 85px;
     color: #fff;
     font-size: 15px;
     display: none;
@@ -150,7 +150,7 @@ body {
     }
     .heading {
        font-size: 36px;
-    }
+    }   
 }
 
 @media (min-width: 768px) {
