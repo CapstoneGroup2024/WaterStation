@@ -37,7 +37,7 @@
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
                                             <td>
-                                                <?= $item['status'] == '0'? "Available": "Out of Stock"; ?>
+                                                <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>
                                             <td>
                                                 <a href="editCategory.php?id=<?= $item['id']; ?>" class="btn bg-primary text-white">Edit</a>

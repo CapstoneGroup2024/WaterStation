@@ -71,7 +71,7 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
 
             $_SESSION['auth_user'] = [
                 'name' => $username,
-                  'email' => $useremail
+                'email' => $useremail
             ];
 
             $_SESSION['role'] = $role;

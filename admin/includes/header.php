@@ -30,6 +30,13 @@
         border-radius: 8px;
         margin-bottom: 5px;
     }
+    .form-select{
+        border: 1px solid #6A6A66 !important;
+        padding: 8px 10px;
+        background-color: #DEEFF5 !important;
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
     .addCategSave{
         color: red;
     }
