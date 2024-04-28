@@ -11,6 +11,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $meta_title = $_POST['meta_title'];
     $meta_description = $_POST['meta_description'];
     $meta_keywords = $_POST['meta_keywords'];
+    $additional_price = $_POST['additional_price'];
     $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
     $popular = isset($_POST['popular']) ? '1':'0'; // IF THE POPULAR IS SET AND NOT NULL
     
@@ -22,8 +23,8 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
     
     $categ_query = "INSERT INTO categories
-        (name,slug,description,meta_title,meta_description,meta_keywords,status,popular,image)
-        VALUES ('$name','$slug','$description','$meta_title','$meta_description','$meta_keywords','$status','$popular','$filename')"; 
+        (name,slug,description, meta_title,meta_description,meta_keywords, additional_price, status,popular,image)
+        VALUES ('$name','$slug','$description','$meta_title','$meta_description','$meta_keywords', '$additional_price', '$status','$popular','$filename')"; 
     
     $categ_query_run = mysqli_query($con, $categ_query); // EXECURE THE SQL QUERY TO INSERT CATEGORY INFORMATION INTO THE DATABASE 
     
@@ -42,6 +43,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $meta_title = $_POST['meta_title'];
     $meta_description = $_POST['meta_description'];
     $meta_keywords = $_POST['meta_keywords'];
+    $additional_price = $_POST['additional_price'];
     $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
     $popular = isset($_POST['popular']) ? '1':'0'; // IF THE POPULAR IS SET AND NOT NULL
 
@@ -59,7 +61,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
     $update_query = "UPDATE categories SET name='$name', slug='$slug', description='$description', 
     meta_title='$meta_title', meta_description='$meta_description', meta_keywords='$meta_keywords', 
-    status='$status', popular='$popular', image='$update_filename' WHERE id='$category_id' ";
+    additional_price='$additional_price', status='$status', popular='$popular', image='$update_filename' WHERE id='$category_id' ";
 
     $update_query_run = mysqli_query($con, $update_query);
 

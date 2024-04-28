@@ -59,7 +59,7 @@
                             <div class="col-md-4"> 
                                 <div class="form-group">
                                     <label for="">Additional Price</label>
-                                    <input type="text" class="form-control" placeholder="Enter Additional Price" name="additional_price">
+                                    <input type="number" class="form-control" placeholder="Enter Additional Price" name="additional_price">
                                 </div>
                             </div>
                             <div class="col-md-4"> 

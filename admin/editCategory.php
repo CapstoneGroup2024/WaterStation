@@ -68,15 +68,21 @@
                                                 <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" id="meta_keywords" rows="3"><?=$data['meta_keywords']; ?></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-4"> 
                                             <div class="form-group">
-                                                <label for="">Status (Check if Available) </label>
+                                                <label for="">Additional Price</label>
+                                                <input type="number" class="form-control" placeholder="Enter Additional Price" name="additional_price">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"> 
+                                            <div class="form-group">
+                                                <label for="">Status (Check if Available) </label><br>
                                             <input type="checkbox" <?= $data['status'] ? "checked":""?> name="status">
                                             </div>
                                         </div>
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-4"> 
                                             <div class="form-group">
-                                                <label for="">Popular </label>
+                                                <label for="">Popular </label><br>
                                             <input type="checkbox" <?= $data['popular'] ? "checked":""?> name="popular">
                                             </div>
                                         </div>

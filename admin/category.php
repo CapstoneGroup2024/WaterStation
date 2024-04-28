@@ -18,6 +18,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Image</th>
+                                <th>Additional Price</th>
                                 <th>Status</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -36,6 +37,7 @@
                                             <td>
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
+                                            <td><?= $item['additional_price']; ?></td>
                                             <td>
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>
