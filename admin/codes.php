@@ -134,6 +134,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     '$meta_description', '$meta_keywords', '$status', '$trending', '$filename')";
 
     $product_query_run = mysqli_query($con, $product_query);
+
     
     if($product_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 

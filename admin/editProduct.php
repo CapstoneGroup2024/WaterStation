@@ -2,7 +2,7 @@
     include('includes/header.php');
     include('../middleware/adminMid.php');
 ?>
-<!--------------- EDIT CATEGORY PAGE --------------->
+<!--------------- EDIT PRODUCT PAGE --------------->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
