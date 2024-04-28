@@ -16,42 +16,42 @@
         </div>
         <!--------------- PRODUCTS --------------->
         <div class="sizes" id="sizes">
-            <h3 id="sizehead ">Products</h3>
+            <h3 id="sizehead" style="font-weight: bold; font-family: 'Poppins', sans-serif;">Products</h3>
             <hr>
         </div>
         <?php
             $product = getAllActive("product");
 
-            if(mysqli_num_rows($product) > 0){
-                foreach($product as $item){
-        ?>
-            <!--------------- PRODUCT CARD --------------->
-            <div class="card" style="width: 18rem;">
-                <img src="uploads/<?= $item['image']; ?>" class="card-img-top" alt="Product Image">
-                <div class="card-body">
-                    <br>
-                    <h6>₱ <?= $item['selling_price']; ?>.00</h6>
-                    <h5 class="card-title"><?= $item['name']; ?></h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            if(mysqli_num_rows($product) > 0):
+            ?>
+                <!-- Start of row -->
+                <div class="row">
+                    <?php foreach($product as $item): ?>
+                        <!-- Start of column -->
+                        <div class="col-md-3">
+                            <div class="card" style="border: none;">
+                                <img src="uploads/<?= $item['image']; ?>" class="card-img-top" alt="Product Image" class="w-50" 
+                                style="height: 200px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);">
+                                <div class="card-body" style="border: none;">
+                                    <br>
+                                    <h6 class="card-title text-center" style="font-size: 18px; font-family: 'Poppins', sans-serif;
+                                    font-weight: bold;">₱ <?= $item['selling_price']; ?>.00</h6>
+                                    <h5 class="card-title text-center" style="font-size: 22px;
+                                    font-family: 'Poppins', sans-serif; font-weight: bold;"><?= $item['name']; ?></h5>
+                                    <h6 class="card-title text-center" style="font-size: 16px; font-family: 'Poppins', sans-serif;
+                                    color: #013D67;"><?= $item['size']; ?></h6>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
             <?php
-                }
-            }
+            endif;
+            ?>
 
-        ?>
         <!--------------- CATEGORIES --------------->
         <div class="category" id="categ">
-            <h3 id="categoryheader"> Categories </h3>
+            <h3 id="categoryheader" style="font-weight: bold; font-family: 'Poppins', sans-serif;"> Categories </h3>
             <hr>
         </div>
         <!--------------- TO SHOW CATEGORY DATA --------------->
@@ -77,9 +77,12 @@
                     <div class="col-md-10">
                         <div class="card-body">
                             <!--------------- CATEGORY TITLE --------------->
-                            <h4 class="text-left" id="category-card-title-header"><?= $item['name']; ?></h4>
+                            <h4 class="text-left" id="category-card-title-header" style="font-weight: bold; font-family: 'Poppins', sans-serif;">
+                                <?= $item['name']; ?> 
+                                <span style="color: #013D67; font-weight: lighter; font-size: 21px; float: right;">Add ₱<?= $item['additional_price']; ?>.00</span>
+                            </h4>
                             <!--------------- CATEGORY DESCRIPTION --------------->
-                            <p id="category-card-texxt-header"><?= $item['description']; ?></p>
+                            <p id="category-card-texxt-header" style="font-family: 'Poppins', sans-serif;"><?= $item['description']; ?></p>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
     include('config/dbconnect.php');
     function getAllActive($table){ // FUNCTION TO RETRIEVE ALL ACTIVE RECORD FROM SPECIFIC TABLE
         global $con; // Access the global database connection object
-        $query = "SELECT * FROM $table WHERE status='0' "; // SQL query to select all records with status '0'
+        $query = "SELECT * FROM $table WHERE status='1' "; // SQL query to select all records with status '0'
         return $query_run = mysqli_query($con, $query); // Execute the query and return the result
     }
 

@@ -12,55 +12,13 @@
 body{
     background-color: #ffffff !important;
 }
+/* ------------------- PRODUCT ------------------- */
 #sizes{
     margin-top: 50px;
     text-align: center;
     font: bolder;
     font-size: larger;
-   
-
 }
-.sizehead{
-    text-align: center;
-    font-weight: bolder;
-  
-}
-hr{
-    height:1px;
-    width: 80%;
-    border-width:0;
-    color:gray;
-    background-color:gray;
-    margin-left:10% !important; 
-    margin-right:10% !important;
-}
-
-.gallons{
-    margin-top: 2px;
-    margin-bottom: 2px;
-    
-}
-
-.price{
-    font-weight: bolder;
-    font-size: larger;
-    font-family:'Poppins';
- 
-}
-.text-center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-size: 10px;
-  
-}
-#blockquote{
-color: #013D67;
-font-weight: lighter;
-padding-top:2px;
-}
-
 /* ------------------- Category ------------------- */
 h4#category-card-title-header{
     font-size:30px;
@@ -85,18 +43,7 @@ p#category-card-texxt-header{
 #categ.category{
     margin-bottom: 50px;
 }
-#purified{
-    background-color: #DDEFF5;
-     
-}
-#mineral{
-    background-color: #CBE6EF;
-    
-}
-#alkaline{
-    background-color: #A9D6E5;
-    
-}
+
 
 .card-title{
     font-size:25px;

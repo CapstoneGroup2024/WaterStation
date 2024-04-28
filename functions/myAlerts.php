@@ -1,5 +1,6 @@
 <?php
     include('../config/dbconnect.php');
+    session_start();
     function getData($table){ // FETCH DATA FROM SPECIFIC TABLE
         global $con; // ACCESS GLOBAL DATABASE VARIABLE
         $query = "SELECT * FROM $table"; // SQL QUERY O SELECT ALL DATA FROM THE TABLE
