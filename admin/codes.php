@@ -110,14 +110,12 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 } else if(isset($_POST['addProduct_button'])){
     $name = $_POST['name'];
     $slug = $_POST['slug'];  
-    $small_description = $_POST['small_description'];
-    $description = $_POST['description'];
+    $size = $_POST['size'];
     $original_price = $_POST['original_price'];
     $selling_price = $_POST['selling_price'];
     $image = $_POST['image'];
     $quantity = $_POST['quantity'];
     $meta_title = $_POST['meta_title'];
-    $meta_description = $_POST['meta_description'];
     $meta_keywords = $_POST['meta_keywords'];
     $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
     $trending = isset($_POST['trending']) ? '1':'0'; // IF THE TRENDING IS SET AND NOT NULL
@@ -129,12 +127,11 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $image_ext = pathinfo($image, PATHINFO_EXTENSION); // GET THE FILE EXTENSION OF THE UPLOADED IMAGE 
     $filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
 
-    $product_query = "INSERT INTO product(name, slug, small_description, description, original_price, selling_price, quantity, meta_title, meta_description, meta_keywords, status, trending, image) 
-    VALUES ('$name', '$slug', '$small_description', '$description', '$original_price', '$selling_price', '$quantity', '$meta_title', 
-    '$meta_description', '$meta_keywords', '$status', '$trending', '$filename')";
+    $product_query = "INSERT INTO product(name, slug, size, original_price, selling_price, quantity, meta_title, meta_keywords, status, trending, image) 
+    VALUES ('$name', '$slug', '$size', '$original_price', '$selling_price', '$quantity', '$meta_title', 
+    '$meta_keywords', '$status', '$trending', '$filename')";
 
     $product_query_run = mysqli_query($con, $product_query);
-
 
     if($product_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
@@ -146,14 +143,12 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $product_id = $_POST['product_id'];
     $name = $_POST['name'];
     $slug = $_POST['slug'];  
-    $small_description = $_POST['small_description'];
-    $description = $_POST['description'];
+    $size = $_POST['size'];
     $original_price = $_POST['original_price'];
     $selling_price = $_POST['selling_price'];
     $image = $_POST['image'];
     $quantity = $_POST['quantity'];
     $meta_title = $_POST['meta_title'];
-    $meta_description = $_POST['meta_description'];
     $meta_keywords = $_POST['meta_keywords'];
     $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
     $trending = isset($_POST['trending']) ? '1':'0'; // IF THE TRENDING IS SET AND NOT NULL
@@ -170,9 +165,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
     $path = "../uploads";
 
-    $update_query = "UPDATE product SET name='$name', slug='$slug', small_description='$small_description', description='$description', 
+    $update_query = "UPDATE product SET name='$name', slug='$slug', size='$size', 
     original_price='$original_price', selling_price='$selling_price', quantity='$quantity',
-    meta_title='$meta_title', meta_description='$meta_description', meta_keywords='$meta_keywords', 
+    meta_title='$meta_title', meta_keywords='$meta_keywords', 
     status='$status', trending='$trending', image='$update_filename' WHERE id='$product_id' ";
 
     $update_query_run = mysqli_query($con, $update_query);

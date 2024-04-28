@@ -50,24 +50,6 @@
                                                 <img src="../uploads/<?=$data['image']; ?>" height="50px" width="50px" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-md-12"> 
-                                            <div class="form-group">
-                                                <label for="">Meta Title</label>
-                                                <input type="text" value="<?=$data['meta_title']; ?>" class="form-control" placeholder="Enter Meta Title" name="meta_title" id="meta_title">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="">Meta Description</label>
-                                                <textarea class="form-control" name="meta_description" placeholder="Enter Meta Description" id="meta_description" rows="3"><?=$data['meta_description']; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12"> 
-                                            <div class="form-group">
-                                                <label for="">Meta Keywords</label>
-                                                <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" id="meta_keywords" rows="3"><?=$data['meta_keywords']; ?></textarea>
-                                            </div>
-                                        </div>
                                         <div class="col-md-4"> 
                                             <div class="form-group">
                                                 <label for="">Additional Price</label>
@@ -84,6 +66,24 @@
                                             <div class="form-group">
                                                 <label for="">Popular </label><br>
                                             <input type="checkbox" <?= $data['popular'] ? "checked":""?> name="popular">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12"> 
+                                            <div class="form-group">
+                                                <label for="">Meta Title</label>
+                                                <input type="text" value="<?=$data['meta_title']; ?>" class="form-control" placeholder="Enter Meta Title" name="meta_title" id="meta_title">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="">Meta Description</label>
+                                                <textarea class="form-control" name="meta_description" placeholder="Enter Meta Description" id="meta_description" rows="3"><?=$data['meta_description']; ?></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12"> 
+                                            <div class="form-group">
+                                                <label for="">Meta Keywords</label>
+                                                <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" id="meta_keywords" rows="3"><?=$data['meta_keywords']; ?></textarea>
                                             </div>
                                         </div>
                                         <!--------------- SAVE BUTTON--------------->

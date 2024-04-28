@@ -14,81 +14,44 @@
                 </div>
             </div>
         </div>
+        <!--------------- PRODUCTS --------------->
         <div class="sizes" id="sizes">
-            <h3 id="sizehead ">Sizes</h3>
+            <h3 id="sizehead ">Products</h3>
             <hr>
         </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class=" row justify-content-center " id="gallons">
-                        <div class="col-md-2" id="images" style="text-align: center;">
-                            <img alt="Water Bottle" class="img-fluid" src="assets/images/bottle.png" />
-                            <div class="description">
-                                <h3 id="price">₱10.00</h3>
-                                <div class="text-center"> 
-                                    <blockquote class="blockquote">
-                                        <p class="mb-3" id="desc">Bottled Water</p>
-                                        <footer class="blockquote-footer">350ml</footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" id="images" style="text-align: center;">
-                            <img alt="Water Bottle" class="img-fluid" src="assets/images/1LBottle.png" />
-                            <div class="description">
-                                <h3 id="price">₱15.00</h3>
-                                <div class="text-center"> 
-                                    <blockquote class="blockquote">
-                                        <p class="mb-3" id="desc">Bottled Water</p>
-                                        <footer class="blockquote-footer">1liter</footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" id="images" style="text-align: center;">
-                            <img alt="Water Bottle" class="img-fluid" src="assets/images/slim container.png" />
-                            <div class="description">
-                                <h3 id="price">₱25.00</h3>
-                                <div class="text-center"> 
-                                    <blockquote class="blockquote">
-                                        <p class="mb-3" id="desc">Slim Container</p>
-                                        <footer class="blockquote-footer">2.50gal</footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" id="images" style="text-align: center;">
-                            <img alt="Water Bottle" class="img-fluid" src="assets/images/5gal.png" />
-                            <div class="description">
-                                <h3 id="price">₱35.00</h3>
-                                <div class="text-center"> 
-                                    <blockquote class="blockquote">
-                                        <p class="mb-3" id="desc">Slim Container</p>
-                                        <footer class="blockquote-footer">5.00gal</footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" id="images" style="text-align: center;">
-                            <img alt="Water Bottle" class="img-fluid" src="assets/images/round.png" />
-                            <div class="description">
-                                <h3 id="price">₱50.00</h3>
-                                <div class="text-center"> 
-                                    <blockquote class="blockquote">
-                                        <p class="mb-3" id="desc">Round Container</p>
-                                        <footer class="blockquote-footer">5.00gal</footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <?php
+            $product = getAllActive("product");
+
+            if(mysqli_num_rows($product) > 0){
+                foreach($product as $item){
+        ?>
+            <!--------------- PRODUCT CARD --------------->
+            <div class="card" style="width: 18rem;">
+                <img src="uploads/<?= $item['image']; ?>" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <br>
+                    <h6>₱ <?= $item['selling_price']; ?>.00</h6>
+                    <h5 class="card-title"><?= $item['name']; ?></h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
                 </div>
             </div>
-        </div>
+            <?php
+                }
+            }
+
+        ?>
         <!--------------- CATEGORIES --------------->
         <div class="category" id="categ">
-            <h3 id="categoryheader "> Categories </h3>
+            <h3 id="categoryheader"> Categories </h3>
             <hr>
         </div>
         <!--------------- TO SHOW CATEGORY DATA --------------->

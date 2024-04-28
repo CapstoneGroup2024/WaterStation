@@ -28,14 +28,20 @@
                             </div>
                             <div class="col-md-12"> 
                                 <div class="form-group">
-                                    <label for="">Small Description</label>
-                                    <textarea class="form-control" name="small_description" placeholder="Enter Small Description" rows="3"></textarea>
+                                    <label for="">Upload Image</label>
+                                    <input type="file" class="form-control" name="image" id="image">
                                 </div>
                             </div>
-                            <div class="col-md-12"> 
+                            <div class="col-md-6"> 
                                 <div class="form-group">
-                                    <label for="">Description</label>
-                                    <textarea class="form-control" name="description" placeholder="Enter Description" rows="3"></textarea>
+                                    <label for="">Size</label>
+                                    <input type="text" class="form-control" placeholder="Enter Size" name="size">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <label for="">Quantity</label>
+                                    <input type="number" class="form-control" placeholder="Enter Quantity" name="quantity">
                                 </div>
                             </div>
                             <div class="col-md-6"> 
@@ -52,44 +58,26 @@
                             </div>
                             <div class="col-md-12"> 
                                 <div class="form-group">
-                                    <label for="">Upload Image</label>
-                                    <input type="file" class="form-control" name="image" id="image">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Quantity</label>
-                                    <input type="number" class="form-control" placeholder="Enter Quantity" name="quantity">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Status (Check if Available) </label><br>
-                                <input type="checkbox" name="status">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Trending </label><br>
-                                <input type="checkbox" name="trending">
-                                </div>
-                            </div>
-                            <div class="col-md-12"> 
-                                <div class="form-group">
                                     <label for="">Meta Title</label>
                                     <input type="text" class="form-control" placeholder="Enter Meta Title" name="meta_title">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="">Meta Description</label>
-                                    <textarea class="form-control" name="meta_description" placeholder="Enter Meta Description" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12"> 
                                 <div class="form-group">
                                     <label for="">Meta Keywords</label>
                                     <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <label for="">Status (Check if Available) </label>
+                                <input type="checkbox" name="status">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <label for="">Trending</label>
+                                <input type="checkbox" name="trending">
                                 </div>
                             </div>
                             <!--------------- SAVE BUTTON--------------->

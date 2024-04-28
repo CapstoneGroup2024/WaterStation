@@ -32,6 +32,24 @@
                                     <textarea class="form-control" name="description" placeholder="Enter Description" id="description" rows="3"></textarea>
                                 </div>
                             </div>
+                            <div class="col-md-4"> 
+                                <div class="form-group">
+                                    <label for="">Additional Price</label>
+                                    <input type="number" class="form-control" placeholder="Enter Additional Price" name="additional_price">
+                                </div>
+                            </div>
+                            <div class="col-md-4"> 
+                                <div class="form-group">
+                                    <label for="">Status (Check if Available) </label><br>
+                                <input type="checkbox" name="status">
+                                </div>
+                            </div>
+                            <div class="col-md-4"> 
+                                <div class="form-group">
+                                    <label for="">Popular </label><br>
+                                <input type="checkbox" name="popular">
+                                </div>
+                            </div>
                             <div class="col-md-12"> 
                                 <div class="form-group">
                                     <label for="">Upload Image</label>
@@ -54,24 +72,6 @@
                                 <div class="form-group">
                                     <label for="">Meta Keywords</label>
                                     <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" id="meta_keywords" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Additional Price</label>
-                                    <input type="number" class="form-control" placeholder="Enter Additional Price" name="additional_price">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Status (Check if Available) </label><br>
-                                <input type="checkbox" name="status">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Popular </label><br>
-                                <input type="checkbox" name="popular">
                                 </div>
                             </div>
                             <!--------------- SAVE BUTTON--------------->

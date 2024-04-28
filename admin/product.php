@@ -17,9 +17,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Size</th>
                                 <th>Image</th>
                                 <th>Original Price</th>
-                                <th>Selling Price</th>
                                 <th>Status</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -35,11 +35,11 @@
                                         <tr>
                                             <td><?= $item['id']; ?></td>
                                             <td><?= $item['name']; ?></td>
+                                            <td><?= $item['size']; ?></td>
                                             <td>
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
                                             <td><?= $item['original_price']; ?></td>
-                                            <td><?= $item['selling_price']; ?></td>
                                             <td>
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>
