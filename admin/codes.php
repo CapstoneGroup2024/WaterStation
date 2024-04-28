@@ -143,7 +143,51 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         redirect("addProduct.php", "Something went wrong"); 
     }
 } else if(isset($_POST['editProduct_button'])){
+    $product_id = $_POST['product_id'];
+    $name = $_POST['name'];
+    $slug = $_POST['slug'];  
+    $small_description = $_POST['small_description'];
+    $description = $_POST['description'];
+    $original_price = $_POST['original_price'];
+    $selling_price = $_POST['selling_price'];
+    $image = $_POST['image'];
+    $quantity = $_POST['quantity'];
+    $meta_title = $_POST['meta_title'];
+    $meta_description = $_POST['meta_description'];
+    $meta_keywords = $_POST['meta_keywords'];
+    $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
+    $trending = isset($_POST['trending']) ? '1':'0'; // IF THE TRENDING IS SET AND NOT NULL
 
+    $new_image = $_FILES['image']['name']; // GET THE ORIGINAL NAME OF THE UPLOADED FILE 
+    $old_image = $_POST['old_image'];
+
+    if($new_image != ""){
+        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION); // GET THE FILE EXTENSION OF THE UPLOADED IMAGE 
+        $update_filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
+    } else{
+        $update_filename = $old_image;
+    }
+
+    $path = "../uploads";
+
+    $update_query = "UPDATE product SET name='$name', slug='$slug', small_description='$small_description', description='$description', 
+    original_price='$original_price', selling_price='$selling_price', quantity='$quantity',
+    meta_title='$meta_title', meta_description='$meta_description', meta_keywords='$meta_keywords', 
+    status='$status', trending='$trending', image='$update_filename' WHERE id='$product_id' ";
+
+    $update_query_run = mysqli_query($con, $update_query);
+
+    if($update_query_run){
+        if($_FILES['image']['name'] != ""){
+            move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$update_filename);
+            if(file_exists("../uploads/".$old_image)){
+                unlink("../uploads/".$old_image);
+            }
+        }
+        redirect("editProduct.php?id=$product_id","Product Updated Successfully");
+    } else{
+        redirect("editProduct.php?id=$product_id","Something went wrong");
+    }
 }
 
 
