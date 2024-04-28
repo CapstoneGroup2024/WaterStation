@@ -56,15 +56,21 @@
                                     <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" id="meta_keywords" rows="3"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6"> 
+                            <div class="col-md-4"> 
                                 <div class="form-group">
-                                    <label for="">Status (Check if Available) </label>
+                                    <label for="">Additional Price</label>
+                                    <input type="text" class="form-control" placeholder="Enter Additional Price" name="additional_price">
+                                </div>
+                            </div>
+                            <div class="col-md-4"> 
+                                <div class="form-group">
+                                    <label for="">Status (Check if Available) </label><br>
                                 <input type="checkbox" name="status">
                                 </div>
                             </div>
-                            <div class="col-md-6"> 
+                            <div class="col-md-4"> 
                                 <div class="form-group">
-                                    <label for="">Popular </label>
+                                    <label for="">Popular </label><br>
                                 <input type="checkbox" name="popular">
                                 </div>
                             </div>
