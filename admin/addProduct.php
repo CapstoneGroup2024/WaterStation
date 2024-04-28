@@ -14,27 +14,6 @@
                     <!--------------- FORM--------------->
                     <form action="codes.php" method="POST" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-md-12"> 
-                                <div class="form-group">
-                                    <label for="">Select Category</label>
-                                    <select name="category_id"class="form-select">
-                                        <option selected>Select Category</option>
-                                        <?php
-                                            $categories = getData("categories");
-
-                                            if(mysqli_num_rows($categories) > 0){
-                                                foreach($categories as $item){
-                                                    ?>
-                                                    <option value="<?= $item['id']; ?>"><?= $item['name']; ?></option>
-                                                    <?php
-                                                }
-                                            } else{
-                                                echo "No category available";
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-md-6"> 
                                 <div class="form-group">
                                     <label for="">Name</label>
