@@ -91,8 +91,8 @@
                             </div>
                             <div class="col-md-4"> 
                                 <div class="form-group">
-                                    <label for="">Popular </label><br>
-                                <input type="checkbox" name="popular">
+                                    <label for="">Trending </label><br>
+                                <input type="checkbox" name="trending">
                                 </div>
                             </div>
                             <div class="col-md-12"> 

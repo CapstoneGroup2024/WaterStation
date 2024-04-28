@@ -111,12 +111,15 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $slug = $_POST['slug'];  
     $small_description = $_POST['small_description'];
     $description = $_POST['description'];
+    $origial_price = $_POST['original_price'];
+    $selling_price = $_POST['selling_price'];
     $image = $_POST['image'];
+    $quantity = $_POST['quantity'];
     $meta_title = $_POST['meta_title'];
     $meta_description = $_POST['meta_description'];
     $meta_keywords = $_POST['meta_keywords'];
     $status = isset($_POST['status']) ? '1':'0'; // IF THE STATUS IS SET AND NOT NULL
-    $popular = isset($_POST['popular']) ? '1':'0'; // IF THE POPULAR IS SET AND NOT NULL
+    $trending = isset($_POST['trending']) ? '1':'0'; // IF THE TRENDING IS SET AND NOT NULL
     
     $image = $_FILES['image']['name']; // GET THE ORIGINAL NAME OF THE UPLOADED FILE 
 
@@ -124,6 +127,19 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     
     $image_ext = pathinfo($image, PATHINFO_EXTENSION); // GET THE FILE EXTENSION OF THE UPLOADED IMAGE 
     $filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
+
+    $product_query = "INSERT INTO product(category_id, name, slug, small_description, description, original_price, selling_price, quantity, meta_title, meta_description, meta_keywords, status, trending, image) 
+    VALUES ('$category_id', '$name', '$slug', '$small_description', '$description', '$original_price', '$selling_price', '$quantity', '$meta_title', 
+    '$meta_description', '$meta_keywords', '$status', '$trending', '$filename')";
+
+    $product_query_run = mysqli_query($con, $product_query);
+    
+    if($product_query_run){
+        move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
+        redirect("addProduct.php", "Product added successfully"); 
+    } else{
+        redirect("addProduct.php", "Something went wrong"); 
+    }
 }
 
 
