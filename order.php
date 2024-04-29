@@ -25,7 +25,7 @@
             if(mysqli_num_rows($product) > 0):
             ?>
                 <!-- Start of row -->
-                <div class="row">
+                <div class="row justify-content-center">
                     <?php foreach($product as $item): ?>
                         <!-- Start of column -->
                         <div class="col-md-3">
