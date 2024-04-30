@@ -183,6 +183,11 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("editProduct.php?id=$product_id","Something went wrong");
     }
+} else if(isset($_POST['orderBtn'])){
+    $selectedProduct = $_POST['selectedProduct'];
+
+    echo "<script>alert('$selectedProduct');</script>";
+
 }
 
 
