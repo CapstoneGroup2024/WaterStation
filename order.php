@@ -29,10 +29,10 @@
                 <div class="row justify-content-center">
                     <?php foreach($product as $item): ?>
                         <!-- Start of column -->
-                        <div class="col-md-3">
+                        <div class="col-md-3 product-data">
                             <label style="border: 4px solid transparent; border-radius: 14px; cursor: pointer; transition: border-color 0.3s ease; display: block;" onclick="toggleRadio(this);">
                                 <input type="radio" name="selectedProduct" value="<?= $item['selling_price']; ?>" class="card-input-element" style="display:none;">
-                                <div class="card" style="border: none;">
+                                <div class="card">
                                     <img src="uploads/<?= $item['image']; ?>" class="card-img-top" alt="Product Image" style="height: 200px; border-radius: 10px;">
                                     <div class="card-body" style="border: none;">
                                         <br>
@@ -104,9 +104,9 @@
                     </div>
                     <div class="col-md-1 text-right" id="qty">
                         <div class="input-group mb-1" style="width:100px;">
-                            <span class="input-group-text">-</span>
-                            <input type="text" class="form-control bg-white text-center" value="1" disabled>
-                            <span class="input-group-text">+</span>
+                            <button class="input-group-text decrement-btn">-</button>
+                            <input type="text" class="form-control bg-white text-center quantityInput" value="1" disabled>
+                            <button class="input-group-text increment-btn">+</button>
                         </div>
                     </div>
                 </div>

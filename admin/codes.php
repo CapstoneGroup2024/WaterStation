@@ -185,8 +185,10 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     }
 } else if(isset($_POST['orderBtn'])){
     $selectedProduct = $_POST['selectedProduct'];
+    $selectedCategory = $_POST['selectedCategory'];
 
     echo "<script>alert('$selectedProduct');</script>";
+    echo "<script>alert('$selectedCategory');</script>";
 
 }
 
