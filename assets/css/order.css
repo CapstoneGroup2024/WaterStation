@@ -159,15 +159,6 @@ input:disabled{
 /* ------------------- Submit ------------------- */
 
 
-#submit{
-    width: 1300px;
-    align-items: center;
-    margin-top: 100px;
-    margin-bottom: 30px;
-    margin-left: 0px ;
-
-}
-
 .submit{
     color: white;
     font-weight: bolder;

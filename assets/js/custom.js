@@ -22,4 +22,12 @@ $(document).ready(function (){ // ENSURES THAT THE DOM IS FULLY LOADED BEFORE EX
             $('.quantityInput').val(value); // UPDATE THE VALUE OF THE QUANTITY INPUT FIELD
         }
     });
+
+    $('.cartBtn').click(function (e){
+        e.preventDefault(); // PREVENTS THE BROWSER OF BEHAVIORAL CLICK EVENT 
+
+        var qty = $('.quantityInput').val();
+    });
+
+
 });

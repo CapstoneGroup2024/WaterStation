@@ -1,8 +1,7 @@
 <?php
-
 include('../config/dbconnect.php');
 include('../functions/myAlerts.php');
-
+ 
 if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $name = $_POST['name'];
     $slug = $_POST['slug'];  
@@ -183,14 +182,31 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("editProduct.php?id=$product_id","Something went wrong");
     }
-} else if(isset($_POST['orderBtn'])){
-    $selectedProduct = $_POST['selectedProduct'];
-    $selectedCategory = $_POST['selectedCategory'];
+} else if(isset($_POST['cartBtn'])){
+    $productId = isset($_POST['selectedProduct']) ? $_POST['selectedProduct'] : null;
+    $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : null;
+    $quantity = isset($_POST['quantityInput']) ? $_POST['quantityInput'] : 1; // Default quantity is 1
 
-    echo "<script>alert('$selectedProduct');</script>";
-    echo "<script>alert('$selectedCategory');</script>";
-
+    if(empty($productId) || empty($categoryId)){
+        echo '<script>alert("Please select a product/category");</script>';
+        echo '<script>window.location.href = "../order.php";</script>';
+    } else {
+        // Call the addToCart function
+        addToCart($productId, $categoryId, $quantity);
+        // Redirect to the cart page
+        header("Location: ../payment.php");
+        exit(); // Make sure to exit after redirecting
+    }
 }
+
+// Check if session variables exist and pre-fill the form fields if they do
+if(isset($_SESSION['selectedProduct'])) {
+    $selectedProduct = $_SESSION['selectedProduct'];
+}
+if(isset($_SESSION['selectedCategory'])) {
+    $selectedCategory = $_SESSION['selectedCategory'];
+}
+
 
 
 ?>

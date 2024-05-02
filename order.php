@@ -113,11 +113,12 @@
             </div>
         </div>
         <!--------------- SUBMIT BUTTON --------------->
-        <div class="submitbtn">
-                    <button type="submit" class="btn btn-md btn-block" name="orderBtn" id="submit" style="background-color: #013D67; color: #fff;">
-                        Submit
-                    </button>
-        </div>
+        <button type="submit" class="btn btn-md btn-block" name="cartBtn" 
+        style="background-color: #AAD7F6; color: #013D67; 
+        font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: bold;
+        width: 100%;margin-top: 40px;
+        "value="<? $product['id']; ?>">Add to Cart</button>
+
     </form>
 </section>
 
