@@ -117,7 +117,7 @@
         style="background-color: #AAD7F6; color: #013D67; 
         font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: bold;
         width: 100%;margin-top: 40px;
-        "value="<? $product['id']; ?>">Add to Cart</button>
+        ">Add to Cart</button>
 
     </form>
 </section>
