@@ -21,24 +21,24 @@
         </div>
         <form action="admin/codes.php" method="POST">
         <?php
-            $product = getAllActive("product");
+            $products = getAllActive("product");
 
-            if(mysqli_num_rows($product) > 0):
+            if(mysqli_num_rows($products) > 0):
             ?>
                 <!-- Start of row -->
                 <div class="row justify-content-center">
-                    <?php foreach($product as $item): ?>
+                    <?php foreach($products as $product): ?>
                         <!-- Start of column -->
                         <div class="col-md-3 product-data">
                             <label style="border: 4px solid transparent; border-radius: 14px; cursor: pointer; transition: border-color 0.3s ease; display: block;" onclick="toggleRadio(this);">
-                                <input type="radio" name="selectedProduct" value="<?= $item['selling_price']; ?>" class="card-input-element" style="display:none;">
+                                <input type="radio" name="selectedProduct" value="<?= $product['id']; ?>" class="card-input-element" style="display:none;">
                                 <div class="card">
-                                    <img src="uploads/<?= $item['image']; ?>" class="card-img-top" alt="Product Image" style="height: 200px; border-radius: 10px;">
+                                    <img src="uploads/<?= $product['image']; ?>" class="card-img-top" alt="Product Image" style="height: 200px; border-radius: 10px;">
                                     <div class="card-body" style="border: none;">
                                         <br>
-                                        <h6 class="card-title text-center" style="font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: bold;">₱ <?= $item['selling_price']; ?>.00</h6>
-                                        <h5 class="card-title text-center" style="font-size: 22px; font-family: 'Poppins', sans-serif; font-weight: bold;"><?= $item['name']; ?></h5>
-                                        <h6 class="card-title text-center" style="font-size: 16px; font-family: 'Poppins', sans-serif; color: #013D67;"><?= $item['size']; ?></h6>
+                                        <h6 class="card-title text-center" style="font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: bold;">₱ <?= $product['selling_price']; ?>.00</h6>
+                                        <h5 class="card-title text-center" style="font-size: 22px; font-family: 'Poppins', sans-serif; font-weight: bold;"><?= $product['name']; ?></h5>
+                                        <h6 class="card-title text-center" style="font-size: 16px; font-family: 'Poppins', sans-serif; color: #013D67;"><?= $product['size']; ?></h6>
                                     </div>
                                 </div>
                             </label>
@@ -61,7 +61,7 @@
 
             if(mysqli_num_rows($categories) > 0){ // CHECK IF THERE ARE CATEGORIES
                 $i = 0; // INITIALIZE COUNTER VARIABLE FOR KNOW INDECES OF COLORS
-                foreach($categories as $item){
+                foreach($categories as $category){
                     $current_color = $colors[$i % $color_count]; // GET CURRENT COLOR FRROM ARRAY COLOR
         ?>
         <label style="border: 4px solid transparent; border-radius: 14px; cursor: pointer; transition: border-color 0.3s ease; display: block; margin-bottom: 0;" onclick="toggleRadio(this);">
@@ -70,18 +70,18 @@
                     <div class="col-md-2">
                         <!-- CATEGORY IMAGE -->
                         <div style="height: 100%;">
-                            <img src="uploads/<?= $item['image']; ?>" alt="Category image" class="w-100" style="height: 150px; border-radius: 10px;">
+                            <img src="uploads/<?= $category['image']; ?>" alt="Category image" class="w-100" style="height: 150px; border-radius: 10px;">
                         </div>
                     </div>
                     <div class="col-md-10">
                         <!-- CATEGORY TITLE, DESCRIPTION, AND RADIO BUTTON -->
-                        <input type="radio" name="selectedCategory" value="<?= $item['additional_price']; ?>" class="card-input-element" style="display: none;">
+                        <input type="radio" name="selectedCategory" value="<?= $category['id']; ?>" class="card-input-element" style="display: none;">
                         <div class="card-body">
                             <h4 class="text-left" id="category-card-title-header" style="font-weight: bold; font-family: 'Poppins', sans-serif;">
-                                <?= $item['name']; ?> 
-                                <span style="color: #013D67; font-weight: lighter; font-size: 21px; float: right;">Add ₱<?= $item['additional_price']; ?>.00</span>
+                                <?= $category['name']; ?> 
+                                <span style="color: #013D67; font-weight: lighter; font-size: 21px; float: right;">Add ₱<?= $category['additional_price']; ?>.00</span>
                             </h4>
-                            <p id="category-card-texxt-header" style="font-family: 'Poppins', sans-serif;"><?= $item['description']; ?></p>
+                            <p id="category-card-texxt-header" style="font-family: 'Poppins', sans-serif;"><?= $category['description']; ?></p>
                         </div>
                     </div>
                 </div>

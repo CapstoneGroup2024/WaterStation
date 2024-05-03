@@ -160,7 +160,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         $update_filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
     } else{
         $update_filename = $old_image;
-    }
+    }                                               
 
     $path = "../uploads";
 
@@ -191,13 +191,39 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         echo '<script>alert("Please select a product/category");</script>';
         echo '<script>window.location.href = "../order.php";</script>';
     } else {
-        // Call the addToCart function
-        addToCart($productId, $categoryId, $quantity);
-        // Redirect to the cart page
-        header("Location: ../payment.php");
-        exit(); // Make sure to exit after redirecting
+        // Fetch product and category data
+        $product_query = "SELECT * FROM product WHERE id = '$productId'";
+        $category_query = "SELECT * FROM categories WHERE id = '$categoryId'";
+        
+        $product_result = mysqli_query($con, $product_query);
+        $category_result = mysqli_query($con, $category_query);
+        
+        $product = mysqli_fetch_assoc($product_result);
+        $category = mysqli_fetch_assoc($category_result);
+
+        // Store cart item in an array
+        $cartItem = array(
+            'productId' => $productId,
+            'productName' => $product['name'],
+            'productImage' => $product['image'],
+            'sellingPrice' => $product['selling_price'],
+            'categoryId' => $categoryId,
+            'categoryName' => $category['name'],
+            'additionalPrice' => $category['additional_price'],
+            'quantity' => $quantity
+        );
+
+        // Insert cart item into database table
+        $insert_query = "INSERT INTO cart_items (product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
+                         VALUES ('$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
+        $insert_query_run = mysqli_query($con, $insert_query);
+
+        if($insert_query_run){
+            echo '<script>alert("Item added to cart successfully!");</script>';
+        }
     }
 }
+
 
 // Check if session variables exist and pre-fill the form fields if they do
 if(isset($_SESSION['selectedProduct'])) {

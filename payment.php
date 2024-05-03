@@ -1,1 +1,1 @@
-<?="Hello payment here" ?>
+<!--  -->

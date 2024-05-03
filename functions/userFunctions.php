@@ -6,6 +6,7 @@
         return $query_run = mysqli_query($con, $query); // Execute the query and return the result
     }
 
+
     // Function to redirect to a specified URL with a message
     function redirect($url, $message){ // Accepts URL and message parameters
         $_SESSION['message'] = $message; // Store the message in the session variable
