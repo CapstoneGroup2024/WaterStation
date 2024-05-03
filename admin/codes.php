@@ -187,6 +187,8 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : null;
     $quantity = isset($_POST['quantityInput']) ? $_POST['quantityInput'] : 1; // Default quantity is 1
 
+    $userId = $_SESSION['user_id']; // Assuming 'user_id' is the session variable storing user's ID
+
     if(empty($productId) || empty($categoryId)){
         echo '<script>alert("Please select a product/category");</script>';
         echo '<script>window.location.href = "../order.php";</script>';
@@ -214,16 +216,16 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         );
 
         // Insert cart item into database table
-        $insert_query = "INSERT INTO cart_items (product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
-                         VALUES ('$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
+        $insert_query = "INSERT INTO cart_items (user_id, product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
+                         VALUES ('$userId', '$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
         $insert_query_run = mysqli_query($con, $insert_query);
 
         if($insert_query_run){
             echo '<script>alert("Item added to cart successfully!");</script>';
+            echo '<script>window.location.href = "../payment.php";</script>';
         }
     }
 }
-
 
 // Check if session variables exist and pre-fill the form fields if they do
 if(isset($_SESSION['selectedProduct'])) {

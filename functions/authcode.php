@@ -46,24 +46,21 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
         }
     }
 }else if(isset($_POST['logButton'])){ // IF FORM SUBMIT IS FROM logButton
-    // GET USER DATA EMAIL AND PASSWORD
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
-
-    // HASHED THE PASSWORD TO MATCH WITH THE ONE IN THE DATABASE
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     $login_query = "SELECT * FROM users WHERE email='$email'"; // SELECT EMAIL FROM USER TABLE
     $login_query_run = mysqli_query($con, $login_query); // QUERYING THE DATABASE
 
-    // IF A ROW WAS RETURNED BY THE SQL QUERY WHICH IS GREATER THAN ZERO, EMAIL ALREADY EXIST
-    if(mysqli_num_rows($login_query_run) > 0){ //
+    // IF A ROW WAS RETURNED BY THE SQL QUERY WHICH IS GREATER THAN ZERO, EMAIL ALREADY EXISTS
+    if(mysqli_num_rows($login_query_run) > 0){ 
         $userdata = mysqli_fetch_array($login_query_run); // RETURNS AN ARRAY THAT CORRESPONDS TO THE FETCHED ROW
-        $stored_password = $userdata['password']; // HOLDS THE HASHED PASSWORRRD
+        $stored_password = $userdata['password']; // HOLDS THE HASHED PASSWORD
 
         // VERIFY THE HASHED PASSWORD
         if(password_verify($password, $stored_password)){
             $_SESSION['auth'] = true;
+            $_SESSION['user_id'] = $userdata['user_id']; // Assuming 'id' is the primary key of your users table
 
             $username = $userdata['name'];
             $useremail = $userdata['email'];
@@ -81,13 +78,15 @@ if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
                 header('Location: ../admin/index.php');
             } else {
                 // IF USER LOGIN SUCCESSFUL
-                redirect("../homepage.php", "Logged in Successfully");
+                $_SESSION['message'] = "Logged in Successfully";
+                header('Location: ../homepage.php');
             }
         } else {
-            redirect("../index.php", "Invalid Credentials");
+            $_SESSION['message'] = "Invalid Credentials";
+            header('Location: ../index.php');
         }
     } else {
-        redirect("../index.php", "Invalid Credentials");
+        $_SESSION['message'] = "Invalid Credentials";
+        header('Location: ../index.php');
     }
 }
-
