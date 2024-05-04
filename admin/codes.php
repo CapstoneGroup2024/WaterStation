@@ -190,8 +190,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $userId = $_SESSION['user_id']; // Assuming 'user_id' is the session variable storing user's ID
 
     if(empty($productId) || empty($categoryId)){
-        echo '<script>alert("Please select a product/category");</script>';
-        echo '<script>window.location.href = "../order.php";</script>';
+        redirect("../order.php","Please choose a product/category!");
     } else {
         // Fetch product and category data
         $product_query = "SELECT * FROM product WHERE id = '$productId'";
@@ -221,19 +220,42 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         $insert_query_run = mysqli_query($con, $insert_query);
 
         if($insert_query_run){
-            echo '<script>alert("Item added to cart successfully!");</script>';
-            echo '<script>window.location.href = "../payment.php";</script>';
+            redirect("../payment.php","Item added to cart successfully");
         }
+    }
+} else if(isset($_POST['deleteOrderBtn'])){
+    $cart_id = mysqli_real_escape_string($con, $_POST['cart_id']);
+
+    $cart_query = "SELECT * FROM cart_items WHERE id='$cart_id'";
+    $cart_query_run = mysqli_query($con, $cart_query);
+    $cart_data = mysqli_fetch_array($cart_query_run);
+    $image = $cart_data['image'];
+
+    // Delete the category
+    $delete_query = "DELETE FROM cart_items WHERE id='$cart_id'";
+    $delete_query_run = mysqli_query($con, $delete_query);
+
+    if($delete_query_run){
+        if(file_exists("../uploads/".$image)){
+            unlink("../uploads/".$image);
+        }
+        
+        // Get the last auto-increment value
+        $last_id_query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'aquaflowdb' AND TABLE_NAME = 'cart_items'";
+        $last_id_result = mysqli_query($con, $last_id_query);
+        $last_id_row = mysqli_fetch_assoc($last_id_result);
+        $last_auto_increment_value = $last_id_row['AUTO_INCREMENT'];
+
+        // Set the auto-increment value to the last deleted ID
+        $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $cart_id";
+        mysqli_query($con, $alter_query);
+
+        redirect("../payment.php","Cart Item Deleted Successfully");
+    } else{
+        redirect("../payment.php","Something went wrong");
     }
 }
 
-// Check if session variables exist and pre-fill the form fields if they do
-if(isset($_SESSION['selectedProduct'])) {
-    $selectedProduct = $_SESSION['selectedProduct'];
-}
-if(isset($_SESSION['selectedCategory'])) {
-    $selectedCategory = $_SESSION['selectedCategory'];
-}
 
 
 

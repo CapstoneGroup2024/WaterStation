@@ -198,6 +198,22 @@ include('includes/navbar.php');
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/passwordCheck.js"></script>
+        <!-- Alertify JS -->
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <script>
+    <?php
+    if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+  ?>
+    alertify.set('notifier','position', 'top-center');
+    var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
+    notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
+      this.classList.remove('animated-check');
+    }); // Remove animation class after animation ends
+  <?php
+    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+  }
+  ?>
+</script>
 
 </body>
 </html>

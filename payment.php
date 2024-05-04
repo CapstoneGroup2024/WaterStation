@@ -38,6 +38,7 @@ $userId = $_SESSION['user_id'];
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +59,13 @@ $userId = $_SESSION['user_id'];
                                 <td><?= $cart['additional_price']; ?></td>
                                 <td><?= $cart['selling_price']; ?></td>
                                 <td><?= $cart['quantity']; ?></td>
+                                <td>...</td>
+                                <td>
+                                    <form action="admin/codes.php" method="POST">
+                                        <input type="hidden" name="cart_id" value="<?= $cart['id'];?>">
+                                        <button type="submit" class="btn btn-danger text-white" name="deleteOrderBtn">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                 <?php
                         }
@@ -70,5 +78,24 @@ $userId = $_SESSION['user_id'];
     </div>
 </section>
 
+        <!-- Alertify JS -->
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+        <!-- Alertify JS -->
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <script>
+    <?php
+    if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+  ?>
+    alertify.set('notifier','position', 'top-right');
+    var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
+    notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
+      this.classList.remove('animated-check');
+    }); // Remove animation class after animation ends
+  <?php
+    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+  }
+  ?>
+</script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?> 
