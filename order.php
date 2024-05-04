@@ -105,7 +105,7 @@
                     <div class="col-md-1 text-right" id="qty">
                         <div class="input-group mb-1" style="width:100px;">
                             <button class="input-group-text decrement-btn">-</button>
-                            <input type="text" class="form-control bg-white text-center quantityInput" value="1" disabled>
+                            <input type="text" class="form-control bg-white text-center quantityInput" name="quantityInput" value="1">
                             <button class="input-group-text increment-btn">+</button>
                         </div>
                     </div>

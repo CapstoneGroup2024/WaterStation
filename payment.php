@@ -4,9 +4,6 @@ include('includes/header.php');
 include('includes/navbar.php');
 include('functions/userFunctions.php');
 
-// Start session
-session_start();
-
 // Check if user is authenticated
 if(!isset($_SESSION['auth'])) {
     // Redirect to login page or display an error message
@@ -24,7 +21,9 @@ $userId = $_SESSION['user_id'];
         <div class="order-here">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Cart</h1>
+                    <h1 style="font-family: 'suez one';
+                    color: #013D67; 
+                    ">Cart</h1>
                 </div>
             </div>
         </div>

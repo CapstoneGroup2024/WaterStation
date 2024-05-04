@@ -1,33 +1,39 @@
-$(document).ready(function (){ // ENSURES THAT THE DOM IS FULLY LOADED BEFORE EXECUTING JQUERY CODE
+$(document).ready(function (){ 
     $('.increment-btn').click(function(e) {
-        e.preventDefault(); // PREVENTS THE BROWSER OF BEHAVIORAL CLICK EVENT 
-        var qty = $('.quantityInput').val();
-        var value = parseInt(qty, 10); 
-        value = isNaN(value) ? 0 : value;
+        e.preventDefault(); 
+        var qtyInput = $('.quantityInput');
+        var qty = parseInt(qtyInput.val(), 10);
+        qty = isNaN(qty) ? 0 : qty;
 
-        if(value < 10){
-            value++;
-            $('.quantityInput').val(value); // UPDATE THE VALUE OF THE QUANTITY INPUT FIELD
+        if(qty < 10){
+            qty++;
+            qtyInput.val(qty); 
         }
     });
 
     $('.decrement-btn').click(function(e) {
-        e.preventDefault(); // PREVENTS THE BROWSER OF BEHAVIORAL CLICK EVENT 
-        var qty = $('.quantityInput').val();
-        var value = parseInt(qty, 10);
-        value = isNaN(value) ? 0 : value;
+        e.preventDefault(); 
+        var qtyInput = $('.quantityInput');
+        var qty = parseInt(qtyInput.val(), 10);
+        qty = isNaN(qty) ? 0 : qty;
 
-        if(value > 0){
-            value--;
-            $('.quantityInput').val(value); // UPDATE THE VALUE OF THE QUANTITY INPUT FIELD
+        if(qty > 0){
+            qty--;
+            qtyInput.val(qty); 
         }
     });
 
     $('.cartBtn').click(function (e){
-        e.preventDefault(); // PREVENTS THE BROWSER OF BEHAVIORAL CLICK EVENT 
+        e.preventDefault(); 
 
         var qty = $('.quantityInput').val();
+        var productId = $('.selectedProduct').val(); 
+        var categoryId = $('.selectedCategory').val(); 
+
+        // Send quantity, product ID, and category ID to server
+        $.post('process_cart.php', { cartBtn: true, quantityInput: qty, selectedProduct: productId, selectedCategory: categoryId }, function(response) {
+            // Handle server response if needed
+            alert(response); 
+        });
     });
-
-
 });
