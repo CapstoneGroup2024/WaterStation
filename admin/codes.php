@@ -220,7 +220,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         $insert_query_run = mysqli_query($con, $insert_query);
 
         if($insert_query_run){
-            redirect("../payment.php","Item added to cart successfully");
+            redirect("../cart.php","Item added to cart successfully");
+        }else{
+            redirect("../cart.php","Something went wrong");
         }
     }
 } else if(isset($_POST['deleteOrderBtn'])){
@@ -250,9 +252,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $cart_id";
         mysqli_query($con, $alter_query);
 
-        redirect("../payment.php","Cart Item Deleted Successfully");
+        redirect("../cart.php","Cart Item Deleted Successfully");
     } else{
-        redirect("../payment.php","Something went wrong");
+        redirect("../cart.php","Something went wrong");
     }
 }
 
