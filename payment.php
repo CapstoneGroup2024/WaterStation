@@ -1,7 +1,7 @@
 <?php
 // Include necessary files
 include('includes/header.php');
-include('includes/navbar.php');
+include('includes/orderbar.php');
 include('functions/userFunctions.php');
 
 // Check if user is authenticated
@@ -16,9 +16,8 @@ if(!isset($_SESSION['auth'])) {
 $userId = $_SESSION['user_id'];
 
 ?>
-<section class="p-5 p-md-5 text-sm-start" style="margin-top: 30px;">
-
-    <div class="container">
+<section class="p-5 p-md-5 text-sm-start" id="Cart">
+    <div class="container" style="margin-top: 60px;">
     <div class="row">
                 <div class="col-md-12">
                     <h1 style="font-family: 'suez one';
@@ -56,7 +55,7 @@ $userId = $_SESSION['user_id'];
                         // Iterate through each cart item
                         foreach($cartItems as $cart){ 
                 ?>
-                <div class="card shadow-sm mb-3">
+                <div class="card shadow-sm mb-3 cart_data">
                 <div class="row align-items-center p-3">
                     
                     <div class="col-md-2">
@@ -72,13 +71,14 @@ $userId = $_SESSION['user_id'];
                     <div class="col-md-1">
                         <h5>₱<?= $cart['selling_price']; ?></h5>
                     </div>
-                    <div class="col-md-2">
-                    <div class="input-group mb-1" style="width:100px;">
-                            <button class="input-group-text decrement-btn">-</button>
-                            <input type="text" class="form-control bg-white text-center quantityInput" name="quantityInput" value="<?= $cart['quantity']; ?>">
-                            <button class="input-group-text increment-btn">+</button>
+                    <div class="col-md-2" id="qty">
+                        <div class="input-group mb-1" style="width:115px;">
+                                <button class="input-group-text decrement-btn">-</button>
+                                <input type="text" class="form-control bg-white text-center input-qty" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
+
+                                <button class="input-group-text increment-btn">+</button>
+                            </div>
                         </div>
-                    </div>
                     <div class="col-md-1">
                         <h5>₱<?= $cart['selling_price']; ?></h5>
                     </div>
@@ -99,64 +99,7 @@ $userId = $_SESSION['user_id'];
         </div>
     </div>
 </section>
-<table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th></th>
-                    <th>Category</th>
-                    <th>Additional Price</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    // Get cart items for the current user
-                    $cartItems = getCartItemsByUserId($userId);
 
-                    if(mysqli_num_rows($cartItems) > 0){ 
-                        // Iterate through each cart item
-                        foreach($cartItems as $cart){ 
-                ?>
-                            <tr>
-                                <td>
-                                    <img src="uploads/<?= $cart['product_image']; ?>" width="50px" height="50px" alt="<?= $cart['product_name']; ?>">
-                                </td>
-                                <td><?= $cart['product_name']; ?></td>
-                                <td><?= $cart['category_name']; ?></td>
-                                <td><?= $cart['additional_price']; ?></td>
-                                <td><?= $cart['selling_price']; ?></td>
-                                <td>
-              
-                        <div class="input-group mb-1" style="width:100px;">
-                            <button class="input-group-text decrement-btn">-</button>
-                            <input type="text" class="form-control bg-white text-center quantityInput" name="quantityInput" value="<?= $cart['quantity']; ?>">
-                            <button class="input-group-text increment-btn">+</button>
-                        </div>
-           
-                                </td>
-                                <td><?= $cart['quantity']; ?></td>
-                                <td>...</td>
-                                <td>
-                                    <form action="admin/codes.php" method="POST">
-                                        <input type="hidden" name="cart_id" value="<?= $cart['id'];?>">
-                                        <button type="submit" class="btn btn-danger text-white" name="deleteOrderBtn">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                <?php
-                        }
-                    } else {
-                        echo "No records found";
-                    }
-                ?>
-            </tbody>
-        </table>
-        <!-- Alertify JS -->
-        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
         <!-- Alertify JS -->
         <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -174,5 +117,6 @@ $userId = $_SESSION['user_id'];
   }
   ?>
 </script>
+<script src="assets/js/cartQty.js"></script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?> 

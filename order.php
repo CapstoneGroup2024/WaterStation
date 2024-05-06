@@ -1,12 +1,12 @@
 <?php
     include('includes/header.php');
-    include('includes/navbar.php');
+    include('includes/orderbar.php');
     include('functions/userFunctions.php');
     ?>
     <link rel="stylesheet" href="assets/css/order.css">   
     <script src="assets/js/toggle.js"></script>
-<section class="p-5 p-md-5 text-sm-start" style="margin-top: 30px;">
-    <div class="container">
+<section class="p-5 p-md-5 text-sm-start" id="Order">
+    <div class="container" style="margin-top: 40px;">
         <div class="order-here">
             <div class="row">
                 <div class="col-md-12">
@@ -103,7 +103,7 @@
                         font-family: 'Poppins', sans-serif;">Quantity</h2>
                     </div>
                     <div class="col-md-1 text-right" id="qty">
-                        <div class="input-group mb-1" style="width:100px;">
+                        <div class="input-group mb-1" style="width:115px;">
                             <button class="input-group-text decrement-btn">-</button>
                             <input type="text" class="form-control bg-white text-center quantityInput" name="quantityInput" value="1">
                             <button class="input-group-text increment-btn">+</button>
