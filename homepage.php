@@ -1,10 +1,10 @@
+<!--------------- INCLUDES --------------->
 <?php 
-
-include('includes/header.php');
-include('includes/navbar.php');
+  include('includes/header.php');
+  include('includes/navbar.php');
 ?>
+<!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/homepage.css">   
-
 <!--------------- HOME PAGE --------------->
 <section class="home bg-Primary  p-5 p-lg-0 pt-lg-5 text-center text-sm-start" id="Home">
     <div class="quote">
@@ -15,11 +15,7 @@ include('includes/navbar.php');
                 <h2 class="order"><a href="order.php" class="btn text-black" id="ordernow_btn">Order Now</a></h2>
             </div>
           </div>
-          <img
-            class="img-fluid d-none d-sm-block"
-            src="assets/images/pic.png"
-            alt=""
-          />
+          <img class="img-fluid d-none d-sm-block" src="assets/images/pic.png" alt="Homepage Image"/>
         </div>
     </div>
 </section>
@@ -198,22 +194,21 @@ include('includes/navbar.php');
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/passwordCheck.js"></script>
-        <!-- Alertify JS -->
-        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-        <script>
-    <?php
-    if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-  ?>
+<!--------------- ALERTIFY JS --------------->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+<?php
+  if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+?>
     alertify.set('notifier','position', 'top-center');
     var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
     notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
-      this.classList.remove('animated-check');
-    }); // Remove animation class after animation ends
-  <?php
+    this.classList.remove('animated-check');
+  }); // Remove animation class after animation ends
+<?php
     unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
   }
-  ?>
+?>
 </script>
-
-</body>
-</html>
+<!--------------- FOOTER --------------->
+<?php include('includes/footer.php');?>

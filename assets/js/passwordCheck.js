@@ -6,16 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var digitRegex = /\d/; // DIGITS
     var symbolRegex = /[\W_]/; // SYMBOLS
 
-    // Check if the password element exists
-    if (password) {
-        // Add input event listener to the password field
-        password.addEventListener('input', function() {
+    if (password) { // CHECK IF PASSWORD ELEMENT EXISTS
+        password.addEventListener('input', function() { // ADD INPUT EVENT LISTENER TO THE PASSWORD FIELD
             var passwordValue = password.value;
             var isWeak = passwordValue.length < 4 || !uppercaseRegex.test(passwordValue) || !digitRegex.test(passwordValue) || !symbolRegex.test(passwordValue);
             
-            // Check if the message element exists
-            if (msg) {
-                // Show or hide message based on password input
+            if (msg) { // CHECK IF MSG ELEMENT EXIST
+                // SHOW OR HIDE MESSAGE BASED ON PASSWORD INPUT
                 if (passwordValue.length > 0) {
                     msg.style.display = "block";
                 } else {
@@ -23,9 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Check if the strength element exists
-            if (str) {
-                // Set password strength message and styling
+            if (str) { // CHECK IF STR ELEMENT EXISTS
+                // SET PASSWORD STRENGTH MESSAGE AND STYLE
                 if (isWeak) {
                     str.innerHTML = "Password is weak";
                     password.style.borderColor = "#ff5925";

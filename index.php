@@ -1,20 +1,21 @@
-<!--------------- HEADER --------------->
+<!--------------- INCLUDES --------------->
 <?php include('includes/header.php');?>
+<!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/login.css">    
-
+<!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
 <?php 
-         if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
+    if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
         $_SESSION['message'] = "You are already logged in";
         header('Location: homepage.php');
         exit();
     }
 ?>
 <div class="row vh-100 g-0">
-    <!----------Left Side---------->
+    <!--------------- LEFT SIDE --------------->
     <div class="col-lg-6 position-relative d-none d-lg-block">
         <div class="bg-holder" style="background-image: url(assets/images/loginPic.png);"></div>
     </div>
-    <!----------Right Side---------->
+    <!--------------- RIGHT SIDE --------------->
     <div class="col-lg-6">
         <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
             {
@@ -55,5 +56,5 @@
         </div>
     </div>
 </div>  
- <!--------------- FOOTER --------------->
- <?php include('includes/footer.php');?>
+<!--------------- FOOTER --------------->
+<?php include('includes/footer.php');?>

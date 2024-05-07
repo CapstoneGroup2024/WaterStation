@@ -1,8 +1,8 @@
-<!--------------- HEADER --------------->
+<!--------------- INCLUDES --------------->
 <?php include('includes/header.php');?>
 <?php session_start(); ?>
 <link rel="stylesheet" href="assets/css/register.css">
-<?php 
+<?php // RESTRICT USER ACCESSING THIS PAGE THROUGH URL
     if(isset($_SESSION['auth'])){
         $_SESSION['message'] = "You are already logged in";
         header('Location: homepage.php');

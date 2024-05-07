@@ -1,49 +1,43 @@
 $(document).ready(function () {
-    $('.increment-btn').click(function (e) {
-        e.preventDefault();
-        var qtyInput = $(this).siblings('.input-qty');
+    $('.increment-btn').click(function (e) { // EVENT HANDLER FOR INCREMENT BUTTON CLICK
+        var qtyInput = $(this).siblings('.input-qty'); // GET THE QUANTITY INPUT ELEMENT ASSOCIATED WITH INCREMENT BUTTON
         var qty = parseInt(qtyInput.val(), 10);
-        qty = isNaN(qty) ? 0 : qty;
+        qty = isNaN(qty) ? 0 : qty;  // IF qty IS NaN, SET IT TO 0 
 
-        if (qty < 100) {
-            qty++;
+        if (qty < 100) { // CHECK IF QTY IS LESS THAN 100
+            qty++; 
         } else {
-            qty = 1; // Reset to 1 if the quantity reaches 100
+            qty = 1; // RESET QUANTITY TO 1 IF REACHED 100
         }
-        qtyInput.val(qty);
+        qtyInput.val(qty); // UPDATE QUANTITY INPUT FIELD VALUE
     });
 
-    $('.decrement-btn').click(function (e) {
+    $('.decrement-btn').click(function (e) { // EVENT HANDLER FOR DECREMENT BUTTON CLICK
         e.preventDefault();
-        var qtyInput = $(this).siblings('.input-qty');
+        var qtyInput = $(this).siblings('.input-qty'); // GET THE QUANTITY INPUT ELEMENT ASSOCIATED WITH DECREMENT BUTTON
         var qty = parseInt(qtyInput.val(), 10);
-        qty = isNaN(qty) ? 0 : qty;
+        qty = isNaN(qty) ? 0 : qty; // IF qty IS NaN, SET IT TO 0 
 
-        if (qty > 1) {
+        if (qty > 1) { // CHECK IF QTY IS GREATER THAN 1
             qty--;
         }
-        qtyInput.val(qty);
+        qtyInput.val(qty); // UPDATE QUANTITY INPUT FIELD VALUE
     });
 
-    $('.cartBtn').click(function (e) {
+    $('.cartBtn').click(function (e) {  // EVENT HANDLER FOR CART BUTTON CLICK
         e.preventDefault();
+        var qty = $(this).closest('.input-group').find('.input-qty').val();         // GET QUANTITY VALUE FROM THE CLOSEST INPUT GROUP ASSOCIATED WITH THE CLICKED CART BUTTON
+        var productId = $('.selectedProduct').val(); 
+        var categoryId = $('.selectedCategory').val(); 
 
-        var qty = $(this).closest('.input-group').find('.input-qty').val();
-        var productId = $('.selectedProduct').val();
-        var categoryId = $('.selectedCategory').val();
-
-        // Send quantity, product ID, and category ID to server
-        $.post('process_cart.php', {
+        $.post('process_cart.php', { // SEND QUANTITY, PRODUCT ID, AND CATEGORY ID TO SERVER USINNNG AJAX POST REQUEST
             cartBtn: true,
             quantityInput: qty,
             selectedProduct: productId,
             selectedCategory: categoryId
-        }, function (response) {
-            // Handle server response if needed
-            alert(response);
+        }, function (response) { // HANDLE SERVER RESPONSE IF NEEDED
+            alert(response); // DISPLAY SERVER RESPONSE
         });
     });
-
-    // Trigger change event to ensure the display updates when the value is changed programmatically
-    $('.input-qty').trigger('change');
+    $('.input-qty').trigger('change'); // TRIGGER CHANGE EVENT TO ENSURE DISPLAY UPDATES WHEN VALUE CHANGES
 });

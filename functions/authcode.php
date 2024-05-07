@@ -1,6 +1,6 @@
 <?php
-include('../config/dbconnect.php');
-include('myAlerts.php');
+    include('../config/dbconnect.php');
+    include('myAlerts.php');
             
 if(isset($_POST['reg_button'])){ // IF FORM SUBMIT IS FROM reg_button
     // GET USER DATA

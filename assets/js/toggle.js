@@ -1,16 +1,14 @@
-function toggleRadio(label) {
+function toggleRadio(label) { // TOGGLE RADIO BUTTON THE CHANGE COLOR
     var radios = document.querySelectorAll('input[type="radio"]');
     var labels = document.querySelectorAll('label');
 
-    // Remove border color from all labels
     labels.forEach(function(l) {
-        l.style.borderColor = 'transparent';
+        l.style.borderColor = 'transparent'; // SET BORDER COLOR TO TRANSPARENT
     });
 
-    // Set border color for the clicked label if a radio button is checked
-    radios.forEach(function(radio) {
-        if (radio.checked) {
-            label.style.borderColor = '#6FC7EA';
+    radios.forEach(function(radio) { // SET COLOR IF A RADIO BUTTON IS CLICKED
+        if (radio.checked) { // CHECK IF RADIO BUTTON IS CHECKED
+            label.style.borderColor = '#6FC7EA'; // SET BORDER COLOR FOR THE CLICKED LABEL
         }
     });
 }
