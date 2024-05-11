@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="col-md-1">
-                        <h5>₱<?= $cart['selling_price']; ?></h5>
+                        <h5 class="total-price">₱<?= $cart['selling_price'] * $cart['quantity']; ?></h5>
                     </div>
                     <div class="col-md-2">
                         <form action="admin/codes.php" method="POST">
@@ -106,6 +106,46 @@
   }
 ?>
 </script>
+
+<script>
+    // Function to calculate and update total price
+    function updateTotalPrice() {
+        // Select all elements with class 'total-price'
+        var totalPriceElements = document.querySelectorAll('.total-price');
+        // Loop through each element
+        totalPriceElements.forEach(function(element) {
+            // Get the quantity input associated with this element
+            var quantityInput = element.closest('.row').querySelector('.input-qty');
+            // Get the unit price
+            var unitPrice = parseFloat(element.dataset.unitPrice); // Assuming you have a data attribute with unit price
+            // Get the quantity value
+            var quantityValue = parseInt(quantityInput.value);
+            // Check if quantityValue is a valid number
+            if (!isNaN(quantityValue)) {
+                // Calculate total price
+                var totalPrice = unitPrice * quantityValue;
+                // Update the text content of the element
+                element.textContent = '₱' + totalPrice.toFixed(2); // Format the total price
+            } else {
+                // If quantityValue is not a valid number, display an error message
+                element.textContent = 'Invalid quantity';
+            }
+        });
+    }
+
+    // Call the function when the page loads
+    window.addEventListener('DOMContentLoaded', function() {
+        updateTotalPrice();
+    });
+
+    // Call the function whenever the quantity changes
+    document.querySelectorAll('.input-qty').forEach(function(input) {
+        input.addEventListener('change', function() {
+            updateTotalPrice();
+        });
+    });
+</script>
+
 <script src="assets/js/cartQty.js"></script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?> 

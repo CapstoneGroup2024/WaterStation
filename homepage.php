@@ -1,73 +1,72 @@
-<!--------------- INCLUDES --------------->
 <?php 
-  include('includes/header.php');
-  include('includes/navbar.php');
+
+include('includes/header.php');
+include('includes/navbar.php');
 ?>
-<!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/homepage.css">   
+
 <!--------------- HOME PAGE --------------->
-<section class="home bg-Primary  p-5 p-lg-0 pt-lg-5 text-center text-sm-start" id="Home">
-    <div class="quote">
-        <div class="d-sm-flex align-items-center justify-content-between">
-          <div>
-            <h1 class="aquaflow" style="margin-top: -40px;">AquaFlow </h1>
-            <div class="water_drop" style="margin-left: 40px; margin-top: 40px;">
-                <h2 class="order"><a href="order.php" class="btn text-black" id="ordernow_btn">Order Now</a></h2>
-            </div>
-          </div>
-          <img class="img-fluid d-none d-sm-block" src="assets/images/pic.png" alt="Homepage Image"/>
+
+<section class="homepage" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
+
+    <div class="quote" style="position: absolute; top: 120px; right: 150px;">
+        <div class="d-sm-flex align-items-center justify-content-between" style="margin-top: 10px;">
+        <div>
+            <h1 class="aquaflow-text" style="font-family: 'Suez One', sans-serif; font-weight: bold; color: #013D67; font-size: 80px; letter-spacing: 5px;">Hydrate Daily!</h1>
+            <h5 class="aquaflow-text" style="font-family:  sans-serif; font-weight: bold; color: #2B7AB8; font-size: 21px; text-align: right; margin-right: 10px; margin-top: 20px;">Where every drop counts, we hydrate the world</h5>
+            <h5 class="aquaflow-text" style="font-family:  sans-serif; font-weight: bold; color: #013D67; font-size: 21px; text-align: right; margin-right: 10px;">From source to glass, our commitment flows.</h5>
+
+        </div>
+
         </div>
     </div>
+
+    <div class="water_drop" style="position: absolute; top: 120px; left: 230px; background-color: rgba(175, 214, 229, 0); box-shadow: inset 17px 30px 26px 0px rgba(25, 25, 112, 0.7), inset 1px 4px 32px 4px rgba(65, 105, 225, 0.7), 15px 20px 25px 1px #c9d8e0;">
+    <h2 class="order"><a href="order.php" class="ordernow-btn" style="color: white; text-decoration: none; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Order Now</a></h2>
+</div>
+
+
 </section>
+
+
 <!--------------- SERVICES --------------->
-<section class="Services pt-lg-5 text-center text-sm-start" id="Services">
-    <div class="ser">
-        <div class="row">
-            <div class="contact-left">
-                <h1 class="services">Services</h1>
-            <div class="row row-cols-1 row-cols-md-3 g-5">
-                <div class="col h-100" id="img">
-                    <div class="card h-100">
-                        <img src="assets/images/Quality.webp" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Quality</h5>
-                                <p class="card-text">Improved ordering experience with
-                                    required supplier certification checks
-                                    that provide you with high-quality 
-                                    water that complies with government
-                                    regulations..</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100" id="imgs">
-                            <img src="assets/images/paymenttt.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Payment</h5>
-                                    <p class="card-text">There's no need to worry about COD or 
-                                    waiting for deliveries anymore. Through 
-                                    the app, GCash, Maya, and Grab the three 
-                                    most popular online payment methods are accepted.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100" id="imgss">
-                            <img src="assets/images/Hassle free.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Hassle free</h5>
-                                <p class="card-text">This is a wider card with supporting text below as 
-                                    a natural lead-in to additional content. This card has even longer content 
-                                    than the first to show that equal height action.</p>
-                        </div>
-                        </div>
+<section class="Services pt-lg-5 text-center text-sm-start" id="Services" style="background-color: #AAD7F6;">
+  <h1 class="services" style="margin-top: 70px; margin-left: 55px; margin-bottom: 40px;">Services</h1>
+    <div class="container">
+      
+
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/images/Quality.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Quality</h5>
+                        <p class="card-text">Improved ordering experience with required supplier certification checks that provide you with high-quality water that complies with government regulations.</p>
                     </div>
                 </div>
-                <br>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/images/paymenttt.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Payment</h5>
+                        <p class="card-text">There's no need to worry about COD or waiting for deliveries anymore. Through the app, GCash, Maya, and Grab the three most popular online payment methods are accepted.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/images/Hassle free.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Hassle free</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
 <!--------------- ABOUT US --------------->
 <section class="pt-lg-3" id="AboutUs">
     <div class="wrapper">
@@ -194,21 +193,5 @@
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/passwordCheck.js"></script>
-<!--------------- ALERTIFY JS --------------->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script>
-<?php
-  if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-?>
-    alertify.set('notifier','position', 'top-center');
-    var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
-    notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
-    this.classList.remove('animated-check');
-  }); // Remove animation class after animation ends
-<?php
-    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-  }
-?>
-</script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

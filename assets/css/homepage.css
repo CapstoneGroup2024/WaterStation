@@ -19,22 +19,27 @@ body{
     background-color: #AAD7F6;
 }
 /*-----Home-----*/
-.home{
-    height: 95vh;
-    background-color: #AAD7F6;
+.homepage {
+    height: 70vh;
+    background-image: url(assets/images/Aquaflowbg.png);
+    background-size: cover; 
 }
-.img-fluid{
-    margin-top: 70px;
-    padding-right: 60px;
-    width: 60%;
-    height: 80vh;
-}
-.aquaflow{
-    margin-top: 50px;
+
+
+h1 .aquaflow-text {
     font-family: 'Suez One';
     font-size: 80px;
-    color: #013D67;
+    color: #ffffff;
+    margin-left: 70px;
 }
+
+.order a {
+    color: white;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+
 /*--------------- QUOTE ---------------*/
 .quote{
     padding-left: 60px;
@@ -54,9 +59,9 @@ body{
     position: relative;
     width: 200px;
     height: 200px;
-    background: #A9D6E5;
+    background: transparent; /* Adjusted to a blueish color */
     border-radius: 55% 45% 66% 34% / 53% 59% 41% 47%;
-    box-shadow: inset 17px 30px 26px 0px #A9D6E5, inset 1px 4px 32px 4px #ffffff, 15px 20px 25px 1px #c9d8e0;
+    box-shadow: inset 17px 30px 26px 0px rgba(30, 62, 72, 0.7), inset 1px 4px 32px 4px rgba(78, 96, 148, 0.7), 15px 20px 25px 1px #c9d8e0;
     animation: water 3s infinite ease-in-out;
 }
 
@@ -64,7 +69,7 @@ body{
 .water_drop::after {
     content: "";
     position: absolute;
-    background-color: white;
+    background-color: rgba(91, 107, 186, 0.7); /* Adjusted to a more blueish color */
 }
 
 .water_drop::before {
@@ -112,23 +117,31 @@ body{
     transition: transform 0.3s ease;
     background-color: #b0d2e8;
 }
-
-/*-------Services------*/
-.ser{
-    padding-left: 5%;
-    padding-right: 5%;
-
+.container {
+    animation: floatContainer 5s infinite alternate; 
 }
 
-.services{
+@keyframes floatContainer {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+/*-------Services------*/
+
+
+h1 .services{
     margin-top: 20px;
     margin-bottom: 20px;
     color: #013D67;
     font-family: 'Suez One';
-    font-size: 60px;
+    font-size: 80px;
     font-weight: bold;
-    padding-left: 5%;
-    padding-right: 5%;
+   
+
 }
 
 .card-img-top{
@@ -691,5 +704,3 @@ a.contact-link:hover{
 .copyright i{
     color: #080808;
 }
-
-
