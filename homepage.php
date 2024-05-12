@@ -1,14 +1,12 @@
 <?php 
-
 include('includes/header.php');
 include('includes/navbar.php');
 ?>
-<link rel="stylesheet" href="assets/css/homepage.css">   
+<link rel="stylesheet" href="assets/css/homepage.css">  
+ 
 
 <!--------------- HOME PAGE --------------->
-
 <section class="homepage" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
-
     <div class="quote" style="position: absolute; top: 120px; right: 150px;">
         <div class="d-sm-flex align-items-center justify-content-between" style="margin-top: 10px;">
         <div>

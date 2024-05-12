@@ -12,83 +12,123 @@
     $userId = $_SESSION['user_id']; // GET USER ID FROM SESSION
 ?>
 
-<section class="p-5 p-md-5 text-sm-start" id="Cart">
-    <div class="container" style="margin-top: 60px;">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 style="font-family: 'suez one';color: #013D67;">Cart</h1>
-            </div>
-        </div>
-        <!--------------- CART BODY --------------->
-        <div class="card-body shadow">
-            <div class="row align-items-center p-2">
-                <div class="col-md-4">
-                    <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
+<section class="p-5 p-md-5 text-sm-start" id="Cart" style="margin-bottom: 100px">
+    <form action="admin/codes.php" method="POST">
+        <div class="container" style="margin-top: 60px;">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 style="font-family: 'suez one';color: #013D67;"><i class="fas fa-shopping-cart"></i> Cart</h1>
                 </div>
-            <div class="col-md-2">
-                <h6 style="font-family: 'Poppins'; font-size: 22px;">Category</h6>
             </div>
-            <div class="col-md-1">
-                <h6 style="font-family: 'Poppins'; font-size: 22px;">Price</h6>
-            </div>
-            <div class="col-md-2">
-                <h6 style="font-family: 'Poppins'; font-size: 22px;">Quantity</h6>
-            </div>
-            <div class="col-md-1">
-                <h6 style="font-family: 'Poppins'; font-size: 22px;">Total</h6>
-            </div>
-            <div class="col-md-2">
-                <h6 style="font-family: 'Poppins'; font-size: 22px;">Remove</h6>
-            </div>
-        </div>
-        <?php
-            $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
-
-            if(mysqli_num_rows($cartItems) > 0){ // ITERATE THROUGH EACH ITEM
-                foreach($cartItems as $cart){ 
-        ?>
-            <!--------------- CART ITEMS --------------->
-            <div class="card shadow-sm mb-3 cart_data">
-                <div class="row align-items-center p-3">
-                    <div class="col-md-2">
-                        <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
+            <!--------------- CART BODY --------------->
+            <div class="card-body shadow">
+                <div class="row align-items-center p-2">
+                    <div class="col-md-4">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
                     </div>
                     <div class="col-md-2">
-                        <h5><?= $cart['product_name']; ?></h5>
-                    </div>
-                    <div class="col-md-2">
-                        <h5><?= $cart['category_name']; ?></h5>
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Category</h6>
                     </div>
                     <div class="col-md-1">
-                        <h5>₱<?= $cart['selling_price']; ?></h5>
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Price</h6>
                     </div>
-                    <div class="col-md-2" id="qty">
-                        <div class="input-group mb-1" style="width:115px;">
-                            <button class="input-group-text decrement-btn">-</button>
-                                <input type="text" class="form-control bg-white text-center input-qty" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
-                            <button class="input-group-text increment-btn">+</button>
+                    <div class="col-md-2">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Quantity</h6>
+                    </div>
+                    <div class="col-md-1">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Total</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Remove</h6>
+                    </div>
+            </div>
+            
+            <?php
+                $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
+
+                if(mysqli_num_rows($cartItems) > 0){ // ITERATE THROUGH EACH ITEM
+                    foreach($cartItems as $cart){ 
+            ?>
+                <!--------------- CART ITEMS --------------->
+                <div class="card shadow-sm mb-3 cart_data">
+                    <div class="row align-items-center p-3">
+                        <div class="col-md-2">
+                            <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
+                        </div>
+                        <div class="col-md-2">
+                            <h5><?= $cart['product_name']; ?></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <h5><?= $cart['category_name']; ?></h5>
+                        </div>
+                        <div class="col-md-1">
+                            <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
+                        </div>
+                        <div class="col-md-2" id="qty">
+                            <div class="input-group mb-1" style="width:115px;">
+                                <button class="input-group-text decrement-btn">-</button>
+                                <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
+                                <button class="input-group-text increment-btn">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <h5>₱<span class="total-price itotal"></span></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="hidden" name="cart_id" value="<?= $cart['id'];?>">
+                            <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <h5 class="total-price">₱<?= $cart['selling_price'] * $cart['quantity']; ?></h5>
+                </div>
+            <?php
+                    }
+                } else {
+                    echo "No records found";
+                }
+            ?>
+            </div>
+        </div>
+        <div class="container" style="width: 300px; display: flex; float:left;">
+            <div class="card-body shadow p-3" style="border-radius: 20px;" style="font-family: 'Poppins';">
+                <div class="col align-items-center p-2" style="text-align: center">
+                    <h4>MODE OF PAYMENT</h4>
+                    <div class="row-md-2 p-2 shadow-sm">
+                        <input type="radio" name="cod"><span> CASH ON DELIVERY</span>
                     </div>
-                    <div class="col-md-2">
-                        <form action="admin/codes.php" method="POST">
-                            <input type="hidden" name="cart_id" value="<?= $cart['id'];?>">
-                            <button type="submit" class="btn btn-danger text-white" name="deleteOrderBtn">Delete</button>
-                        </form>
+                    <div class="row-md-2 p-2 shadow-sm">
+                        <input type="radio" name="gcash"><span> GCASH</span>
                     </div>
                 </div>
             </div>
-        <?php
-                }
-            } else {
-                echo "No records found";
-            }
-        ?>
         </div>
-    </div>
+        <div class="container" style="width: 400px; display: flex; float:right;">
+            <div class="card-body shadow p-3" style="border-radius: 20px;">
+            <div class="col align-items-center p-2" >
+                <!-- Subtotal -->
+                <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
+                    <input type="hidden" name="subtotal" value="">
+                        <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;" name="subtotal"></span></h5>
+                    </div>
+                    <!-- Delivery Fee -->
+                    <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
+                    <input type="hidden" name="delivery" value="">
+                        <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;" name="delivery"></span></h5>
+                    </div>
+                    <!-- Grand Total -->
+                    <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
+                    <input type="hidden" name="grand" value="">
+                        <h5>Grand Total: <span class="grand-total" style="display: flex; float:right;" name="grand"></span></h5>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn text-white" style="background-color: #013D67; width: 100%; font-family: 'Suez one'; margin-top:10px" name="placeOrderBtn">Place Order</button>
+                    </div>
+            </div>
+                </div>
+        </div>
+    </form>
+
 </section>
+
 
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -107,44 +147,7 @@
 ?>
 </script>
 
-<script>
-    // Function to calculate and update total price
-    function updateTotalPrice() {
-        // Select all elements with class 'total-price'
-        var totalPriceElements = document.querySelectorAll('.total-price');
-        // Loop through each element
-        totalPriceElements.forEach(function(element) {
-            // Get the quantity input associated with this element
-            var quantityInput = element.closest('.row').querySelector('.input-qty');
-            // Get the unit price
-            var unitPrice = parseFloat(element.dataset.unitPrice); // Assuming you have a data attribute with unit price
-            // Get the quantity value
-            var quantityValue = parseInt(quantityInput.value);
-            // Check if quantityValue is a valid number
-            if (!isNaN(quantityValue)) {
-                // Calculate total price
-                var totalPrice = unitPrice * quantityValue;
-                // Update the text content of the element
-                element.textContent = '₱' + totalPrice.toFixed(2); // Format the total price
-            } else {
-                // If quantityValue is not a valid number, display an error message
-                element.textContent = 'Invalid quantity';
-            }
-        });
-    }
 
-    // Call the function when the page loads
-    window.addEventListener('DOMContentLoaded', function() {
-        updateTotalPrice();
-    });
-
-    // Call the function whenever the quantity changes
-    document.querySelectorAll('.input-qty').forEach(function(input) {
-        input.addEventListener('change', function() {
-            updateTotalPrice();
-        });
-    });
-</script>
 
 <script src="assets/js/cartQty.js"></script>
 <!--------------- FOOTER --------------->
