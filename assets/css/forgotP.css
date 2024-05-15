@@ -79,6 +79,7 @@ body {
     background: none;
     border: none;
     font-weight: bold;
+    align-items: center;
 }
 #wrapper .backTo{
     text-decoration: none; 
@@ -189,13 +190,12 @@ body {
     }
     #wrapper .back{
         width: 80%;
-        padding: 18px;
         margin-left: 67px;
         font-size: 16px;
     }
     #wrapper .textBtn{
         font-size: 18px;
-        margin-top: 10px;
+        margin-top: 18px;
     }
     #wrapper .backTo{
         font-size: 16px;

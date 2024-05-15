@@ -29,7 +29,7 @@
                 unset($_SESSION['message']); // UNSET THE VARIABLE TO ENSURE THAT THE MESSAGE IS ONLY DISPLAYED ONCE
             }
         ?>
-        <div class="h-100 shadow-sm" id="wrapper"> <!-- Added shadow-sm class -->
+        <div class="h-100 shadow-sm mx-5" id="wrapper"> <!-- Added shadow-sm class -->
             <!----------Logo Side---------->
             <h1 class="mb-4">Forgot Password</h1>
             <form action="functions/authcode.php" method="POST">
@@ -37,8 +37,8 @@
                     <input type="text" placeholder="Email" name="email" required>
                     <i class='bx bxs-user'></i>
                 </div>
-                <div class="row-md-4 mb-1 btn"> <!-- Added mb-3 class for margin-bottom -->
-                    <button type="submit" name="logButton" class="textBtn">Login</button> 
+                <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
+                    <button type="submit" name="logButton" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Send Reset Link</button> 
                 </div>
                 <div class="back row-md-4 mb-2"> <!-- Removed mb-3 class -->
                     <a href="register.php" class="backTo">Back to Login</a>
