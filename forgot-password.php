@@ -30,27 +30,15 @@
         ?>
         <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0" id="wrapper">
             <!----------Logo Side---------->
-            <h1 style="font-size: 60px" class="title">Login</h1>
+            <h1 style="font-size: 60px" class="title">Forgot Password</h1>
             <form action="functions/authcode.php" method="POST">
                 <div class="input-box">
                     <input type="text" placeholder="Email" name="email" required>
                     <i class='bx bxs-user'></i>
                 </div>
-                <div class="input-box">
-                    <input type="password" placeholder="Password" name="password" required>
-                    <i class='bx bxs-lock-alt' ></i>
-                </div>
-                <div class="remember-forgot">
-                    <label><input class="remember" type="checkbox">Remember me</label>
-                    <a href="forgot-password.php">Forgot password?</a>
-                </div>
-                <div class="line"></div>
-                <div class="register-link">
-                    <p class="text" id="contactNUm">Login using <a href="Register.html" >Contact Number</a></p>
-                </div>
                 <button type="submit" name="logButton" class="btn">Login</button> 
                 <div class="register-link">
-                    <p class="text">Don't have an account? <a href="register.php">Register</a></p>
+                    <a href="register.php">Back to Login</a>
                 </div>
             </form>
         </div>

@@ -227,8 +227,6 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         }
     }
 } else if (isset($_POST['placeOrderBtn'])) {
-    // Include your database connection file and establish a connection
-    
     // Retrieve form data
     $userId = $_SESSION['user_id'];
     $subtotal = isset($_POST['subtotal']) ? $_POST['subtotal'] : 0;
@@ -257,15 +255,15 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     
             // Execute the query
             if (mysqli_query($con, $insertQuery)) {
-                echo '<script>alert("Success");</script>';
+                redirect("../payment.php","Processing Payment");
             } else {
-                echo '<script>alert("Error: ' . mysqli_error($conn) . '");</script>';
+                redirect("../order.php","Error retrieving cart items".mysqli_error($con));
             }
         }
     } else {
-        echo "Error retrieving cart items.";
+        redirect("../order.php","Error retrieving cart items");
     }
 } else {
-    echo '<script>alert("Place order button not clicked.");</script>';
+    redirect("../order.php","Place order button not clicked");
 }
 

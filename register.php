@@ -10,7 +10,7 @@
     }
 ?> 
 <!--------------- REGISTER FORM --------------->
-<div class="Register">
+<div class="Register mt-5" >
     <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
     {
         ?>  <!-- SHOW ALERT --> 
