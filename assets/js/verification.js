@@ -1,42 +1,52 @@
-window.addEventListener("DOMContentLoaded", () => {
-    const inputs = document.querySelectorAll(".input-field input"),
-      button = document.querySelector("button");
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
 
-    inputs.forEach((input, index1) => {
-      input.addEventListener("input", () => {
-        const currentInput = input,
-          nextInput = input.nextElementSibling,
-          prevInput = input.previousElementSibling;
+  var inputs = document.querySelectorAll('input');
 
-        if (currentInput.value.length > 1) {
-          currentInput.value = currentInput.value.slice(0, 1);
-          return;
-        }
+  function goToNextInput(e) {
+      var key = e.which || e.keyCode;
+      var target = e.target;
 
-        if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
-          nextInput.removeAttribute("disabled");
-          nextInput.focus();
-        }
+      // Allow tab key (key code 9) and numeric keys (key codes 48-57)
+      if (key !== 9 && (key < 48 || key > 57)) {
+          e.preventDefault();
+          return false;
+      }
 
-        if (currentInput.value === "") {
-          if (prevInput) {
-            prevInput.focus();
-          }
-        }
+      if (key === 9) {
+          return true;
+      }
 
-        inputs.forEach((input, index2) => {
-          if (index1 <= index2 && prevInput) {
-            input.setAttribute("disabled", true);
-            input.value = "";
-            prevInput.focus();
-          }
-        });
+      var nextInputIndex = Array.from(inputs).indexOf(target) + 1;
+      var nextInput = inputs[nextInputIndex];
 
-        if (!inputs[5].disabled && inputs[5].value !== "") {
-          button.classList.add("active");
-          return;
-        }
-        button.classList.remove("active");
-      });
-    });
+      if (!nextInput) {
+          nextInput = inputs[0];
+      }
+
+      nextInput.focus();
+      nextInput.select();
+  }
+
+  function onKeyDown(e) {
+      var key = e.which || e.keyCode;
+
+      // Allow tab key (key code 9) and numeric keys (key codes 48-57)
+      if (key === 9 || (key >= 48 && key <= 57)) {
+          return true;
+      }
+
+      e.preventDefault();
+      return false;
+  }
+
+  function onFocus(e) {
+      e.target.select();
+  }
+
+  inputs.forEach(function(input) {
+      input.addEventListener('keyup', goToNextInput);
+      input.addEventListener('keydown', onKeyDown);
+      input.addEventListener('click', onFocus);
   });
+});

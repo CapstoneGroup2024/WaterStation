@@ -41,7 +41,7 @@
                     <button type="submit" name="logButton" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Send Reset Link</button> 
                 </div>
                 <div class="back row-md-4 mb-2"> <!-- Removed mb-3 class -->
-                    <a href="register.php" class="backTo">Back to Login</a>
+                    <a href="index.php" class="backTo">Back to Login</a>
                 </div>
             </form>
         </div>
