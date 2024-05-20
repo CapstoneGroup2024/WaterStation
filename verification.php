@@ -22,6 +22,7 @@
             <!----------Logo Side---------->
             <h1 class="mb-4">Verify Email</h1>  
             <form action="functions/authcode.php" method="POST">
+            <input type="hidden" name="user_id" value="<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : ''; ?>">
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
                     <input type="text" placeholder="Enter Verification Code" name="verifyCode" required>
                     <i class='bx bxs-lock'></i>
