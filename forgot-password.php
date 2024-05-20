@@ -35,7 +35,6 @@
             <form action="functions/authcode.php" method="POST">
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
                     <input type="text" placeholder="Email" name="email" required>
-                    <i class='bx bxs-user'></i>
                 </div>
                 <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
                     <button type="submit" name="forgotPass" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Send Reset Link</button> 

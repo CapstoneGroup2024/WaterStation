@@ -25,7 +25,6 @@
             <input type="hidden" name="user_id" value="<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : ''; ?>">
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
                     <input type="text" placeholder="Enter Verification Code" name="verifyCode" required>
-                    <i class='bx bxs-lock'></i>
                 </div>
                 <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
                     <button type="submit" name="verifyBtn" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 

@@ -1,7 +1,7 @@
 <!--------------- INCLUDES --------------->
 <?php include('includes/header.php');session_start();?>
 <!--------------- CSS --------------->
-<link rel="stylesheet" href="assets/css/forgotP.css">    
+<link rel="stylesheet" href="assets/css/newPass.css">    
 <!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
 <?php 
     if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
@@ -24,8 +24,12 @@
             <form action="functions/authcode.php" method="POST">
             <input type="hidden" name="user_id" value="<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : ''; ?>">
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
-                    <input type="text" placeholder="Enter Verification Code" name="forgotVerifyCode" required>
-                    <i class='bx bxs-lock'></i>
+                    <label for="pw" class="form-label">New Password:</label>    
+                    <input type="password" placeholder="Enter New Password" name="newPassword" required>
+                </div>
+                <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
+                    <label for="pw" class="form-label">Confirm Password:</label>    
+                    <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
                 </div>
                 <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
                     <button type="submit" name="forgotVerifyBtn" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 
