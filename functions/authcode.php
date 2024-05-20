@@ -23,6 +23,7 @@ if(isset($_POST["reg_button"])){
     }
     
     if($password === $confirm_password) {
+        $_SESSION['registration_data'] = $_POST;
         $mail = new PHPMailer(true);
 
         try{
@@ -55,15 +56,13 @@ if(isset($_POST["reg_button"])){
 
             $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
 
-            
                 $con = mysqli_connect("localhost: 3306", "root", "", "aquaflowdb");
                 if (!$con) {
                     throw new Exception("Database connection failed: " . mysqli_connect_error());
                 }
-                $sql = "INSERT INTO users(name, email, phone, address, password, verification_code, email_verified_at) VALUES ('" . $name . "', '" . $email . "', '" . $phone . "', '" . $address . "', '" . $encrypted_password . "', '" . $verification_code . "', NULL)";
-
+                $sql = "INSERT INTO verification_codes(email, verification_code, email_verified_at) VALUES ('" . $email . "', '" . $verification_code . "', NULL)";
                 mysqli_query($con, $sql);
-                header("Location: verification.php?email=" . $email);
+                header("Location: ../verification.php?email=" . $email);
                 exit();
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -116,6 +115,46 @@ if(isset($_POST["reg_button"])){
         $_SESSION['message'] = "Invalid Credentials";
         header('Location: ../index.php');
         exit();
+    }
+} else if(isset($_SESSION['registration_data'])){
+    $registration_data = $_SESSION['registration_data'];
+    $name = $registration_data["name"];
+    $email = $registration_data["email"];
+    $phone = filter_var($registration_data["phone"], FILTER_SANITIZE_NUMBER_INT);
+    $address = $registration_data["address"];
+    $password = $registration_data["password"];
+    $confirm_password = $registration_data["confirm_password"];
+    $verification_code = $_POST["verification_code"];
+
+    // Verification code logic
+    if(isset($_POST['verifyBtn'])){
+        // Retrieve verification code from form
+        $code = $_POST['verifyCode'];
+
+        if(empty($code)){
+            $_SESSION['message'] = "Please fill in all fields";
+            header("Location: ../verification.php");
+            exit();
+        }
+            
+        // Query to check verification code
+        $code_query = "SELECT verification_code FROM verification_codes WHERE user_id='user_id'";
+        $result = mysqli_query($con, $code_query);
+        // Compare verification code
+        if ($code === $result) {
+            // Insert user data into database
+            $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users(name, email, phone, address, password, verification_code, email_verified_at) VALUES ('$name', '$email', '$phone', '$address', '$encrypted_password', '$verification_code', NULL)";
+            mysqli_query($con, $sql);
+            // Redirect to registration page
+            $_SESSION['message'] = "Registered Successfully";
+            header("Location: ../register.php");
+            exit();
+        } else {
+            $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
+            header("Location: ../register.php");
+            exit();
+        }
     }
 }
 ?>
