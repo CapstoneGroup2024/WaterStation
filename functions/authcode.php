@@ -302,7 +302,7 @@ if (isset($_POST["reg_button"])) {
                 exit();
             }
         }
-}
+} 
 ?>
 
 

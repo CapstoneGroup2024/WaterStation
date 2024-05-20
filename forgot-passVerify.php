@@ -30,7 +30,7 @@
                     <button type="submit" name="forgotVerifyBtn" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 
                 </div>
                 <div class="back row-md-4 mb-2"> <!-- Removed mb-3 class -->
-                    <a href="index.php" class="backTo">Back to Login</a>
+                    <a  href="index.php" class="backTo">Back to Login</a>
                 </div>
             </form>
         </div>

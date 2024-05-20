@@ -32,7 +32,7 @@
                     <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
                 </div>
                 <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
-                    <button type="submit" name="forgotVerifyBtn" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 
+                    <a type="submit" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</a> 
                 </div>
                 <div class="back row-md-4 mb-2"> <!-- Removed mb-3 class -->
                     <a href="index.php" class="backTo">Back to Login</a>
