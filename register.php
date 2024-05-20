@@ -1,4 +1,7 @@
 <?php
+    // INCLUDES 
+    include('includes/header.php');
+
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
@@ -14,63 +17,64 @@
         $confirm_password = $_POST["confirm_password"];
         // Validation
         if(empty($name) || empty($email) || empty($phone) || empty($address) || empty($password) || empty($confirm_password)) {
-            redirect("../register.php", "Please fill in all fields");
-        }
+            $_SESSION['message'] = "Please fill in all fields";
 
-        if($password != $confirm_password) {
-            redirect("../register.php", "Password do not match");
-        }
-        $mail = new PHPMailer(true);
+        if($password === $confirm_password) {
+            $mail = new PHPMailer(true);
 
-        try{
-            $mail->SMTPOptions = [
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ];
-            
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-            $mail -> isSMTP();
-            $mail -> Host = 'smtp.gmail.com';
-            $mail -> SMTPAuth = true;
-            $mail -> Username = 'aquaflow024@gmail.com';
-            $mail -> Password = 'pamu swlw fxyj pavq';
-            $mail -> SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail -> Port = 587;
+            try{
+                $mail->SMTPOptions = [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ];
+                
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                $mail -> isSMTP();
+                $mail -> Host = 'smtp.gmail.com';
+                $mail -> SMTPAuth = true;
+                $mail -> Username = 'aquaflow024@gmail.com';
+                $mail -> Password = 'pamu swlw fxyj pavq';
+                $mail -> SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail -> Port = 587;
 
-            $mail -> setFrom('aquaflow024@gmail.com', 'AquaFlow');
-            $mail -> addAddress($email, $name);
-            $mail -> isHTML(true);
+                $mail -> setFrom('aquaflow024@gmail.com', 'AquaFlow');
+                $mail -> addAddress($email, $name);
+                $mail -> isHTML(true);
 
-            $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+                $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
 
-            $mail -> Subject = 'Email verification';
-            $mail -> Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
-            $mail -> send();
+                $mail -> Subject = 'Email verification';
+                $mail -> Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+                $mail -> send();
 
-            $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
+                $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
 
-            
-                $con = mysqli_connect("localhost: 3306", "root", "", "aquaflowdb");
-                if (!$con) {
-                    throw new Exception("Database connection failed: " . mysqli_connect_error());
+                
+                    $con = mysqli_connect("localhost: 3306", "root", "", "aquaflowdb");
+                    if (!$con) {
+                        throw new Exception("Database connection failed: " . mysqli_connect_error());
+                    }
+                    $sql = "INSERT INTO users(name, email, phone, address, password, verification_code, email_verified_at) VALUES ('" . $name . "', '" . $email . "', '" . $phone . "', '" . $address . "', '" . $encrypted_password . "', '" . $verification_code . "', NULL)";
+
+                    mysqli_query($con, $sql);
+                    header("Location: verification.php?email=" . $email);
+                    exit();
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
-                $sql = "INSERT INTO users(name, email, phone, address, password, verification_code, email_verified_at) VALUES ('" . $name . "', '" . $email . "', '" . $phone . "', '" . $address . "', '" . $encrypted_password . "', '" . $verification_code . "', NULL)";
-
-                mysqli_query($con, $sql);
-                header("Location: verification.php?email=" . $email);
-                exit();
-            } catch (Exception $e) {
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-            }
+            }   
+        } else{
+            $_SESSION['message'] = "Password do not match";
         }
+    }
+    
 ?>
 
 
 <!--------------- INCLUDES --------------->
-<?php include('includes/header.php');?>
 
 <link rel="stylesheet" href="assets/css/register.css">
 <?php // RESTRICT USER ACCESSING THIS PAGE THROUGH URL
@@ -82,17 +86,6 @@
 ?> 
 <!--------------- REGISTER FORM --------------->
 <div class="Register mt-5" >
-    <?php if(isset($_SESSION['message'])) // THE VARIABLE IS SET, THEN DISPLAY THE MESSAGE
-    {
-        ?>  <!-- SHOW ALERT --> 
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <?= $_SESSION['message'] ?>.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php 
-        unset($_SESSION['message']); // UNSET THE VARIABLE TO ENSURE THAT THE MESSAGE IS ONLY DISPLAYED ONCE
-    }
-    ?>
     <h1 class="heading">Register Here!</h1>
     <form method="POST">
         <!--------------- FIRST ROW --------------->
@@ -157,5 +150,17 @@
         </div>
     </form>
 </div>
+<!--------------- ALERTIFY JS --------------->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    <?php
+        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+    ?>
+    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
+    <?php
+        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+        }
+    ?>
+</script>
  <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

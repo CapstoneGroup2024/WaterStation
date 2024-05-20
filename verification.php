@@ -1,3 +1,27 @@
+<?php
+    session_start();
+    $userId = $_SESSION['user_id'];
+    if(isset($_POST['verifyBtn'])){
+        $code = $_POST['verifyCode'];
+
+        if(empty($code)){
+            redirect("verification.php", "Please fill in all fields");
+        }
+        
+        $code_query = "SELECT verification_code WHERE $userId='user_id'";
+        $result = mysqli_query($con, $code_query);
+
+        if ($result) {
+            redirect("register.php", "Registered Successfully");
+        } else {
+            echo "Error retrieving verification code: " . mysqli_error($con);
+            return false;
+        }
+    }
+
+?>
+
+
 <!--------------- INCLUDES --------------->
 <?php include('includes/header.php');?>
 <!--------------- CSS --------------->
@@ -32,13 +56,13 @@
         <div class="h-100 shadow-sm mx-5" id="wrapper"> <!-- Added shadow-sm class -->
             <!----------Logo Side---------->
             <h1 class="mb-4">Verify Email</h1>  
-            <form action="functions/authcode.php" method="POST">
+            <form method="POST">
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
                     <input type="text" placeholder="Enter Verification Code" name="verifyCode" required>
                     <i class='bx bxs-lock'></i>
                 </div>
                 <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
-                    <button type="submit" name="logButton" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 
+                    <button type="submit" name="verifyBtn" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 
                 </div>
                 <div class="back row-md-4 mb-2"> <!-- Removed mb-3 class -->
                     <a href="register.php" class="backTo">Back to Register</a>
