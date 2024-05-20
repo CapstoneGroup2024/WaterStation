@@ -65,7 +65,7 @@ body {
     height: 100%;
     background-color: #DEEFF5;
     border: 2px solid rgba(0, 0, 0, 0.2);/* Set initial border to transparent */
-    border-radius: 20px;
+    border-radius: 12px;
     font-size: 14px;
     color: #013D67;
     padding: 20px 45px 20px 20px;
@@ -100,7 +100,7 @@ body {
     width: 340px;
     height: 45px;
     border: none;
-    border-radius: 40px;
+    border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-weight: bolder;
@@ -134,13 +134,13 @@ body {
         background-color: #FFFFFF;
         border: none;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
+        border-radius: 12px;
         padding: 15px 30px;
     }
     .regform input {
         width: 95%;
         height: 100%;
-        border-radius: 20px;
+        border-radius: 12px;
         font-size: 14px;
         padding: 20px 45px 20px 20px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
@@ -161,13 +161,13 @@ body {
         background-color: #FFFFFF;
         border: none;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
+        border-radius: 12px;
         padding: 15px 30px;
     }
     .regform input {
         width: 95%;
         height: 100%;
-        border-radius: 20px;
+        border-radius: 12px;
         font-size: 14px;
         padding: 20px 45px 20px 20px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
@@ -189,13 +189,13 @@ body {
         background-color: #FFFFFF;
         border: none;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
+        border-radius: 12px;
         padding: 15px 30px;
     }
     .regform input {
         width: 95%;
         height: 100%;
-        border-radius: 20px;
+        border-radius: 12px;
         font-size: 14px;
         padding: 20px 45px 20px 20px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
