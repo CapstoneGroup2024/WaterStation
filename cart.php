@@ -4,9 +4,10 @@
     include('includes/orderbar.php');
     include('functions/userFunctions.php');
 
+    session_start();
     if(!isset($_SESSION['auth'])) { // RESTRICT USER ACCESSING THIS PAGE THROUGH URL
         $_SESSION['message'] = "Please login to view your cart.";
-        header("Location: login.php"); // REDIRECT TO LOGIN
+        echo'<script>window.location.href = "index.php";</script>';
         exit();
     }
     $userId = $_SESSION['user_id']; // GET USER ID FROM SESSION
@@ -145,6 +146,17 @@
     unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
   }
 ?>
+</script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    <?php
+        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+    ?>
+    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
+    <?php
+        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+        }
+    ?>
 </script>
 
 
