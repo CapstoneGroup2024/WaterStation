@@ -27,7 +27,17 @@ if (isset($_POST["reg_button"])) {
     if ($password === $confirm_password) {
         $_SESSION['registration_data'] = $_POST;
         $mail = new PHPMailer(true);
-    
+
+        $email_check_sql = "SELECT * FROM users WHERE email='$email'";
+        $email_check_sql = $con->query($email_check_sql);
+
+        if($email_check_sql->num_rows > 0){
+            //display error message
+            $_SESSION['message'] = "Email already exists";
+            header("Location: ../register.php");
+            exit();
+        }
+
         try {
             $mail->SMTPOptions = [
                 'ssl' => [
@@ -289,7 +299,7 @@ if (isset($_POST["reg_button"])) {
     
                 if ($code === $stored_verification_code) {
                     $_SESSION['message'] = "Verification Correct";
-                    header("Location: ../changePassword.php");
+                    header("Location: ../changePassword.php?email=" . urlencode($email) . "&user_id=" . $user_id);
                     exit();
                 } else {
                     $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
@@ -302,7 +312,44 @@ if (isset($_POST["reg_button"])) {
                 exit();
             }
         }
-} 
+} else if(isset($_POST['newPassBtn'])){
+    $email = $_SESSION['forgotPass_data']['email'] ?? null;
+    $newPassword = $_POST['newPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
+
+    if ($newPassword == $confirmPassword){
+        $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $update_query = "UPDATE users SET password= $hashed_password WHERE email = ?";
+
+            $stmt = $con->prepare($update_query);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+    
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $password = $row['password'];
+    
+                if ($hashed_password === $password) {
+                    $_SESSION['message'] = "Password Updated Successfully";
+                    header("Location: ../index.php");
+                    exit();
+                } else {
+                    $_SESSION['message'] = "Incorrect Password! Please try again.";
+                    header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
+                    exit();
+                }
+            } else {
+                $_SESSION['message'] = "No password found for the provided email and user ID.";
+                header("Location: ../index.php");
+                exit();
+            }
+        }
+
+
+    }
+
 ?>
 
 
