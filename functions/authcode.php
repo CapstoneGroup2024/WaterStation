@@ -171,6 +171,9 @@ if (isset($_POST["reg_button"])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    // Check if "Remember Me" is checked
+    $remember_me = isset($_POST['remember_me']) ? true : false;
+
     // Check if email exists
     $login_query = "SELECT * FROM users WHERE email=?";
     $stmt = mysqli_prepare($con, $login_query);
@@ -201,6 +204,17 @@ if (isset($_POST["reg_button"])) {
                 $_SESSION['message'] = "Logged in Successfully";
                 header('Location: ../homepage.php');
             }
+
+            // If Remember Me is checked, set a long-term cookie
+            if ($remember_me) {
+                $token = bin2hex(random_bytes(32)); // Generate a random token
+                // Set cookie to expire in 30 days (adjust as needed)
+                setcookie('remember_me', $token, time() + (30 * 24 * 60 * 60), '/', '', false, true);
+                // Save the token in the database for future authentication
+                // For security reasons, it's recommended to hash the token before saving it
+                // Example: $hashed_token = password_hash($token, PASSWORD_DEFAULT);
+                // Save $hashed_token in the database along with the user ID
+            }
         } else {
             $_SESSION['message'] = "Incorrect Password";
             header("Location: ../index.php");
@@ -211,7 +225,8 @@ if (isset($_POST["reg_button"])) {
         header('Location: ../index.php');
         exit();
     }
-} else if (isset($_POST['forgotPass'])) {
+}
+else if (isset($_POST['forgotPass'])) {
     $email = $_POST['email'];
     $_SESSION['forgotPass_data'] = $_POST;
 

@@ -31,7 +31,7 @@ session_start();?>
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
                 <div class="remember-forgot">
-                    <label><input class="remember" type="checkbox">Remember me</label>
+                    <label><input class="remember" name="remember_me" type="checkbox">Remember me</label>
                     <a href="forgot-password.php">Forgot password?</a>
                 </div>
                 <div class="line"></div>

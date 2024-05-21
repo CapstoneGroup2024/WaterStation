@@ -9,7 +9,7 @@
     position: absolute;
 }
 body{
-    background-color: #FFFFFF!important;
+    background-color: #80a6c2;
 }
 /*--------------- NAVBAR ---------------*/
 .navbar-brand{
@@ -132,16 +132,13 @@ h1 .aquaflow-text {
 
 /*-------Services------*/
 
-
-h1 .services{
+.services h1{
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #013D67;
     font-family: 'Suez One';
-    font-size: 80px;
+    font-size: 60px;
     font-weight: bold;
-   
-
 }
 
 .card-img-top{
@@ -162,85 +159,72 @@ h1 .services{
 }
 
 /*-------About Us------*/
-.wrapper{
-    padding: 5px;
-    max-width: 3000px;
-    width: 95%;
-    margin: 20px auto;
-}
-
-.wrapper h1{
-    font-family: 'Suez One';
-    color: #013D67;
-    font-size: 60px;
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-
-.header{
-    padding: 0 15px;
-    text-align: center;
-}
-
-.columns{
+.aboutus{
+    position: relative;
     display: flex;
-    flex-flow: row wrap;
     justify-content: center;
-    margin: 5px 0;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 50px 0;
+    gap: 40px 60px;
 }
 
-.column{
-    flex: 1;
-    border: 1px solid #666;
-    height: 59vh;
-    margin: 10px;
-    border-radius: 20px;
-    padding: 10px;
-    background: #3af4d5;
-    transition: 0.3s;
-}
-
-.column h2{
+.About{
     font-family: 'Suez One';
     color: #013D67;
+    padding-left: 40px;
+    margin-top: 50px;
+    font-size: 60px;
 }
 
-.coulumn p{
-    font-family: 'Times New Roman', Times, serif;
+.aboutus .drop{
+    position: relative;
+    width: 305px;
+    height: 350px;
+    box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.05), 
+    25px 35px 20px rgb(0, 0, 0, 0.05),
+    25px 30px 30px rgba(0, 0, 0, 0.05), 
+    inset -20px -20px 25px rgb(225, 225, 2225, 0.9);
+    transition: 0.5s ease-in-out;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+.aboutus .drop:nth-child(1){
+    border-radius: 63% 37% 53% 47% / 48% 46% 54% 52%   ;
+}
+.aboutus .drop:nth-child(2){
+    border-radius: 47% 53% 37% 63% / 50% 39% 61% 50%  ;
+}
+.aboutus .drop:nth-child(3){
+    border-radius: 58% 42% 58% 42% / 36% 51% 49% 64%    ;
+}
+.aboutus .drop:nth-child(4){
+    border-radius: 45% 55% 39% 61% / 52% 51% 49% 48%   ;
+}
+.aboutus .drop:hover{
+    border-radius: 50%;
 }
 
-#column1{
-    background-color: #AAD7F6;
+.aboutus .drop .content{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:  column;
+    text-align: center;
+    padding: 40px;
+    gap: 15px;
 }
-
-#column2{
-    background-color: #C7D5F3;
+.aboutus .drop .content h2{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Suez One';
+    font-size: 25px;
+    color: #013D67;
 }
-
-#column3{
-    background-color: #3af4d5;
-}
-
-@media screen and (max-width: 980px) {
-    .columns .column{
-        margin-bottom: 5px;
-        flex-basis: 40%;
-    }
-    .coumns .column:last-child{
-        flex-basis: 100%;
-        margin: 0;
-    }
-    .coumns .column:nth-last-child(2){
-        margin: 0;
-    }
-}
-@media screen and (max-width: 680px) {
-    .columns .column{
-        flex-basis: 100%;
-        margin: 0 0 5px 0;
-    }
-}
-
 /*-------Contact------*/
 footer{
     background-color: #9cc5eb;
@@ -268,15 +252,12 @@ footer{
     display: flex;
     align-items: center;
 }
-
 .contact-text{
-    color: #013D67;
-    font-family: 'Times New Roman', Times, serif;
+    color: #000000;
 }
 #contact-header{
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Suez One';
     color: #414833;
-    font-weight: bold;
     letter-spacing: 1px;
 }
 .contact-info{
@@ -402,6 +383,7 @@ a.contact-link:hover{
     }
     #contact-info-text{
         font-size: 14px;
+        font-family: 'Poppins';
     }
     .contact-text{
         margin-top: 10px;
@@ -526,6 +508,7 @@ a.contact-link:hover{
     }
     #contact-info-text {
         font-size: 14px;
+        font-family: 'Poppins';
     }
     .contact-text {
         margin-top: 10px;
@@ -611,6 +594,7 @@ a.contact-link:hover{
     }
     #contact-info-text {
         font-size: 14px;
+        font-family: 'Poppins';
     }
     .contact-text {
         margin-top: 10px;
@@ -692,16 +676,15 @@ a.contact-link:hover{
 }
 
 .copyright{
-    margin-bottom: 20px;
     width: 100%;
     height: 11vh;
+    background-color: #9a9c96;
+}
+.copyright p{
     text-align: center;
     padding: 20px 0;
-
     font-weight: 350;
-    margin-top: 20px;
 }
 .copyright i{
-    color: #080808;
+    color: #f8f7f7;
 }
-

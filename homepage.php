@@ -1,12 +1,15 @@
+homepage.php
 <?php 
+
 include('includes/header.php');
 include('includes/navbar.php');
 ?>
-<link rel="stylesheet" href="assets/css/homepage.css">  
- 
+<link rel="stylesheet" href="assets/css/homepage.css">   
 
 <!--------------- HOME PAGE --------------->
-<section class="homepage" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
+
+<section class="homepage" id="Home" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
+
     <div class="quote" style="position: absolute; top: 120px; right: 150px;">
         <div class="d-sm-flex align-items-center justify-content-between" style="margin-top: 10px;">
         <div>
@@ -28,11 +31,9 @@ include('includes/navbar.php');
 
 
 <!--------------- SERVICES --------------->
-<section class="Services pt-lg-5 text-center text-sm-start" id="Services" style="background-color: #AAD7F6;">
+<section class="Services pt-lg-1 text-center text-sm-start" id="Services" style="background-color: #AAD7F6;">
   <h1 class="services" style="margin-top: 70px; margin-left: 55px; margin-bottom: 40px;">Services</h1>
     <div class="container">
-      
-
         <div class="row row-cols-1 row-cols-md-3 g-5">
             <div class="col">
                 <div class="card h-100">
@@ -66,26 +67,38 @@ include('includes/navbar.php');
 </section>
 
 <!--------------- ABOUT US --------------->
-<section class="pt-lg-3" id="AboutUs">
-    <div class="wrapper">
-        <header>
-            <h1 class="About">About Us</h1>
-        </header>
-        <div class="columns">
-            <div class="column" id="column1">
-                <h2>Aquaflow:</h2>
-                <p >Welcome to AquaFlow  Water Delivery, your trusted source for premium quality water delivered straight to your doorstep. At PureFlow, we understand the importance of clean and refreshing water in your daily life, which is why we are dedicated to providing you with the highest quality water delivery service.</p>
-            </div>
-            <div class="column" id="column2">
-                <h2>Our Mission:</h2>
-                <p>At PureFlow, our mission is simple: to deliver pure, clean, and refreshing water to our customers with convenience and reliability. We aim to exceed customer expectations by providing exceptional service, superior quality water, and sustainable solutions.</p>
-            </div>
-            <div class="column" id="column3">
-                <h2>Our Commitment to Quality:</h2>
-                <p>Quality is at the heart of everything we do. Our water undergoes rigorous filtration and purification processes to ensure it meets the highest industry standards. We are committed to delivering water that is not only safe to drink but also tastes great, providing you with the refreshing hydration you deserve.</p>
+<section class="pt-lg-3" id="AboutUs" >
+      <h1 class="About">About Us</h1>
+      <div class="aboutus">
+        <div class="drop" style="--clr:#013D67;">
+            <div class="content">
+                <h2>Description</h2>
+                <p>Provides users with easy access to information about water quality,
+                distribution, and conservation efforts in their area. 
+                </p>
             </div>
         </div>
-    </div>
+        <div class="drop" style="--clr:#013D67;">
+            <div class="content">
+                <h2>Mission</h2>
+                <p>Promote sustainable water management practices and raise awareness
+                about the importance of clean water access for communities worldwide 
+                </p>
+            </div>
+        </div>
+        <div class="drop" style="--clr:#013D67;">
+            <div class="content">
+                <h2>Vision</h2>
+                <p>Create a world where every individual has access to clean and safe drinking water, contributing to healthier communities and a sustainable future</p>
+            </div>
+        </div>
+        <div class="drop" style="--clr:#013D67;">
+            <div class="content">
+                <h2>Commitment</h2>
+                <p>we are dedicated to ensuring access to clean water for all, fostering sustainable practices, and promoting water conservation globally.</p>
+            </div>
+        </div>
+    </div>  
 </section>
 <!--------------- CONTACT --------------->
 <section class="contacts p-5 p-lg-0 pt-lg-5 text-center text-sm-start"  id="contacts">
@@ -102,33 +115,23 @@ include('includes/navbar.php');
                 <ul class="contact-ul">
                   <li>
                     <a href="tel: 09814377193" target="_blank" class="contact-link">
-                    <div class="svg-container">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
-                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
-                      </svg>
-                    </div>
+                      <div class="svg-container bg-transparent">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                          <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+                        </svg>
+                      </div>
                     </a>
                     <p class="contact-text" id="contact-info-text">++639 814377193</p>
                   </li>
                   <li>
                     <a href="..." target="_blank" class="contact-link">
-                    <div class="svg-container">
+                    <div class="svg-container bg-transparent">
                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
                       </svg>
                     </div>
                     </a>
                     <p class="contact-text" id="contact-info-text">AquaflowStation@gmail.com</p>
-                  </li>
-                  <li>
-                    <a href="..." target="_blank" class="contact-link">
-                    <div class="svg-container">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
-                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
-                      </svg>
-                    </div>
-                    </a>
-                    <p class="contact-text" id="contact-info-text">Aquaflow Water Station</p>
                   </li>
                 </ul>
             </div>
@@ -191,17 +194,6 @@ include('includes/navbar.php');
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/passwordCheck.js"></script>
-<!--------------- ALERTIFY JS --------------->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script>
-    <?php
-        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-    ?>
-    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
-    <?php
-        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-        }
-    ?>
-</script>
-<!--------------- FOOTER --------------->
-<?php include('includes/footer.php');?>
+
+</body>
+</html>
