@@ -7,6 +7,9 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require '../vendor/autoload.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require '../config/dbconnect.php';
 
 if (isset($_POST["reg_button"])) {
     // Registration form submitted
@@ -37,7 +40,7 @@ if (isset($_POST["reg_button"])) {
             header("Location: ../register.php");
             exit();
         }
-
+        
         try {
             $mail->SMTPOptions = [
                 'ssl' => [
@@ -208,147 +211,148 @@ if (isset($_POST["reg_button"])) {
         header('Location: ../index.php');
         exit();
     }
-} else if(isset($_POST['forgotPass'])){
+} else if (isset($_POST['forgotPass'])) {
     $email = $_POST['email'];
     $_SESSION['forgotPass_data'] = $_POST;
+
+    $email_check_sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $con->prepare($email_check_sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $email_check_sql_run = $stmt->get_result();
+    
+    if ($email_check_sql_run->num_rows == 0) {
+        $_SESSION['message'] = "Email not registered. Register first!";
+        header('Location: ../register.php');
+        exit();
+    }
+
     $mail = new PHPMailer(true);
     
-        try {
-            $mail->SMTPOptions = [
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ];
-            
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-            $mail -> isSMTP();
-            $mail -> Host = 'smtp.gmail.com';
-            $mail -> SMTPAuth = true;
-            $mail -> Username = 'aquaflow024@gmail.com';
-            $mail -> Password = 'pamu swlw fxyj pavq';
-            $mail -> SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail -> Port = 587;
-    
-            $mail -> setFrom('aquaflow024@gmail.com', 'AquaFlow');
-            $mail -> addAddress($email, 'AquaFlow');
-            $mail -> isHTML(true);
-    
-            $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-    
-            $mail -> Subject = 'Email verification';
-            $mail -> Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
-            $mail -> send();
-    
-            $con = mysqli_connect("localhost: 3306", "root", "", "aquaflowdb");
-            if (!$con) {
-                throw new Exception("Database connection failed: " . mysqli_connect_error());
-            }
-            
-            $sql = "INSERT INTO verification_codes (email, verification_code) VALUES (?, ?)";
-            $stmt = $con->prepare($sql);
-            $stmt->bind_param("ss", $email, $verification_code);
-            $stmt->execute();
-    
-            $user_id = $stmt->insert_id;
-    
-            if ($stmt) {
-                $_SESSION['message'] = "Verification Code Sent to Email";
-                header("Location: ../forgot-passVerify.php?email=" . urlencode($email) . "&user_id=" . $user_id);
-                exit();
-            } else {
-                $_SESSION['message'] = "Error";
-                header('Location: ../index.php');
-                exit();
-            }
-        } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        } finally {
-            $con->close();
+    try {
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ],
+        ];
+        
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'aquaflow024@gmail.com';
+        $mail->Password = 'pamu swlw fxyj pavq';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('aquaflow024@gmail.com', 'AquaFlow');
+        $mail->addAddress($email, 'AquaFlow');
+        $mail->isHTML(true);
+
+        $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+
+        $mail->Subject = 'Email verification';
+        $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+        $mail->send();
+
+        $sql = "INSERT INTO verification_codes (email, verification_code) VALUES (?, ?)";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("ss", $email, $verification_code);
+        $stmt->execute();
+
+        $user_id = $stmt->insert_id;
+
+        if ($stmt) {
+            $_SESSION['message'] = "Verification Code Sent to Email";
+            header("Location: ../forgot-passVerify.php?email=" . urlencode($email) . "&user_id=" . $user_id);
+            exit();
+        } else {
+            $_SESSION['message'] = "Error";
+            header('Location: ../index.php');
+            exit();
         }
-} else if (isset($_SESSION['forgotPass_data'])) {
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    } finally {
+        $con->close();
+    }
+} else if (isset($_POST['forgotVerifyBtn'])) {
     $email = $_SESSION['forgotPass_data']['email'] ?? null;
-    
-    if (isset($_POST['forgotVerifyBtn'])) {
-        $code = $_POST['forgotVerifyCode'];
-        $user_id = $_POST['user_id'];
-    
-        if (empty($code) || empty($user_id)) {
-                $_SESSION['message'] = "Please fill in all fields";
-                header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
-                exit();
-            }
-    
-            $con = mysqli_connect("localhost", "root", "", "aquaflowdb");
-            if (!$con) {
-                $_SESSION['message'] = "Database connection failed: " . mysqli_connect_error();
-                header("Location: ../index.php");
-                exit();
-            }
-    
-            $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND user_id = ?";
-            $stmt = $con->prepare($query);
-            $stmt->bind_param("si", $email, $user_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-    
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $stored_verification_code = $row['verification_code'];
-    
-                if ($code === $stored_verification_code) {
-                    $_SESSION['message'] = "Verification Correct";
-                    header("Location: ../changePassword.php?email=" . urlencode($email) . "&user_id=" . $user_id);
-                    exit();
-                } else {
-                    $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
-                    header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
-                    exit();
-                }
-            } else {
-                $_SESSION['message'] = "No verification code found for the provided email and user ID.";
-                header("Location: ../index.php");
-                exit();
-            }
+    $code = $_POST['forgotVerifyCode'];
+    $user_id = $_POST['user_id'];
+
+    if (empty($code) || empty($user_id)) {
+        $_SESSION['message'] = "Please fill in all fields";
+        header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
+        exit();
+    }
+
+    $con = mysqli_connect("localhost", "root", "", "aquaflowdb");
+    if (!$con) {
+        $_SESSION['message'] = "Database connection failed: " . mysqli_connect_error();
+        header("Location: ../index.php");
+        exit();
+    }
+
+    $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND user_id = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("si", $email, $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $stored_verification_code = $row['verification_code'];
+
+        if ($code === $stored_verification_code) {
+            $_SESSION['message'] = "Verification Correct";
+            header("Location: ../changePassword.php?email=" . urlencode($email) . "&user_id=" . $user_id);
+            exit();
+        } else {
+            $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
+            header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
+            exit();
         }
-} else if(isset($_POST['newPassBtn'])){
+    } else {
+        $_SESSION['message'] = "No verification code found for the provided email and user ID.";
+        header("Location: ../index.php");
+        exit();
+    }
+} else if (isset($_POST['newPassBtn'])) {
     $email = $_SESSION['forgotPass_data']['email'] ?? null;
     $newPassword = $_POST['newPassword'];
     $confirmPassword = $_POST['confirmPassword'];
 
-    if ($newPassword == $confirmPassword){
+    if ($newPassword === $confirmPassword && $email) {
         $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        $update_query = "UPDATE users SET password= $hashed_password WHERE email = ?";
+        $update_query = "UPDATE users SET password = ? WHERE email = ?";
+        $stmt = $con->prepare($update_query);
+        $stmt->bind_param("ss", $hashed_password, $email);
 
-            $stmt = $con->prepare($update_query);
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-    
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $password = $row['password'];
-    
-                if ($hashed_password === $password) {
-                    $_SESSION['message'] = "Password Updated Successfully";
-                    header("Location: ../index.php");
-                    exit();
-                } else {
-                    $_SESSION['message'] = "Incorrect Password! Please try again.";
-                    header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
-                    exit();
-                }
-            } else {
-                $_SESSION['message'] = "No password found for the provided email and user ID.";
-                header("Location: ../index.php");
-                exit();
-            }
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Password Updated Successfully";
+            header("Location: ../index.php");
+            exit();
+        } else {
+            $_SESSION['message'] = "Failed to update password. Please try again.";
+            header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
+            exit();
         }
-
-
+    } else {
+        $_SESSION['message'] = "Passwords do not match or email is missing.";
+        header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
+        exit();
     }
+} else {
+    $_SESSION['message'] = "Invalid request.";
+    header("Location: ../index.php");
+    exit();
+}
+
+
 
 ?>
 

@@ -20,14 +20,14 @@
     <div class="col-lg-6 card-body shadow-sm"> <!-- Added shadow-sm class -->
         <div class="h-100 shadow-sm mx-5" id="wrapper"> <!-- Added shadow-sm class -->
             <!----------Logo Side---------->
-            <h1 class="mb-4">Change Password</h1>  
+            <h1 class="mb-4">Change Passwored</h1>  
             <form action="functions/authcode.php" method="POST">
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
-                    <label for="pw" class="form-label">New Password:</label>    
+                    <p class="form-label">New Password:</p>    
                     <input type="password" placeholder="Enter New Password" name="newPassword" required>
                 </div>
                 <div class="input-box row-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
-                    <label for="pw" class="form-label">Confirm Password:</label>    
+                    <p class="form-label">Confirm Password:</p>    
                     <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
                 </div>
                 <div class="row-md-4 mb-2 btn"> <!-- Added mb-3 class for margin-bottom -->
