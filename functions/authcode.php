@@ -225,8 +225,7 @@ if (isset($_POST["reg_button"])) {
         header('Location: ../index.php');
         exit();
     }
-}
-else if (isset($_POST['forgotPass'])) {
+} else if (isset($_POST['forgotPass'])) {
     $email = $_POST['email'];
     $_SESSION['forgotPass_data'] = $_POST;
 
@@ -361,6 +360,60 @@ else if (isset($_POST['forgotPass'])) {
         header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
         exit();
     }
+} else if (isset($_POST['contactBtn'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+    $mail = new PHPMailer(true);
+    
+    try {
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ],
+        ];
+        
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'aquaflow024@gmail.com';
+        $mail->Password = 'pamu swlw fxyj pavq';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom($email, $name);
+        $mail->addAddress('aquaflow024@gmail.com', 'AquaFlow');
+        $mail->isHTML(true);
+
+        $mail->Subject = $subject;
+        $mail->Body = '<p>' . $message . '</p>';
+        $mail->send();
+
+        $sql = "INSERT INTO usermessage (name, email, subject, message) VALUES (?, ?, ?, ?)";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("ssss", $name, $email, $subject, $message);
+        $stmt->execute();
+
+        if ($stmt) {
+            $_SESSION['message'] = "Message sent successfully";
+            header("Location: ../homepage.php");
+            exit();
+        } else {
+            $_SESSION['message'] = "Something went wrong.";
+            header('Location: ../homepage.php');
+            exit();
+        }
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    } finally {
+        $con->close();
+    }
+
 } else {
     $_SESSION['message'] = "Invalid request.";
     header("Location: ../index.php");

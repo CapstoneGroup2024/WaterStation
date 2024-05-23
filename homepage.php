@@ -136,20 +136,20 @@ include('includes/navbar.php');
                 </ul>
             </div>
                 <div class="form-container">
-                  <form>
+                  <form action="functions/authcode.php" method="POST">
                     <div class="input-box">
-                      <input type="text" placeholder="Name" id="username" name="username" required>
+                      <input type="text" placeholder="Name" id="username" name="name" required>
                     </div>
                     <div class="input-box">
-                      <input type="email" placeholder="Email" id="email" name="useremail" required>
+                      <input type="email" placeholder="Email" id="email" name="email" required>
                     </div>
                     <div class="input-box">
-                      <input type="text" placeholder="Subject" id="subject" name="usersubject" required>
+                      <input type="text" placeholder="Subject" id="subject" name="subject" required>
                     </div>
                     <div class="input-box">
-                      <textarea placeholder="Message" id="message" name="usermessage" required></textarea>
+                      <textarea placeholder="Message" id="message" name="message" required></textarea>
                     </div>
-                      <input type="submit" value="Send" id="loginbtn">
+                      <input type="submit" value="Send" id="loginbtn" name="contactBtn">
                   </form>
                 </div>
               </div>
