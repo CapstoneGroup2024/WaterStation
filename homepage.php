@@ -2,13 +2,14 @@
 <?php 
   include('includes/header.php');
   include('includes/navbar.php');
+  include('functions/userFunctions.php'); 
 ?>
 <!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/homepage.css">   
 
 <!--------------- HOME PAGE --------------->
 <section class="homepage" id="Home" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
-  <div class="quote" style="position: absolute; top: 120px; right: 70px;">
+  <div class="quote" style="position: absolute; top: 120px; right: 100px;">
     <div class="d-sm-flex align-items-center justify-content-between" style="margin-top: 10px;">
       <div>
         <h1 class="aquaflow-text" style="font-family: 'Suez One', sans-serif; font-weight: bold; color: #013D67; font-size: 80px; letter-spacing: 5px;">Hydrate Daily!</h1>
@@ -147,11 +148,6 @@
       </div>
     </footer>
 </section>
-<!--------------- COPYRIGHT --------------->
-<!--------------- BOOTSTRAP JS --------------->
-<script src="assets/js/jquery-3.7.1.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/passwordCheck.js"></script>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
