@@ -1,11 +1,12 @@
 <!--------------- INCLUDES --------------->
 <?php
-include('includes/header.php');
-include('includes/orderbar.php');
-include('functions/userFunctions.php');
+    // INCLUDE NECESSARY FILES
+    include('includes/header.php');
+    include('includes/orderbar.php');
+    include('functions/userFunctions.php');
 
-// Assuming $userId is defined somewhere in your code
-$userId = $_SESSION['user_id'];
+    // GET USER ID FROM SESSION
+    $userId = $_SESSION['user_id'];
 ?>
 <section class="p-5 p-md-5 text-sm-start">
     <div class="container" style="margin-top: 60px;">
@@ -15,12 +16,13 @@ $userId = $_SESSION['user_id'];
             </div>
         </div>
         <?php
+        // FETCH USER, ORDER, AND CART DETAILS
         $userDetails = getUserDetails($userId);
         $order = getOrderItemsByUserId($userId);
         $cartItems = getCartItemsByUserId($userId);
         
         if($userDetails && $order && $cartItems){ 
-            // Fetching the order details
+            // FETCH ORDER DETAILS
             $orderDetails = mysqli_fetch_assoc($order);
         ?>
         <div class="container" style="width: 300px; display: flex; float:left;">
@@ -37,7 +39,7 @@ $userId = $_SESSION['user_id'];
             </div>
         </div>
         <?php
-        // Loop through each cart item and display its details
+        // DISPLAY EACH CART ITEM
         foreach ($cartItems as $cartItem) {
         ?>
         <div class="container mt-4">
@@ -65,15 +67,15 @@ $userId = $_SESSION['user_id'];
         <div class="container mt-4">
             <div class="card-body shadow p-3" style="border-radius: 20px; width: 780px; display: flex; float:right; margin-top: 20px">
                 <div class="col align-items-center p-2" >
-                    <!-- Subtotal -->
+                    <!-- DISPLAY SUBTOTAL -->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;"><?php echo $orderDetails['subtotal']; ?></span></h5>
                     </div>
-                    <!-- Delivery Fee -->
+                    <!-- DISPLAY DELIVERY FEE -->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;"><?php echo $orderDetails['delivery_fee']; ?></span></h5>
                     </div>
-                    <!-- Grand Total -->
+                    <!-- DISPLAY GRAND TOTAL -->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <h5>Total: <span class="grand-total" style="display: flex; float:right;"><?php echo $orderDetails['grand_total']; ?></span></h5>
                     </div>
@@ -87,4 +89,5 @@ $userId = $_SESSION['user_id'];
         ?>
     </div>
 </section>
+<!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

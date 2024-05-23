@@ -1,15 +1,13 @@
-<?php
-    // INCLUDES 
-    session_start();
-    include('includes/header.php');
-    
-?>
-
-
 <!--------------- INCLUDES --------------->
-
+<?php
+    session_start();
+    include('includes/header.php'); 
+?>
+<!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/register.css">
-<?php // RESTRICT USER ACCESSING THIS PAGE THROUGH URL
+
+<!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
+<?php
     if(isset($_SESSION['auth'])){
         $_SESSION['message'] = "You are already logged in";
         header('Location: homepage.php');

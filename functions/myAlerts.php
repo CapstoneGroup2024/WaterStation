@@ -16,19 +16,16 @@
         exit();
     }
     function getCartItemsByUserId($userId) {
-        global $con; // Assuming $con is your database connection object
+        global $con;
     
-        // Query to fetch cart items for the specified user ID
+        // QUERY TO FETCH CART ITEMS FOR THE SPECIFIED USER 
         $query = "SELECT * FROM cart_items WHERE user_id = '$userId'";
-        
-        // Execute the query
         $result = mysqli_query($con, $query);
     
-        // Check if query was successful
         if ($result) {
-            return $result; // Return the result set
+            return $result; // RETURN THE RESULT SET
         } else {
-            // Handle query error
+            // HANDLE QUERY ERROR
             echo "Error retrieving cart items: " . mysqli_error($con);
             return false;
         }

@@ -1,4 +1,5 @@
-<?php session_start(); ?> <!----- START SESSION ----->
+<!----- START SESSION ----->
+<?php session_start(); ?> 
 <!--------------- NAVBAR --------------->
 <nav class="navbar fixed-top navbar-expand-lg bg-custom-success navbar-dark py-2 " id="navbg">
   <div class="container-fluid" id="navbar"> 

@@ -25,7 +25,6 @@ body{
     background-size: cover; 
 }
 
-
 h1 .aquaflow-text {
     font-family: 'Suez One';
     font-size: 80px;
@@ -38,7 +37,6 @@ h1 .aquaflow-text {
     text-decoration: none;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
-
 
 /*--------------- QUOTE ---------------*/
 .quote{
@@ -55,7 +53,8 @@ h1 .aquaflow-text {
     color: #085372;
     font-weight: bold;
     font-size: 14px;
-}.water_drop {
+}
+.water_drop {
     position: relative;
     width: 200px;
     height: 200px;
@@ -189,6 +188,7 @@ h1 .aquaflow-text {
     display: flex;
     justify-self: center;
     align-items: center;
+    animation: floatDrop 3s infinite ease-in-out;
 }
 .aboutus .drop:nth-child(1){
     border-radius: 63% 37% 53% 47% / 48% 46% 54% 52%   ;
@@ -225,6 +225,17 @@ h1 .aquaflow-text {
     font-size: 25px;
     color: #013D67;
 }
+
+/* Add keyframes for floating effect */
+@keyframes floatDrop {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
 /*-------Contact------*/
 footer{
     background-color: #9cc5eb;

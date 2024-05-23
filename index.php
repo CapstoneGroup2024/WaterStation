@@ -1,8 +1,11 @@
 <!--------------- INCLUDES --------------->
-<?php include('includes/header.php');
-session_start();?>
+<?php 
+    include('includes/header.php');
+    session_start();
+?>
 <!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/login.css">    
+
 <!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
 <?php 
     if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN

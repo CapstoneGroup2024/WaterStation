@@ -104,48 +104,45 @@
         </div>
         <div class="container" style="width: 400px; display: flex; float:right;">
             <div class="card-body shadow p-3" style="border-radius: 20px;">
-            <div class="col align-items-center p-2" >
-                <!-- Subtotal -->
-                <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                    <input type="hidden" name="subtotal" value="">
+                <div class="col align-items-center p-2" >
+                <!--------------- SUBTOTAL --------------->
+                    <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
+                        <input type="hidden" name="subtotal" value="">
                         <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;" name="subtotal"></span></h5>
                     </div>
-                    <!-- Delivery Fee -->
+                    <!--------------- DELIVERY FEE --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                    <input type="hidden" name="delivery" value="">
+                        <input type="hidden" name="delivery" value="">
                         <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;" name="delivery"></span></h5>
                     </div>
-                    <!-- Grand Total -->
+                    <!--------------- GRAND TOTAL --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                    <input type="hidden" name="grand" value="">
+                        <input type="hidden" name="grand" value="">
                         <h5>Grand Total: <span class="grand-total" style="display: flex; float:right;" name="grand"></span></h5>
                     </div>
                     <div>
                         <button type="submit" class="btn text-white" style="background-color: #013D67; width: 100%; font-family: 'Suez one'; margin-top:10px" name="placeOrderBtn">Place Order</button>
                     </div>
-            </div>
                 </div>
+            </div>
         </div>
     </form>
-
 </section>
-
-
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
-<?php
-    if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-?>
-    alertify.set('notifier','position', 'top-right');
-    var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
-    notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
-    this.classList.remove('animated-check');
-    }); // Remove animation class after animation ends
-<?php
-    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-  }
-?>
+    <?php
+        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+    ?>
+        alertify.set('notifier','position', 'top-right');
+        var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
+        notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
+        this.classList.remove('animated-check');
+        }); // REMOVE ANIMATION CLASS AFTER ANIMATION ENDS
+    <?php
+        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+    }
+    ?>
 </script>
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
