@@ -89,4 +89,5 @@
         </div>
     </div>
 </div>
+<!--------------- ALERTIFY JS --------------->
 <?php include('includes/footer.php');?>

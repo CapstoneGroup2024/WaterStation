@@ -7,13 +7,6 @@
 <link rel="stylesheet" href="assets/css/login.css">    
 
 <!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
-<?php 
-    if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
-        $_SESSION['message'] = "You are already logged in";
-        header('Location: homepage.php');
-        exit();
-    }
-?>
 <div class="row vh-100 g-0">
     <!--------------- LEFT SIDE --------------->
     <div class="col-lg-6 position-relative d-none d-lg-block">
