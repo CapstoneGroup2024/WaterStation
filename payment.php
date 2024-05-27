@@ -1,5 +1,7 @@
 <!--------------- INCLUDES --------------->
 <?php
+    session_start();
+
     // INCLUDE NECESSARY FILES
     include('includes/header.php');
     include('includes/orderbar.php');

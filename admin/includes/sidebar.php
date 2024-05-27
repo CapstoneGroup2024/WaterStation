@@ -61,7 +61,7 @@
         </li>
         <!--------------- ORDERS --------------->
         <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
+          <a class="nav-link text-dark-blue " href="orders.php" id="side-bar-link-box">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10" id="side-bar-icon">shopping_bag</i>
             </div>

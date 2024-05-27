@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('../config/dbconnect.php');
 include('../functions/myAlerts.php');
  
@@ -183,14 +184,25 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         redirect("editProduct.php?id=$product_id","Something went wrong");
     }
 } else if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUEST
-    $productId = isset($_POST['selectedProduct']) ? $_POST['selectedProduct'] : null;
-    $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : null;
+   
+    // RETRIEVE SELECTED PRODUCT, CATEGORY, AND QUANTITY FROM POST REQUEST
+    if(!isset($_SESSION['user_id'])){
+        $_SESSION['message'] = "Please log in to add items to your cart.";
+        header('Location: ../homepage.php');
+        exit; // Terminate further execution
+    }
+
+    $userId = $_SESSION['user_id'];
+
+    // Retrieve product and category data
+    $productId = isset($_POST['selectedProduct']) ? $_POST['selectedProduct'] : 1;
+    $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : 1;
     $quantity = isset($_POST['quantityInput']) ? $_POST['quantityInput'] : 1; // DEFAULT QUANTITY IS 1
 
-    $userId = $_SESSION['user_id']; // GET USER ID FROM SESSION
-
     if(empty($productId) || empty($categoryId)){ // CHECK IF PRODUCT ID OR CATEGORY ID IS EMPTY
-        redirect("../order.php","Please choose a product/category!");
+        $_SESSION['message'] = "Please choose a product/category!";
+        header('Location: ../order.php');
+        exit; // Terminate further execution
     } else {
         // FETCH PRODUCT AND CATEGORY DATA FROM DATABASE
         $product_query = "SELECT * FROM product WHERE id = '$productId'";
@@ -201,6 +213,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         
         $product = mysqli_fetch_assoc($product_result);
         $category = mysqli_fetch_assoc($category_result);
+
 
         // STORE CART ITEM DETAILS IN AN ARRAY
         $cartItem = array(
@@ -215,55 +228,26 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         );
 
         // INSERT CART ITEM INTO DATABASE TABLE
-        $insert_query = "INSERT INTO cart_items (user_id, product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
-                         VALUES ('$userId', '$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
-        $insert_query_run = mysqli_query($con, $insert_query);
+        if($userId){
+            // Insert cart item into the database table
+            $insert_query = "INSERT INTO cart_items (user_id, product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
+                             VALUES ('$userId', '$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
+            $insert_query_run = mysqli_query($con, $insert_query);
 
-        // REDIRECT TO CART PAGE WITH SUCCESS MESSAGE IF INSERTION WAS SUCCESSFUL, OTHERWISE SHOW ERROR MESSAGE
-        if($insert_query_run){
-            redirect("../cart.php","ITEM ADDED TO CART SUCCESSFULLY");
-        }else{
-            redirect("../cart.php","SOMETHING WENT WRONG");
+                // Check if the query executed successfully
+                if($insert_query_run){
+                    $_SESSION['message'] = "ITEM ADDED TO CART SUCCESSFULLY!";
+                    header('Location: ../cart.php');  
+                      
+                } else {
+                    $_SESSION['message'] = "Error: " . mysqli_error($con); // Get detailed error message
+                    header('Location: ../register.php');
+                }
+        } else {
+            // Handle the case when product or category data cannot be fetched
+            $_SESSION['message'] = "Failed to fetch product or category data.";
+            header('Location: ../admin/index.php');
         }
     }
-} else if (isset($_POST['placeOrderBtn'])) {
-    // Retrieve form data
-    $userId = $_SESSION['user_id'];
-    $subtotal = isset($_POST['subtotal']) ? $_POST['subtotal'] : 0;
-    $deliveryFee = isset($_POST['delivery']) ? $_POST['delivery'] : 0;
-    $grandTotal = isset($_POST['grand']) ? $_POST['grand'] : 0;
-
-    // Retrieve mode of payment
-    $modeOfPaymentOptions = ['cod', 'gcash'];
-    $modeOfPayment = implode(', ', array_filter($_POST, function($key) use ($modeOfPaymentOptions) {
-        return in_array($key, $modeOfPaymentOptions);
-    }, ARRAY_FILTER_USE_KEY));
-
-    // Fetch cart items for the user
-    $cartItems = getCartItemsByUserId($userId);
-
-    // Check if cart items were fetched successfully
-    if ($cartItems) {
-        // Iterate over cart items to insert them into the orders table
-        while ($cartItem = mysqli_fetch_assoc($cartItems)) {
-            $productId = $cartItem['product_id'];
-            $quantity = $cartItem['quantity'];
-            
-            // Insert query to insert each item into the database
-            $insertQuery = "INSERT INTO orders (user_id, product_id, quantity, mode, subtotal, delivery_fee, grand_total) 
-                            VALUES ('$userId', '$productId', '$quantity', '$modeOfPayment', '$subtotal', '$deliveryFee', '$grandTotal')";
-    
-            // Execute the query
-            if (mysqli_query($con, $insertQuery)) {
-                redirect("../payment.php","Processing Payment");
-            } else {
-                redirect("../order.php","Error retrieving cart items".mysqli_error($con));
-            }
-        }
-    } else {
-        redirect("../order.php","Error retrieving cart items");
-    }
-} else {
-    redirect("../order.php","Place order button not clicked");
 }
 

@@ -1,7 +1,7 @@
 <!--------------- INCLUDES --------------->
 <?php 
-    include('includes/header.php');
     session_start();
+    include('includes/header.php');
 ?>
 <!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/login.css">    

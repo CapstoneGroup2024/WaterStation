@@ -2,12 +2,16 @@
 <?php
     session_start();
 
+    // INCLUDE NECESSARY FILES
     include('includes/header.php');
     include('includes/orderbar.php');
     include('functions/userFunctions.php');
+
+    // GET USER ID FROM SESSION
+    $userId = $_SESSION['user_id'];
 ?>
 
-<section class="p-5 p-md-5 text-sm-start" id="Cart" style="margin-bottom: 100px">
+<section class="p-5 p-md-5 text-sm-start" id="Purchases" style="margin-bottom: 100px">
     <form action="admin/codes.php" method="POST">
         <div class="container" style="margin-top: 60px;">
             <div class="row">
@@ -36,51 +40,51 @@
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Remove</h6>
                     </div>
-                </div>
-                
-                <?php
-                    $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
+            </div>
+            
+            <?php
+                $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
 
-                    if (mysqli_num_rows($cartItems) > 0) {
-                        foreach ($cartItems as $cart) { 
-                            ?>
-                                <!--------------- CART ITEMS --------------->
-                                <div class="card shadow-sm mb-3 cart_data">
-                                    <div class="row align-items-center p-3">
-                                        <div class="col-md-2">
-                                            <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $cart['product_name']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $cart['category_name']; ?></h5>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
-                                        </div>
-                                        <div class="col-md-2" id="qty">
-                                            <div class="input-group mb-1" style="width:115px;">
-                                                <button class="input-group-text decrement-btn">-</button>
-                                                <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
-                                                <button class="input-group-text increment-btn">+</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <h5>₱<span class="total-price itotal"></span></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="hidden" name="cart_id" value="<?= $cart['id']; ?>">
-                                            <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php
-                        }
-                    } else {
-                        echo "No records found";
+                if(mysqli_num_rows($cartItems) > 0){ // ITERATE THROUGH EACH ITEM
+                    foreach($cartItems as $cart){ 
+            ?>
+                <!--------------- CART ITEMS --------------->
+                <div class="card shadow-sm mb-3 cart_data">
+                    <div class="row align-items-center p-3">
+                        <div class="col-md-2">
+                            <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
+                        </div>
+                        <div class="col-md-2">
+                            <h5><?= $cart['product_name']; ?></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <h5><?= $cart['category_name']; ?></h5>
+                        </div>
+                        <div class="col-md-1">
+                            <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
+                        </div>
+                        <div class="col-md-2" id="qty">
+                            <div class="input-group mb-1" style="width:115px;">
+                                <button class="input-group-text decrement-btn">-</button>
+                                <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
+                                <button class="input-group-text increment-btn">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <h5>₱<span class="total-price itotal"></span></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="hidden" name="cart_id" value="<?= $cart['id'];?>">
+                            <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
+                        </div>
+                    </div>
+                </div>
+            <?php
                     }
-                ?>
+                } else {
+                    echo "No records found";
+                }
+            ?>
             </div>
         </div>
         <div class="container" style="width: 300px; display: flex; float:left;">
@@ -122,17 +126,11 @@
         </div>
     </form>
 </section>
-<section>
-    <?php
-    echo $_SESSION['user_id'];
-
-    ?>
-</section>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
     <?php
-        if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
+        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
     ?>
         alertify.set('notifier','position', 'top-right');
         var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
@@ -147,7 +145,7 @@
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
     <?php
-        if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
+        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
     ?>
     alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
     <?php
@@ -155,7 +153,5 @@
         }
     ?>
 </script>
-
-<script src="assets/js/cartQty.js"></script>
 <!--------------- FOOTER --------------->
-<?php include('includes/footer.php'); ?>
+<?php include('includes/footer.php');?>

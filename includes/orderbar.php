@@ -1,5 +1,5 @@
 <!----- START SESSION ----->
-<?php session_start(); ?> 
+
 <!--------------- NAVBAR --------------->
 <nav class="navbar fixed-top navbar-expand-lg bg-custom-success navbar-dark py-2 " id="navbg">
   <div class="container-fluid" id="navbar"> 
@@ -27,8 +27,13 @@
           </li>
           <li class="nav-item px-lg-1" style="font-family: 'Poppins', sans-serif; color: #013D67; 
           font-weight: bold;">/</li>
-          <li class="nav-item px-lg-1" style="margin-right: 20px;">
+          <li class="nav-item px-lg-1">
             <a class="nav-link px-lg-1" id="contact" href="cart.php#Cart">Cart</a>
+          </li>
+          <li class="nav-item px-lg-1" style="font-family: 'Poppins', sans-serif; color: #013D67; 
+          font-weight: bold;">/</li>
+          <li class="nav-item px-lg-1" style="margin-right: 20px;">
+            <a class="nav-link px-lg-1" id="contact" href="purchases.php#Purchase">Purchases</a>
           </li>
         <!--------------- DROP DOWN FOR LOGOUT --------------->
         <?php

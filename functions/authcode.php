@@ -193,9 +193,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        // CHECK IF "REMEMBER ME" IS CHECKED
-        $remember_me = isset($_POST['remember_me']) ? true : false;
-
+       
         // PREPARE SQL QUERY TO CHECK IF EMAIL EXISTS IN THE DATABASE
         $login_query = "SELECT * FROM users WHERE email=?";
         $stmt = mysqli_prepare($con, $login_query);
@@ -212,30 +210,24 @@
             if(password_verify($password, $stored_password)) {
                 // SET SESSION VARIABLES FOR AUTHENTICATED USER
                 $_SESSION['auth'] = true;
-                $_SESSION['user_id'] = $userdata['user_id'];
+                $_SESSION['user_id'] = $userdata['user_id']; // Ensure that user_id is set in the session
                 $_SESSION['auth_user'] = [
                     'name' => $userdata['name'],
                     'email' => $userdata['email']
                 ];
-
-                $role = $userdata['role']; // GET USER ROLE
+                $role = $userdata['role']; // Get user role
                 $_SESSION['role'] = $role;
-
-                // REDIRECT BASED ON USER ROLE
+                
+                // Debugging: Output user_id to check if it's properly set
+                echo "User ID: " . $_SESSION['user_id'];
+                
+                // Redirect based on user role
                 if($role == 1) {
                     $_SESSION['message'] = "Welcome to Admin Dashboard";
                     header('Location: ../admin/index.php');
                 } else {
                     $_SESSION['message'] = "Logged in Successfully";
                     header('Location: ../homepage.php');
-                }
-
-                // IF "REMEMBER ME" IS CHECKED, SET A LONG-TERM COOKIE
-                if ($remember_me) {
-                    $token = bin2hex(random_bytes(32)); // GENERATE A RANDOM TOKEN
-                    // SET COOKIE TO EXPIRE IN 30 DAYS (ADJUST AS NEEDED)
-                    setcookie('remember_me', $token, time() + (30 * 24 * 60 * 60), '/', '', false, true);
-                    // SAVE THE TOKEN IN THE DATABASE FOR FUTURE AUTHENTICATION
                 }
             } else {
                 // SET ERROR MESSAGE FOR INCORRECT PASSWORD

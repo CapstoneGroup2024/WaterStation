@@ -1,5 +1,7 @@
 <!--------------- INCLUDES --------------->
 <?php 
+    session_start();
+
   include('includes/header.php');
   include('includes/navbar.php');
   include('functions/userFunctions.php'); 
@@ -147,6 +149,11 @@
         <p>Copyright © Aquaflow by Aquaflow Water Station</p>
       </div>
     </footer>
+</section>
+<section>
+    <?php
+    echo $_SESSION['user_id'];
+    ?>
 </section>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
