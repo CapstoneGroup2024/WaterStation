@@ -1,14 +1,21 @@
 <!--------------- INCLUDES --------------->
 <?php
     session_start();
-
+    if (!isset($_SESSION['auth'])) {
+        // User is not authenticated, redirect to index.php
+        $_SESSION['message'] = "Please login first";
+        header('Location: index.php');
+        exit();
+    }
     include('includes/header.php');
     include('includes/orderbar.php');
     include('functions/userFunctions.php');
+
+    $userId = $_SESSION['user_id'];
 ?>
 
 <section class="p-5 p-md-5 text-sm-start" id="Cart" style="margin-bottom: 100px">
-    <form action="admin/codes.php" method="POST">
+    <form action="functions/order_code.php" method="POST">
         <div class="container" style="margin-top: 60px;">
             <div class="row">
                 <div class="col-md-10">

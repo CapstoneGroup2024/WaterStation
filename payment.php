@@ -1,7 +1,12 @@
 <!--------------- INCLUDES --------------->
 <?php
     session_start();
-
+    if (!isset($_SESSION['auth'])) {
+        // User is not authenticated, redirect to index.php
+        $_SESSION['message'] = "Please login first";
+        header('Location: index.php');
+        exit();
+    }
     // INCLUDE NECESSARY FILES
     include('includes/header.php');
     include('includes/orderbar.php');

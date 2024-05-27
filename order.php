@@ -1,5 +1,12 @@
 <?php
     session_start();
+    
+    if (!isset($_SESSION['auth'])) {
+        // User is not authenticated, redirect to index.php
+        $_SESSION['message'] = "Please login first";
+        header('Location: index.php');
+        exit();
+    }
 
     include('includes/header.php');
     include('includes/orderbar.php');
@@ -28,7 +35,7 @@
             <h3 id="sizehead" style="font-weight: bold; font-family: 'Poppins', sans-serif;">Products</h3>
             <hr>
         </div>
-        <form action="admin/codes.php" method="POST">
+        <form action="functions/order_code.php" method="POST">
         <?php
             $products = getAllActive("product");
 
