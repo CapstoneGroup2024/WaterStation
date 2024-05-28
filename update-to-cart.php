@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
 
     // Check if the product is in the user's cart
-    $sql = "SELECT quantity FROM cart_items WHERE user_id = ? AND id = ?";
-    $stmt = $con->prepare($sql);
+    $quantity_sql = "SELECT quantity FROM cart_items WHERE user_id = ? AND id = ?";
+    $stmt = $con->prepare($quantity_sql);
     $stmt->bind_param("ii", $user_id, $id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -33,12 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            $_SESSION['message'] = 'Quantity updated successfully';
+            $_SESSION['message'] = '✔ Quantity updated successfully';
         } else {
-            $_SESSION['message'] = 'Failed to update quantity';
+            $_SESSION['message'] = '✖ Failed to update quantity';
         }
     } else {
-        $_SESSION['message'] = "Product not found in the cart for user ID: $user_id and product ID: $id with quantity: $quantity";
+        $_SESSION['message'] = "✖ Product not found in the cart for user ID: $user_id and product ID: $id with quantity: $quantity";
     }
 
     $stmt->close();

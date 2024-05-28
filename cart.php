@@ -140,18 +140,16 @@
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
-    <?php
-        if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
-    ?>
-        alertify.set('notifier','position', 'top-right');
-        var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>'); // DISPLAY MESSAGE NOTIF with animated check icon
-        notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
-        this.classList.remove('animated-check');
-        }); // REMOVE ANIMATION CLASS AFTER ANIMATION ENDS
-    <?php
-        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-    }
-    ?>
+<?php
+if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
+?>
+    alertify.set('notifier','position', 'top-right');
+    alertify.success('<?php echo $_SESSION['message']; ?>'); // DISPLAY MESSAGE NOTIF
+<?php
+    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+}
+?>
+
 </script>
 <script>
     <?php
