@@ -52,7 +52,7 @@
                         foreach ($cartItems as $cart) { 
                             ?>
                                 <!--------------- CART ITEMS --------------->
-                                <div class="card shadow-sm mb-3 cart_data">
+                                <div class="card shadow-sm mb-3 cart_data cartpage">
                                     <div class="row align-items-center p-3">
                                         <div class="col-md-2">
                                             <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
@@ -68,13 +68,14 @@
                                         </div>
                                         <div class="col-md-2" id="qty">
                                             <div class="input-group mb-1" style="width:115px;">
-                                                <button class="input-group-text decrement-btn">-</button>
+                                                <button class="input-group-text decrement-btn changeQuantity">-</button>
                                                 <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
-                                                <button class="input-group-text increment-btn">+</button>
+                                                <button class="input-group-text increment-btn changeQuantity">+</button>
+                                                <input type="hidden" class="product_id" name="product_id" value="<?= $cart['id']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-1">
-                                            <h5>₱<span class="total-price itotal"></span></h5>
+                                            <h5><span class="total-price itotal"></span></h5>
                                         </div>
                                         <div class="col-md-2">
                                             <input type="hidden" name="cart_id" value="<?= $cart['id']; ?>">
@@ -135,6 +136,7 @@
 
     ?>
 </section>
+<script src="assets/js/cartQty.js"></script>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
@@ -151,7 +153,6 @@
     }
     ?>
 </script>
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
     <?php
         if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
@@ -162,7 +163,5 @@
         }
     ?>
 </script>
-
-<script src="assets/js/cartQty.js"></script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php'); ?>

@@ -1,71 +1,103 @@
+$(document).ready(function () {
+    function updateTotalPrice() {
+        var subtotal = 0;
 
-    $(document).ready(function () {
-        function updateTotalPrice() {
-            var subtotal = 0;
+        $('.cart_data').each(function() {
+            var qty = parseInt($(this).find('.input-qty').val(), 10);
+            var price = parseFloat($(this).find('.iprice').text().replace('₱', ''));
+            var total = qty * price;
+            total = Math.round(total);
+            subtotal += total;
+            $(this).find('.itotal').text('₱' + total);
+        });
 
-            $('.cart_data').each(function() {
-                var qty = parseInt($(this).find('.input-qty').val(), 10);
-                var price = parseFloat($(this).find('.iprice').text().replace('₱', ''));
-                var total = qty * price;
-                total = Math.round(total);
-                subtotal += total;
-                $(this).find('.itotal').text('₱' + total);
-            });
+        var deliveryFee = 10;
+        var grandTotal = subtotal + deliveryFee;
 
-            var deliveryFee = 10;
-            var grandTotal = subtotal + deliveryFee;
+        $('.subtotal-price').text('₱' + subtotal.toFixed(2));
+        $('.delivery-fee').text('₱' + deliveryFee.toFixed(2));
+        $('.grand-total').text('₱' + grandTotal.toFixed(2));
 
-            $('.subtotal-price').text('₱' + subtotal.toFixed(2));
-            $('.delivery-fee').text('₱' + deliveryFee.toFixed(2));
-            $('.grand-total').text('₱' + grandTotal.toFixed(2));
-        }
-
-        function updateQuantity(cartId, qty) {
-            $.ajax({
-                url: 'update_quantity.php',
-                method: 'POST',
-                data: { cart_id: cartId, quantity: qty },
-                success: function(response) {
-                    updateTotalPrice();
-                }
-            });
-        }
-
-        $('.increment-btn').click(function (e) {
-            var qtyInput = $(this).siblings('.input-qty');
-            var qty = parseInt(qtyInput.val(), 10);
-            qty = isNaN(qty) ? 0 : qty;
-            var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
-
-            if (qty < 100) {
-                qty++;
-            } else {
-                qty = 1;
+        // Update database with new subtotal and grand total
+        $.ajax({
+            url: 'update_total_price.php',
+            method: 'POST',
+            data: { subtotal: subtotal, grandTotal: grandTotal },
+            success: function(response) {
+                // Database updated successfully
             }
-            qtyInput.val(qty);
-            updateQuantity(cartId, qty);
         });
+    }
 
-        $('.decrement-btn').click(function (e) {
-            e.preventDefault();
-            var qtyInput = $(this).siblings('.input-qty');
-            var qty = parseInt(qtyInput.val(), 10);
-            qty = isNaN(qty) ? 0 : qty;
-            var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
-
-            if (qty > 1) {
-                qty--;
+    function updateQuantity(cartId, qty) {
+        $.ajax({
+            url: 'update_quantity.php',
+            method: 'POST',
+            data: { cart_id: cartId, quantity: qty },
+            success: function(response) {
+                updateTotalPrice();
             }
-            qtyInput.val(qty);
-            updateQuantity(cartId, qty);
         });
+    }
 
-        $('.input-qty').on('change', function() {
-            var qty = parseInt($(this).val(), 10);
-            var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
-            updateQuantity(cartId, qty);
-        });
+    $('.increment-btn').click(function (e) {
+        var qtyInput = $(this).siblings('.input-qty');
+        var qty = parseInt(qtyInput.val(), 10);
+        qty = isNaN(qty) ? 0 : qty;
+        var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
 
-        updateTotalPrice(); // Initial call to set values
+        if (qty < 100) {
+            qty++;
+        } else {
+            qty = 1;
+        }
+        qtyInput.val(qty);
+        updateQuantity(cartId, qty);
     });
 
+    $('.decrement-btn').click(function (e) {
+        e.preventDefault();
+        var qtyInput = $(this).siblings('.input-qty');
+        var qty = parseInt(qtyInput.val(), 10);
+        qty = isNaN(qty) ? 0 : qty;
+        var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
+
+        if (qty > 1) {
+            qty--;
+        }
+        qtyInput.val(qty);
+        updateQuantity(cartId, qty);
+    });
+
+    $('.input-qty').on('change', function() {
+        var qty = parseInt($(this).val(), 10);
+        var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
+        updateQuantity(cartId, qty);
+    });
+
+    $('.changeQuantity').click(function (e) {
+        e.preventDefault();
+
+        var quantity = $(this).closest(".input-group").find('.input-qty').val();
+        var product_id = $(this).closest(".input-group").find('.product_id').val();
+
+        var data = {
+            'quantity': quantity,
+            'product_id': product_id,
+        };
+
+        $.ajax({
+            url: 'update-to-cart.php',
+            type: 'POST',
+            data: data,
+            success: function () {
+                // Update total prices after successful update
+                updateTotalPrice();
+                // Reload the page or update other elements as needed
+                window.location.reload();
+            }
+        });
+    });
+
+    updateTotalPrice(); // Initial call to set values
+});
