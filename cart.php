@@ -91,6 +91,7 @@
                 ?>
             </div>
         </div>
+
         <div class="container" style="width: 300px; display: flex; float:left;">
             <div class="card-body shadow p-3" style="border-radius: 20px;" style="font-family: 'Poppins';">
                 <div class="col align-items-center p-2" style="text-align: center">
@@ -115,8 +116,9 @@
                     <!--------------- DELIVERY FEE --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <input type="hidden" name="delivery" value="">
-                        <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;" name="delivery"></span></h5>
+                        <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;" name="delivery"><?= $cart['additional_price']; ?></span></h5>
                     </div>
+
                     <!--------------- GRAND TOTAL --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <input type="hidden" name="grand" value="">

@@ -2,9 +2,6 @@
 session_start();
 include('config/dbconnect.php');
 
-echo $_SESSION['user_id'];
-echo $id = $_POST['product_id'];
-echo $quantity = $_POST['quantity'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['product_id'];
     $quantity = $_POST['quantity'];
@@ -38,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['message'] = '✖ Failed to update quantity';
         }
     } else {
-        $_SESSION['message'] = "✖ Product not found in the cart for user ID: $user_id and product ID: $id with quantity: $quantity";
+        $_SESSION['message'] = "✖ Product not found in the cart.";
     }
 
     $stmt->close();
