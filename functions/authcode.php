@@ -122,7 +122,7 @@
             header("Location: ../register.php");
             exit();
         }
-
+    
         // VERIFICATION CODE LOGIC
         if (isset($_POST['verifyBtn'])) {
             // RETRIEVE VERIFICATION CODE AND USER_ID FROM FORM
@@ -135,7 +135,7 @@
                 header("Location: ../verification.php?email=" . urlencode($email));
                 exit();
             }
-
+    
             // ESTABLISH DATABASE CONNECTION
             $con = mysqli_connect("localhost:3306", "root", "", "aquaflowdb");
             if (!$con) {
@@ -156,7 +156,7 @@
                 // FETCH THE VERIFICATION CODE FROM DATABASE
                 $row = $result->fetch_assoc();
                 $stored_verification_code = $row['verification_code'];
-
+    
                 if ($code === $stored_verification_code) {
                     // IF CODES MATCH, INSERT USER DATA INTO DATABASE
                     $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
@@ -168,9 +168,12 @@
                         header("Location: ../register.php");
                         exit();
                     }
-
+    
                     $stmt->bind_param("sssss", $name, $email, $phone, $address, $encrypted_password);
                     $stmt->execute();
+                    // UNSET THE USER ID AND REGISTRATION DATA SESSION VARIABLES AFTER SUCCESSFUL REGISTRATION
+                    unset($_SESSION['registration_data']);
+                    unset($_SESSION['user_id']);
                     // SET SUCCESS MESSAGE AND REDIRECT TO REGISTRATION PAGE
                     $_SESSION['message'] = "Registered Successfully";
                     header("Location: ../register.php");
@@ -183,12 +186,13 @@
                 }
             } else {
                 // IF NO VERIFICATION CODE FOUND, SET ERROR MESSAGE AND REDIRECT TO REGISTRATION PAGE
-                $_SESSION['message'] = "No verification code found for the provided user $email and user_id: $user_id";
+                $_SESSION['message'] = "No verification code found for the provided email $email and user_id: $user_id";
                 header("Location: ../register.php");
                 exit();
             }
         }
-    } else if (isset($_POST['logButton'])) {
+    }
+     else if (isset($_POST['logButton'])) {
         // RETRIEVE EMAIL AND PASSWORD FROM POST REQUEST
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -217,9 +221,6 @@
                 ];
                 $role = $userdata['role']; // Get user role
                 $_SESSION['role'] = $role;
-                
-                // Debugging: Output user_id to check if it's properly set
-                echo "User ID: " . $_SESSION['user_id'];
                 
                 // Redirect based on user role
                 if($role == 1) {
