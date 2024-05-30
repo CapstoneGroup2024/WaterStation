@@ -95,26 +95,6 @@ body {
     text-decoration: underline;
 }
 
-/* OR */
-.line {
-    position: relative;
-    height: 1px;
-    width: 100%;
-    margin: 36px 0;
-    background-color: #000000;
-}
-
-.line::before {
-    content: 'or';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    color: #000000;
-    padding: 0 15px;
-}
-
 /* Log In */
 #wrapper .btn {
     width: 100%;
@@ -160,7 +140,8 @@ body {
     }
     .title{
         font-size: 100px;
-        margin-bottom: -90px;
+        margin-top: 80px;
+        margin-bottom: -120px;
     }
     #wrapper .btn {
         width: 80%;
@@ -189,7 +170,8 @@ body {
     }
     .title{
         font-size: 100px;
-        margin-bottom: 10px;
+        margin-top: 80px;
+        margin-bottom: -120px;
     }
     .input-box input {
         height: 112%;
@@ -213,12 +195,12 @@ body {
 @media (min-width: 1200px) {
     #wrapper {
         max-width: 550px;
-        height: 100px;
+        height: 80px;
     }
     .title{
         font-size: 100px;
-        margin-top: 50px;
-        margin-bottom: 10px;
+        margin-top: 80px;
+        margin-bottom: -120px;
     }
     .input-box input {
         height: 112%;

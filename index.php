@@ -15,7 +15,6 @@
     <!--------------- RIGHT SIDE --------------->
     <div class="col-lg-6">
         <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0" id="wrapper">
-            <!----------Logo Side---------->
             <h1 style="font-size: 60px" class="title">Login</h1>
             <form action="functions/authcode.php" method="POST">
                 <div class="input-box">
@@ -29,10 +28,6 @@
                 <div class="remember-forgot">
                     <label><input class="remember" name="remember_me" type="checkbox">Remember me</label>
                     <a href="forgot-password.php">Forgot password?</a>
-                </div>
-                <div class="line"></div>
-                <div class="register-link">
-                    <p class="text" id="contactNUm">Login using <a href="Register.html" >Contact Number</a></p>
                 </div>
                 <button type="submit" name="logButton" class="btn">Login</button> 
                 <div class="register-link">
