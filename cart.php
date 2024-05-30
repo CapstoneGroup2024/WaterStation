@@ -65,6 +65,7 @@
                                         </div>
                                         <div class="col-md-1">
                                             <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
+                                            <span class="additional_price_hidden"><?= $cart['additional_price']; ?></span>
                                         </div>
                                         <div class="col-md-2" id="qty">
                                             <div class="input-group mb-1" style="width:115px;">
@@ -113,11 +114,12 @@
                         <input type="hidden" name="subtotal" value="">
                         <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;" name="subtotal"></span></h5>
                     </div>
-                    <!--------------- DELIVERY FEE --------------->
+                    <!--------------- ADDITIONAL FEE --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <input type="hidden" name="delivery" value="">
-                        <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;" name="delivery"><?= $cart['additional_price']; ?></span></h5>
+                        <h5>Additional Fee: <span class="additional-fee" style="display: flex; float:right;" name="delivery"></span></h5>
                     </div>
+
 
                     <!--------------- GRAND TOTAL --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">

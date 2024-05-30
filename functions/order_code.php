@@ -27,13 +27,12 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         // FETCH PRODUCT AND CATEGORY DATA FROM DATABASE
         $product_query = "SELECT * FROM product WHERE id = '$productId'";
         $category_query = "SELECT * FROM categories WHERE id = '$categoryId'";
-        
+
         $product_result = mysqli_query($con, $product_query);
         $category_result = mysqli_query($con, $category_query);
-        
+
         $product = mysqli_fetch_assoc($product_result);
         $category = mysqli_fetch_assoc($category_result);
-
 
         // STORE CART ITEM DETAILS IN AN ARRAY
         $cartItem = array(

@@ -1,33 +1,35 @@
 $(document).ready(function () {
     function updateTotalPrice() {
         var subtotal = 0;
-
+        var finalAdd = 0;
+    
         $('.cart_data').each(function() {
             var qty = parseInt($(this).find('.input-qty').val(), 10);
             var price = parseFloat($(this).find('.iprice').text().replace('₱', ''));
+            var additional_price = parseFloat($(this).find('.additional_price_hidden').text().replace('₱', ''));
             var total = qty * price;
             total = Math.round(total);
             subtotal += total;
+            finalAdd += additional_price;
             $(this).find('.itotal').text('₱' + total);
         });
-
-        var deliveryFee = 10;
-        var grandTotal = subtotal + deliveryFee;
-
-        $('.subtotal-price').text('₱' + subtotal.toFixed(2));
-        $('.delivery-fee').text('₱' + deliveryFee.toFixed(2));
-        $('.grand-total').text('₱' + grandTotal.toFixed(2));
-
-        // Update database with new subtotal and grand total
-        $.ajax({
-            url: 'update_total_price.php',
-            method: 'POST',
-            data: { subtotal: subtotal, grandTotal: grandTotal },
-            success: function(response) {
-                // Database updated successfully
-            }
-        });
-    }
+    
+            var grandTotal = subtotal + finalAdd;
+    
+            $('.subtotal-price').text('₱' + subtotal.toFixed(2));
+            $('.additional-fee').text('₱' + finalAdd.toFixed(2));
+            $('.grand-total').text('₱' + grandTotal.toFixed(2));
+    
+            // Update database with new subtotal and grand total
+            $.ajax({
+                url: 'update_total_price.php',
+                method: 'POST',
+                data: { subtotal: subtotal, grandTotal: grandTotal },
+                success: function(response) {
+                    // Database updated successfully
+                }
+            });
+        }
 
     function updateQuantity(cartId, qty) {
         $.ajax({
