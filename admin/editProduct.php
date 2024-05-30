@@ -31,8 +31,8 @@
                                         </div>
                                         <div class="col-md-6"> 
                                             <div class="form-group">
-                                                <label for="">Slug</label>
-                                                <input type="text" value="<?=$data['slug']; ?>" class="form-control" placeholder="Enter Slug" name="slug">
+                                                <label for="">Size</label>
+                                                <input type="text" value="<?=$data['size']; ?>" class="form-control" placeholder="Enter Size" name="size" >
                                             </div>
                                         </div>
                                         <div class="col-md-12"> 
@@ -44,52 +44,28 @@
                                                 <img src="../uploads/<?=$data['image']; ?>" height="50px" width="50px" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-md-6"> 
-                                            <div class="form-group">
-                                                <label for="">Size</label>
-                                                <input type="text" value="<?=$data['size']; ?>" class="form-control" placeholder="Enter Size" name="size" >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-12"> 
                                             <div class="form-group">
                                                 <label for="">Quantity</label>
                                                 <input type="number" value="<?=$data['quantity']; ?>" class="form-control" placeholder="Enter Quantity" name="quantity">
                                             </div>
                                         </div>
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-12"> 
                                             <div class="form-group">
                                                 <label for="">Original Price</label>
                                                 <input type="text" value="<?=$data['original_price']; ?>" class="form-control" placeholder="Enter Original Price" name="original_price" >
                                             </div>
                                         </div>
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-12"> 
                                             <div class="form-group">
                                                 <label for="">Selling Price</label>
                                                 <input type="text" value="<?=$data['selling_price']; ?>" class="form-control" placeholder="Enter Selling Price" name="selling_price">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12"> 
-                                            <div class="form-group">
-                                                <label for="">Meta Title</label>
-                                                <input type="text" value="<?=$data['meta_title']; ?>" class="form-control" placeholder="Enter Meta Title" name="meta_title">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12"> 
-                                            <div class="form-group">
-                                                <label for="">Meta Keywords</label>
-                                                <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" rows="3"><?=$data['meta_keywords']; ?></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6"> 
                                             <div class="form-group">
                                                 <label for="">Status (Check if Available) </label>
                                             <input type="checkbox" <?= $data['status'] ? "checked":""?> name="status">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6"> 
-                                            <div class="form-group">
-                                                <label for="">Trending </label>
-                                            <input type="checkbox" <?= $data['trending'] ? "checked":""?> name="popular">
                                             </div>
                                         </div>
                                         <!--------------- SAVE BUTTON--------------->

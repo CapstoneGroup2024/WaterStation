@@ -22,8 +22,8 @@
                             </div>
                             <div class="col-md-6"> 
                                 <div class="form-group">
-                                    <label for="">Slug</label>
-                                    <input type="text" class="form-control" placeholder="Enter Slug" name="slug" id="slug">
+                                    <label for="">Additional Price</label>
+                                    <input type="number" class="form-control" placeholder="Enter Additional Price" name="additional_price">
                                 </div>
                             </div>
                             <div class="col-md-12"> 
@@ -32,46 +32,16 @@
                                     <textarea class="form-control" name="description" placeholder="Enter Description" id="description" rows="3"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Additional Price</label>
-                                    <input type="number" class="form-control" placeholder="Enter Additional Price" name="additional_price">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Status (Check if Available) </label><br>
-                                <input type="checkbox" name="status">
-                                </div>
-                            </div>
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="">Popular </label><br>
-                                <input type="checkbox" name="popular">
-                                </div>
-                            </div>
                             <div class="col-md-12"> 
                                 <div class="form-group">
                                     <label for="">Upload Image</label>
                                     <input type="file" class="form-control" name="image" id="image">
                                 </div>
                             </div>
-                            <div class="col-md-12"> 
+                            <div class="col-md-4"> 
                                 <div class="form-group">
-                                    <label for="">Meta Title</label>
-                                    <input type="text" class="form-control" placeholder="Enter Meta Title" name="meta_title" id="meta_title">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="">Meta Description</label>
-                                    <textarea class="form-control" name="meta_description" placeholder="Enter Meta Description" id="meta_description" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12"> 
-                                <div class="form-group">
-                                    <label for="">Meta Keywords</label>
-                                    <textarea class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" id="meta_keywords" rows="3"></textarea>
+                                    <label for="">Status (Check if Available) </label><br>
+                                <input type="checkbox" name="status">
                                 </div>
                             </div>
                             <!--------------- SAVE BUTTON--------------->

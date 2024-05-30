@@ -77,41 +77,6 @@
             <span class="nav-link-text ms-1" id="side-bar-title">Customer</span>
           </a>
         </li>
-        <!--------------- PAYMENTS --------------->
-        <li class="nav-item" style="margin-left: 15px">
-            <span class="nav-link-text ms-1" id="side-bar-sub-title" >PAYMENTS</span>
-        </li>
-        <!--------------- ONLINE PAYMENT --------------->
-        <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
-            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10" id="side-bar-icon">payment</i>
-            </div>
-            <span class="nav-link-text ms-1" id="side-bar-title">Online Payment</span>
-          </a>
-        </li>
-        <!--------------- CASH ON DELIVERY --------------->
-        <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
-            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10" id="side-bar-icon">payments</i>
-            </div>
-            <span class="nav-link-text ms-1" id="side-bar-title">Cash on Delivery</span>
-          </a>
-        </li>
-        <!--------------- SYSTEM --------------->
-        <li class="nav-item" style="margin-left: 15px">
-            <span class="nav-link-text ms-1" id="side-bar-sub-title">SYSTEM</span>
-        </li>
-        <!--------------- SETTINGS --------------->
-        <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="#" id="side-bar-link-box">
-            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10" id="side-bar-icon">settings</i>
-            </div>
-            <span class="nav-link-text ms-1" id="side-bar-title">Settings</span>
-          </a>
-        </li>
       </ul>
     </div>
     <!--------------- LOGOUT BUTTON --------------->
