@@ -33,13 +33,13 @@
                                     foreach($product as $item){ // ITERATE THROUGH EACH CATEGORY
                             ?>
                                         <tr>
-                                            <td><?= $item['id']; ?></td>
+                                            <td name="product_id"><?= $item['id']; ?></td>
                                             <td><?= $item['name']; ?></td>
                                             <td><?= $item['size']; ?></td>
                                             <td>
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
-                                            <td><?= $item['original_price']; ?></td>
+                                            <td>₱ <?= $item['original_price']; ?></td>
                                             <td>
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>

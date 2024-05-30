@@ -32,12 +32,12 @@
                                     foreach($category as $item){ // ITERATE THROUGH EACH CATEGORY
                             ?>
                                         <tr>
-                                            <td><?= $item['id']; ?></td>
+                                            <td name="category_id"><?= $item['id']; ?></td>
                                             <td><?= $item['name']; ?></td>
                                             <td>
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
-                                            <td><?= $item['additional_price']; ?></td>
+                                            <td>₱ <?= $item['additional_price']; ?></td>
                                             <td>
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>

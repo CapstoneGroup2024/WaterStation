@@ -66,7 +66,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         redirect("editCategory.php?id=$category_id","Something went wrong");
     }
 } else if(isset($_POST['deleteCategory_button'])){
-    $category_id = mysqli_real_escape_string($con, $_POST['category_id']);
+    $category_id = $_POST['category_id'];
 
     $category_query = "SELECT * FROM categories WHERE id='$category_id'";
     $category_query_run = mysqli_query($con, $category_query);
@@ -162,16 +162,16 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("editProduct.php?id=$product_id","Something went wrong");
     }
-} else if(isset($_POST['deleteCategory_button'])){
-    $category_id = mysqli_real_escape_string($con, $_POST['category_id']);
+} else if(isset($_POST['deleteProduct_button'])){
+    $product_id = $_POST['product_id'];
 
-    $category_query = "SELECT * FROM categories WHERE id='$category_id'";
-    $category_query_run = mysqli_query($con, $category_query);
-    $category_data = mysqli_fetch_array($category_query_run);
-    $image = $category_data['image'];
+    $product_query = "SELECT * FROM product WHERE id='$product_id'";
+    $product_query_run = mysqli_query($con, $product_query);
+    $product_data = mysqli_fetch_array($product_query_run);
+    $image = $product_data['image'];
 
     // Delete the category
-    $delete_query = "DELETE FROM categories WHERE id='$category_id'";
+    $delete_query = "DELETE FROM product WHERE id='$product_id'";
     $delete_query_run = mysqli_query($con, $delete_query);
 
     if($delete_query_run){
@@ -180,18 +180,18 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         }
         
         // Get the last auto-increment value
-        $last_id_query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'aquaflowdb' AND TABLE_NAME = 'categories'";
+        $last_id_query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'aquaflowdb' AND TABLE_NAME = 'product'";
         $last_id_result = mysqli_query($con, $last_id_query);
         $last_id_row = mysqli_fetch_assoc($last_id_result);
         $last_auto_increment_value = $last_id_row['AUTO_INCREMENT'];
 
         // Set the auto-increment value to the last deleted ID
-        $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $category_id";
+        $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $product_id";
         mysqli_query($con, $alter_query);
 
-        redirect("category.php","Category Deleted Successfully");
+        redirect("product.php","Product Deleted Successfully");
     } else{
-        redirect("category.php","Something went wrong");
+        redirect("product.php","Something went wrong");
     }
 }
 
