@@ -81,17 +81,6 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         if(file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
-        
-        // Get the last auto-increment value
-        $last_id_query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'aquaflowdb' AND TABLE_NAME = 'categories'";
-        $last_id_result = mysqli_query($con, $last_id_query);
-        $last_id_row = mysqli_fetch_assoc($last_id_result);
-        $last_auto_increment_value = $last_id_row['AUTO_INCREMENT'];
-
-        // Set the auto-increment value to the last deleted ID
-        $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $category_id";
-        mysqli_query($con, $alter_query);
-
         redirect("category.php","Category Deleted Successfully");
     } else{
         redirect("category.php","Something went wrong");
@@ -178,17 +167,6 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         if(file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
-        
-        // Get the last auto-increment value
-        $last_id_query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'aquaflowdb' AND TABLE_NAME = 'product'";
-        $last_id_result = mysqli_query($con, $last_id_query);
-        $last_id_row = mysqli_fetch_assoc($last_id_result);
-        $last_auto_increment_value = $last_id_row['AUTO_INCREMENT'];
-
-        // Set the auto-increment value to the last deleted ID
-        $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $product_id";
-        mysqli_query($con, $alter_query);
-
         redirect("product.php","Product Deleted Successfully");
     } else{
         redirect("product.php","Something went wrong");

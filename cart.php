@@ -46,50 +46,82 @@
                 </div>
                 
                 <?php
-                    $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
-
-                    if (mysqli_num_rows($cartItems) > 0) {
-                        foreach ($cartItems as $cart) { 
+                $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
+                
+                if (mysqli_num_rows($cartItems) > 0) {
+                    foreach ($cartItems as $cart) { 
+                        $productActive = isProductActive($cart['product_id'], $cart['category_id'], $con);
+                        
+                        if($productActive){
+            ?>
+                <!--------------- CART ITEMS --------------->
+                <div class="card shadow-sm mb-3 cart_data cartpage">
+                    <div class="row align-items-center p-3">
+                        <div class="col-md-2">
+                            <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
+                        </div>
+                        <div class="col-md-2">
+                            <h5><?= $cart['product_name']; ?></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <h5><?= $cart['category_name']; ?></h5>
+                        </div>
+                        <div class="col-md-1">
+                            <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
+                            <span class="additional_price_hidden" style="display:none;"><?= $cart['additional_price']; ?></span>
+                        </div>
+                        <div class="col-md-2" id="qty">
+                            <div class="input-group mb-1" style="width:115px;">
+                                <button class="input-group-text decrement-btn changeQuantity">-</button>
+                                <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
+                                <button class="input-group-text increment-btn changeQuantity">+</button>
+                                <input type="hidden" class="product_id" name="product_id" value="<?= $cart['id']; ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <h5><span class="total-price itotal"></span></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="hidden" name="cart_id" value="<?= $cart['id']; ?>">
+                            <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
+                        </div>
+                    </div>
+                </div>
+            <?php
+                        } else {
                             ?>
-                                <!--------------- CART ITEMS --------------->
-                                <div class="card shadow-sm mb-3 cart_data cartpage">
-                                    <div class="row align-items-center p-3">
-                                        <div class="col-md-2">
-                                            <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $cart['product_name']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $cart['category_name']; ?></h5>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
-                                            <span class="additional_price_hidden"><?= $cart['additional_price']; ?></span>
-                                        </div>
-                                        <div class="col-md-2" id="qty">
-                                            <div class="input-group mb-1" style="width:115px;">
-                                                <button class="input-group-text decrement-btn changeQuantity">-</button>
-                                                <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
-                                                <button class="input-group-text increment-btn changeQuantity">+</button>
-                                                <input type="hidden" class="product_id" name="product_id" value="<?= $cart['id']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <h5><span class="total-price itotal"></span></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="hidden" name="cart_id" value="<?= $cart['id']; ?>">
-                                            <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
-                                        </div>
+                            <div class="card shadow-sm mb-3 cartpage" style="background-color: #DFE3E5;  opacity: 0.8;">
+                                <div class="row align-items-center p-3">
+                                    <div class="col-md-2">
+                                        <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5><?= $cart['product_name']; ?></h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5><?= $cart['category_name']; ?></h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5 style="color: red; font-weight: bold; font-size: 17px">PRODUCT NOT AVAILABLE</h5>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <h5></h5>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="hidden" name="cart_id_<?= $cart['id']; ?>" value="<?= $cart['id']; ?>">
+                                        <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
                                     </div>
                                 </div>
+                            </div>
                             <?php
                         }
-                    } else {
-                        echo "No records found";
+                        
                     }
-                ?>
+                } else {
+                    echo "No records found";
+                }
+            ?>
+
             </div>
         </div>
 
@@ -119,8 +151,6 @@
                         <input type="hidden" name="delivery" value="">
                         <h5>Additional Fee: <span class="additional-fee" style="display: flex; float:right;" name="delivery"></span></h5>
                     </div>
-
-
                     <!--------------- GRAND TOTAL --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
                         <input type="hidden" name="grand" value="">
@@ -140,6 +170,7 @@
 
     ?>
 </section>
+
 <script src="assets/js/cartQty.js"></script>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>

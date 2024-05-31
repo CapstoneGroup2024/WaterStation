@@ -69,34 +69,29 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         }
     }
 } else if(isset($_POST['deleteOrderBtn'])){
-    $cart_id = mysqli_real_escape_string($con, $_POST['cart_id']);
+    foreach($_POST as $key => $value) {
+        if (strpos($key, 'cart_id') === 0) {
+            $cart_id = mysqli_real_escape_string($con, $value);
 
-    $cart_query = "SELECT * FROM cart_items WHERE id='$cart_id'";
-    $cart_query_run = mysqli_query($con, $cart_query);
-    $cart_data = mysqli_fetch_array($cart_query_run);
+            $cart_query = "SELECT * FROM cart_items WHERE id='$cart_id'";
+            $cart_query_run = mysqli_query($con, $cart_query);
+            $cart_data = mysqli_fetch_array($cart_query_run);
 
-    // Delete the category
-    $delete_query = "DELETE FROM cart_items WHERE id='$cart_id'";
-    $delete_query_run = mysqli_query($con, $delete_query);
+            // Delete the cart item
+            $delete_query = "DELETE FROM cart_items WHERE id='$cart_id'";
+            $delete_query_run = mysqli_query($con, $delete_query);
 
-    if($delete_query_run){
-        // Get the last auto-increment value
-        $last_id_query = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'aquaflowdb' AND TABLE_NAME = 'cart_items'";
-        $last_id_result = mysqli_query($con, $last_id_query);
-        $last_id_row = mysqli_fetch_assoc($last_id_result);
-        $last_auto_increment_value = $last_id_row['AUTO_INCREMENT'];
-
-        // Set the auto-increment value to the last deleted ID
-        $alter_query = "ALTER TABLE categories AUTO_INCREMENT = $cart_id";
-        mysqli_query($con, $alter_query);
-
-        $_SESSION['message'] = "Cart Item Deleted Successfully.";
-        header('Location: ../cart.php');
-        exit; // Terminate further execution
-    } else{
-        $_SESSION['message'] = "Something went wrong";
-        header('Location: ../cart.php');
-        exit; // Terminate further execution
+            if($delete_query_run){
+                $_SESSION['message'] = "Cart Item Deleted Successfully.";
+                header('Location: ../cart.php');
+                exit; // Terminate further execution
+            } else{
+                $_SESSION['message'] = "Something went wrong";
+                header('Location: ../cart.php');
+                exit; // Terminate further execution
+            }
+        }
     }
 }
+
 

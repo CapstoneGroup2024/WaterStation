@@ -81,3 +81,45 @@
             return false;
         }
     }
+
+    function getActiveCartItemsByUserId($userId, $con) {
+        $query = "SELECT ci.*, p.id AS product_id, p.name AS product_name, c.id AS category_id, c.name AS category_name 
+                  FROM cart_items ci
+                  LEFT JOIN product p ON ci.id = p.id
+                  LEFT JOIN categories c ON p.id = c.id
+                  WHERE ci.user_id = ?";
+        $statement = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($statement, "s", $userId);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        if ($result) {
+            return $result; 
+        } else {
+            error_log("Error retrieving cart items: " . mysqli_error($con));
+            return false;
+        }
+    }
+    
+    function isProductActive($productId, $categoryId, $con) {
+        $product_query = "SELECT * FROM product WHERE id = ? LIMIT 1";
+        $category_query = "SELECT * FROM categories WHERE id = ? LIMIT 1";
+        
+        $stmt_product = mysqli_prepare($con, $product_query);
+        $stmt_category = mysqli_prepare($con, $category_query);
+        
+        mysqli_stmt_bind_param($stmt_product, "i", $productId);
+        mysqli_stmt_bind_param($stmt_category, "i", $categoryId);
+        
+        mysqli_stmt_execute($stmt_product);
+        $product_result = mysqli_stmt_get_result($stmt_product);
+        $productIsActive = mysqli_num_rows($product_result) > 0;
+        
+        mysqli_stmt_execute($stmt_category);
+        $category_result = mysqli_stmt_get_result($stmt_category);
+        $categoryIsActive = mysqli_num_rows($category_result) > 0;
+        
+        mysqli_stmt_close($stmt_product);
+        mysqli_stmt_close($stmt_category);
+        
+        return $productIsActive && $categoryIsActive;
+    }
