@@ -191,8 +191,7 @@
                 exit();
             }
         }
-    }
-     else if (isset($_POST['logButton'])) {
+    } else if (isset($_POST['logButton'])) {
         // RETRIEVE EMAIL AND PASSWORD FROM POST REQUEST
         $email = $_POST['email'];
         $password = $_POST['password'];

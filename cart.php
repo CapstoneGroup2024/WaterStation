@@ -125,15 +125,12 @@
             </div>
         </div>
 
-        <div class="container" style="width: 300px; display: flex; float:left;">
+        <div class="container" style="width: 320px; display: flex; float:left;">
             <div class="card-body shadow p-3" style="border-radius: 20px;" style="font-family: 'Poppins';">
                 <div class="col align-items-center p-2" style="text-align: center">
                     <h4>MODE OF PAYMENT</h4>
                     <div class="row-md-2 p-2 shadow-sm">
-                        <input type="radio" name="cod"><span> CASH ON DELIVERY</span>
-                    </div>
-                    <div class="row-md-2 p-2 shadow-sm">
-                        <input type="radio" name="gcash"><span> GCASH</span>
+                        <h5 name="cod">✔ CASH ON DELIVERY</h5>
                     </div>
                 </div>
             </div>

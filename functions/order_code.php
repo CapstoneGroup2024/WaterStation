@@ -82,7 +82,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             $delete_query_run = mysqli_query($con, $delete_query);
 
             if($delete_query_run){
-                $_SESSION['message'] = "Cart Item Deleted Successfully.";
+                $_SESSION['message'] = "✔ Cart Item Deleted Successfully";
                 header('Location: ../cart.php');
                 exit; // Terminate further execution
             } else{

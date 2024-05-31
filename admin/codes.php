@@ -25,7 +25,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     
     if($categ_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
-        redirect("addCategory.php", "Category added successfully"); 
+        redirect("addCategory.php", "✔ Category added successfully"); 
     } else{
         redirect("addCategory.php", "Something went wrong"); 
     }
@@ -61,7 +61,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                 unlink("../uploads/".$old_image);
             }
         }
-        redirect("editCategory.php?id=$category_id","Category Updated Successfully");
+        redirect("editCategory.php?id=$category_id","✔ Category Updated Successfully");
     } else{
         redirect("editCategory.php?id=$category_id","Something went wrong");
     }
@@ -81,7 +81,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         if(file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
-        redirect("category.php","Category Deleted Successfully");
+        redirect("category.php","✔ Category Deleted Successfully");
     } else{
         redirect("category.php","Something went wrong");
     }
@@ -108,7 +108,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
     if($product_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
-        redirect("addProduct.php", "Product added successfully"); 
+        redirect("addProduct.php", "✔ Product added successfully"); 
     } else{
         redirect("addProduct.php", "Something went wrong"); 
     }
@@ -147,7 +147,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                 unlink("../uploads/".$old_image);
             }
         }
-        redirect("editProduct.php?id=$product_id","Product Updated Successfully");
+        redirect("editProduct.php?id=$product_id","✔ Product Updated Successfully");
     } else{
         redirect("editProduct.php?id=$product_id","Something went wrong");
     }
@@ -167,7 +167,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         if(file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
-        redirect("product.php","Product Deleted Successfully");
+        redirect("product.php","✔ Product Deleted Successfully");
     } else{
         redirect("product.php","Something went wrong");
     }
