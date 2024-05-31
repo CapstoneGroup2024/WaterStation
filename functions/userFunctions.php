@@ -11,37 +11,20 @@
     // FUNCTION TO GET CART ITEMS BY USER ID
     function getCartItemsByUserId($userId) {
         global $con; 
-
+    
         // QUERY TO SELECT CART ITEMS FOR A SPECIFIC USER
         $query = "SELECT * FROM cart_items WHERE user_id = '$userId'";
         $result = mysqli_query($con, $query);
-
-        if ($result) {
-            return $result; 
+    
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result; // Return the result set
         } else {
             // DISPLAY ERROR MESSAGE IF QUERY FAILED
             echo "Error retrieving cart items: " . mysqli_error($con);
             return false;
         }
     }
-
-    // FUNCTION TO GET USER DETAILS BY USER ID
-    function getUserDetails($userId) {
-        global $con; 
-
-        // QUERY TO SELECT USER DETAILS FOR A SPECIFIC USER
-        $query = "SELECT * FROM users WHERE user_id = '$userId'";
-        $result = mysqli_query($con, $query);
-
-        if ($result && mysqli_num_rows($result) > 0) {
-            $userDetails = mysqli_fetch_assoc($result);
-            return $userDetails; 
-        } else {
-            // DISPLAY ERROR MESSAGE IF QUERY FAILED
-            echo "Error retrieving user details: " . mysqli_error($con);
-            return false;
-        }
-    }
+    
 
     // FUNCTION TO GET RECORD BY ID FROM A SPECIFIED TABLE
     function getByID($table, $id){ 
@@ -65,22 +48,7 @@
         }
     }
 
-    // FUNCTION TO GET ORDER ITEMS BY USER ID
-    function getOrderItemsByUserId($userId) {
-        global $con; 
-
-        // QUERY TO SELECT ORDER ITEMS FOR A SPECIFIC USER
-        $query = "SELECT * FROM orders WHERE user_id = '$userId'";
-        $result = mysqli_query($con, $query);
-
-        if ($result) {
-            return $result; 
-        } else {
-            // DISPLAY ERROR MESSAGE IF QUERY FAILED
-            echo "Error retrieving cart items: " . mysqli_error($con);
-            return false;
-        }
-    }
+    // FUNCTION TO GET ORDER ITEMS BY USER I
 
     function getActiveCartItemsByUserId($userId, $con) {
         $query = "SELECT ci.*, p.id AS product_id, p.name AS product_name, c.id AS category_id, c.name AS category_name 
@@ -123,3 +91,44 @@
         
         return $productIsActive && $categoryIsActive;
     }
+
+// Function to fetch products based on order ID from the database
+function getProductsByOrderId($order_id) {
+    global $con;
+    // Initialize an empty array to store products
+    $products = array();
+
+    // Prepare and execute the SQL query to fetch products based on order ID
+    $query = "SELECT * FROM order_items WHERE order_id = ?";
+    $statement = $con->prepare($query);
+    $statement->bind_param("i", $order_id);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    // Fetch products and add them to the products array
+    while ($row = $result->fetch_assoc()) {
+        // Assuming you have a products table where you can retrieve product details based on product ID
+        $product_id = $row['product_id'];
+        $product_query = "SELECT * FROM product WHERE id = ?";
+        $product_statement = $con->prepare($product_query);
+        $product_statement->bind_param("i", $product_id);
+        $product_statement->execute();
+        $product_result = $product_statement->get_result();
+        $product = $product_result->fetch_assoc();
+
+        // Add product details to the products array
+        $products[] = array(
+            'product_id' => $product['id'],
+            'product_name' => $product['name'],
+            'quantity' => $row['quantity'],
+            'price' => $row['price']
+        );
+    }
+
+    // Close the statement and database connection
+    $statement->close();
+    $con->close();
+
+    // Return the array of products
+    return $products;
+}

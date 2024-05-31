@@ -47,7 +47,7 @@
                 
                 <?php
                 $cartItems = getCartItemsByUserId($userId); // GET CART ITEMS BASED ON USER ID
-                
+                $_SESSION['cart'] = $cartItems;
                 if (mysqli_num_rows($cartItems) > 0) {
                     foreach ($cartItems as $cart) { 
                         $productActive = isProductActive($cart['product_id'], $cart['category_id'], $con);
@@ -161,12 +161,7 @@
         </div>
     </form>
 </section>
-<section>
-    <?php
-    echo $_SESSION['user_id'];
 
-    ?>
-</section>
 
 <script src="assets/js/cartQty.js"></script>
 <script src="assets/js/order.js"></script>
