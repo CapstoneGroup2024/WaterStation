@@ -140,21 +140,21 @@
                 <div class="col align-items-center p-2" >
                 <!--------------- SUBTOTAL --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                        <input type="hidden" name="subtotal" value="">
-                        <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;" name="subtotal"></span></h5>
+                        <input type="hidden" name="subtotal" value="" class="subtotal-hidden">
+                        <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;"></span></h5>
                     </div>
                     <!--------------- ADDITIONAL FEE --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                        <input type="hidden" name="delivery" value="">
-                        <h5>Additional Fee: <span class="additional-fee" style="display: flex; float:right;" name="delivery"></span></h5>
+                        <input type="hidden" name="additional_fee" value="additional-fee-hidden" class="additional-fee-hidden">
+                        <h5>Additional Fee: <span class="additional-fee" style="display: flex; float:right;"></span></h5>
                     </div>
                     <!--------------- GRAND TOTAL --------------->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                        <input type="hidden" name="grand" value="">
-                        <h5>Grand Total: <span class="grand-total" style="display: flex; float:right;" name="grand"></span></h5>
+                        <input type="hidden" name="grandtotal" value="" class="grand-total-hidden">
+                        <h5>Grand Total: <span class="grand-total" style="display: flex; float:right;"></span></h5>
                     </div>
                     <div>
-                        <button type="submit" class="btn text-white" style="background-color: #013D67; width: 100%; font-family: 'Suez one'; margin-top:10px" name="placeOrderBtn">Place Order</button>
+                        <input type="submit" class="btn text-white" style="background-color: #013D67; width: 100%; font-family: 'Suez one'; margin-top:10px" name="placeOrderBtn">Place Order</input>
                     </div>
                 </div>
             </div>
@@ -169,6 +169,7 @@
 </section>
 
 <script src="assets/js/cartQty.js"></script>
+<script src="assets/js/order.js"></script>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>

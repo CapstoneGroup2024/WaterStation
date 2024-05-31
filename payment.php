@@ -36,11 +36,14 @@
             <div class="card-body shadow p-3 mt-4" style="border-radius: 20px; font-family: 'Poppins';">
                 <div class="col align-items-center p-2">
                     <h4>Delivery Details</h4>
-                    <div class="row-md-2 p-2 shadow-sm">
-                        <h5>User Name: <?php echo $userDetails['name']; ?></h5>
+                    <div class="row-md-2 p-1" style="margin-top: 20px; margin-left: 5px">
+                        <h6>Customer Name: <br><?php echo $userDetails['name']; ?></h6>
                     </div>
-                    <div class="row-md-2 p-2 shadow-sm">
-                        <h5>Address: <?php echo $userDetails['address']; ?></h5>
+                    <div class="row-md-2 p-1" style="margin-top: -10px; margin-left: 5px">
+                        <h6>Contact Number: <br><?php echo $userDetails['phone']; ?></h6>
+                    </div>
+                    <div class="row-md-2 p-1" style="margin-top: -10px; margin-bottom: -15px; margin-left: 5px">
+                        <h6>Address: <br><?php echo $userDetails['address']; ?></h6>
                     </div>
                 </div>
             </div>
@@ -80,7 +83,7 @@
                     </div>
                     <!-- DISPLAY DELIVERY FEE -->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                        <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;"><?php echo $orderDetails['delivery_fee']; ?></span></h5>
+                        <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;"><?php echo $orderDetails['additional_fee']; ?></span></h5>
                     </div>
                     <!-- DISPLAY GRAND TOTAL -->
                     <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
@@ -96,5 +99,19 @@
         ?>
     </div>
 </section>
+
+<!-- Alertify JS -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    <?php
+    if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+  ?>
+    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
+  <?php
+    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+  }
+  ?>
+</script>
+
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

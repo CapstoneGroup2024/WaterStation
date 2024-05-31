@@ -92,6 +92,33 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             }
         }
     }
+} else if(isset($_POST['placeOrderBtn'])){
+    // RETRIEVE SELECTED PRODUCT, CATEGORY, AND QUANTITY FROM POST REQUEST
+    if(!isset($_SESSION['user_id'])){
+        $_SESSION['message'] = "Please log in to add items to your cart.";
+        header('Location: ../homepage.php');
+        exit; // Terminate further execution
+    }
+
+    $userId = $_SESSION['user_id'];
+
+    $subtotal = $_POST['subtotal'];
+    $additional_fee = $_POST['additional_fee'];
+    $grandtotal = $_POST['grandtotal'];
+
+    $insert_query = "INSERT INTO orders (user_id, status, subtotal, additional_fee, grand_total) VALUES ('$userId', 'Ongoing', '$subtotal', '$additional_fee', '$grandtotal')";
+    $insert_query_run = mysqli_query($con, $insert_query);
+
+    if($insert_query_run){
+        $_SESSION['message'] = "✔ Order in Process. Subtotal: $subtotal, $additional_fee, $grandtotal";
+        header('Location: ../payment.php');
+        exit; // Terminate further execution
+    } else {
+        $_SESSION['message'] = "Something went wrong";
+        header('Location: ../cart.php');
+        exit; // Terminate further execution
+    }
+
 }
 
 
