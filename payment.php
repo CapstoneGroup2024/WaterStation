@@ -50,6 +50,28 @@ function getUserDetails($userId) {
     }
 }
 
+    function getItemsCart($order_id) {
+    global $con;
+
+    // QUERY TO SELECT CART ITEMS FOR A SPECIFIC ORDER
+    $query = "SELECT oi.*, oi.total AS total_price FROM order_items oi WHERE oi.order_id = ?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $order_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        return $result; // Return the result set
+    } else {
+        // DISPLAY ERROR MESSAGE IF QUERY FAILED
+        echo "Error retrieving cart items: " . mysqli_error($con);
+        return false;
+    }
+}
+
+
+
+
 // Reconnect to the database if necessary
 if (mysqli_connect_errno()) {
     include('config/dbconnect.php'); // Assuming dbconnect.php contains the connection code
@@ -116,28 +138,32 @@ if ($userDetails) {
                     <?php
                     // Fetch cart items from the session
                     $cartItems = getCartItemsByUserId($userId);
+                    $getTotal =  getItemsCart($order_id);
                     ?>               
-                    <?php foreach ($cartItems as $cartItem) { ?>
-                    <div class="card shadow-sm p-3" style=" width: 780px; border-radius: 20px; display: flex; float:right; margin-bottom: 20px;">
-                        <div class="row align-items-center ">
-                            <div class="col-md-3" style="padding-left: 50px; margin-bottom: 0px">
-                                <h5><?= $cartItem['quantity'] ?></h5>
-                            </div>
-                            <div class="col-md-2">
-                                <img src="uploads/<?= $cartItem['product_image'] ?>" width="80px" alt="<?= $cartItem['product_name'] ?>" style="border-radius: 10px;">
-                            </div>
-                            <div class="col-md-2">
-                                <h5><?= $cartItem['product_name'] ?></h5>
-                            </div>
-                            <div class="col-md-2">
-                                <h5><?= $cartItem['selling_price'] ?></h5>
-                            </div>
-                                <div class="col-md-1">
-                                <h5><span class="total-price itotal"></span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <?php } ?>
+<?php foreach ($cartItems as $cartItem) { ?>
+    <div class="card shadow-sm p-3" style=" width: 780px; border-radius: 20px; display: flex; float:right; margin-bottom: 20px;">
+        <div class="row align-items-center ">
+            <div class="col-md-3" style="padding-left: 50px; margin-bottom: 0px">
+                <h5><?= $cartItem['quantity'] ?></h5>
+            </div>
+            <div class="col-md-2">
+                <img src="uploads/<?= $cartItem['product_image'] ?>" width="80px" alt="<?= $cartItem['product_name'] ?>" style="border-radius: 10px;">
+            </div>
+            <div class="col-md-3">
+                <h5><?= $cartItem['product_name'] ?></h5>
+            </div>
+            <div class="col-md-1">
+                <h5><?= $cartItem['selling_price'] ?></h5>
+            </div>
+            <!-- Access total_price instead of total -->
+            <div class="col-md-1">
+                <h5><?= isset($cartItem['total_price']) ? $cartItem['total_price'] : '' ?></h5>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+
                 </div>
                 <!-- Display subtotal, delivery fee, and grand total -->
                 <div class="container mt-4">
