@@ -1,25 +1,36 @@
 <?php
-    session_start();
-    
-    if (!isset($_SESSION['auth'])) {
-        // User is not authenticated, redirect to index.php
-        $_SESSION['message'] = "Please login first";
-        header('Location: index.php');
-        exit();
-    }
+session_start();
 
-    include('includes/header.php');
-    include('includes/orderbar.php');
-    include('config/dbconnect.php');
-    
-    function getAllActive($table){ 
-        global $con; 
-        $query = "SELECT * FROM $table WHERE status='1' "; 
-        return $query_run = mysqli_query($con, $query); 
+if (!isset($_SESSION['auth'])) {
+    // User is not authenticated, redirect to index.php
+    $_SESSION['message'] = "Please login first";
+    header('Location: index.php');
+    exit();
+}
+
+include('includes/header.php');
+include('includes/orderbar.php');
+include('functions/userFunctions.php');
+
+$productsResult = getAllActiveProducts($con);
+
+// Check if there are products
+if(mysqli_num_rows($productsResult) > 0) {
+    while($product = mysqli_fetch_assoc($productsResult)) {
+        // Check if quantity is zero
+        if($product['quantity'] == 0) {
+            // If quantity is zero, update product status to unavailable
+            updateProductStatus($product['id'], $conn);
+            // You can also disable the selection or show a message here
+            // For example:
+            // echo "<p>{$product['name']} is not available.</p>";
+        }
     }
-    ?>
-    <link rel="stylesheet" href="assets/css/order.css">   
-    <script src="assets/js/toggle.js"></script>
+}
+?>
+
+<link rel="stylesheet" href="assets/css/order.css">   
+<script src="assets/js/toggle.js"></script>
 
 <section class="p-5 p-md-5 text-sm-start" id="Order">
     <div class="container" style="margin-top: 40px;">
@@ -46,6 +57,7 @@
                     <?php foreach($products as $product): ?>
                         <!-- Start of column -->
                         <div class="col-md-3 product-data">
+                            <?php if($product['quantity'] > 0): ?>
                             <label style="border: 4px solid transparent; border-radius: 14px; cursor: pointer; transition: border-color 0.3s ease; display: block;" onclick="toggleRadio(this);">
                                 <input type="radio" name="selectedProduct" value="<?= $product['id']; ?>" class="card-input-element" style="display:none;">
                                 <div class="card">
@@ -55,9 +67,13 @@
                                         <h6 class="card-title text-center" style="font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: bold;">₱ <?= $product['selling_price']; ?>.00</h6>
                                         <h5 class="card-title text-center" style="font-size: 22px; font-family: 'Poppins', sans-serif; font-weight: bold;"><?= $product['name']; ?></h5>
                                         <h6 class="card-title text-center" style="font-size: 16px; font-family: 'Poppins', sans-serif; color: #013D67;"><?= $product['size']; ?></h6>
+                                        <h6 class="card-title text-center" style="font-size: 16px; font-family: 'Poppins', sans-serif; color: #013D67;">Stock: <?= $product['quantity']; ?></h6>
                                     </div>
                                 </div>
                             </label>
+                            <?php else: ?>
+                            <p><?= $product['name']; ?> is not available.</p>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>

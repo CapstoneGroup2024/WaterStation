@@ -132,3 +132,22 @@ function getProductsByOrderId($order_id) {
     // Return the array of products
     return $products;
 }
+
+
+function getAllActiveProducts($con) { 
+    $query = "SELECT * FROM product WHERE status='1'"; 
+    return mysqli_query($con, $query); 
+}
+
+// Function to update product status to unavailable
+function updateProductStatus($productId, $con) {
+
+    global $con;
+    $query = "UPDATE product SET status = '0' WHERE id = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $productId);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// Get all active products
