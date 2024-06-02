@@ -17,6 +17,7 @@
 
     if (isset($_POST["reg_button"])) {
         // REGISTRATION FORM SUBMITTED
+
         $name = $_POST["name"];
         $email = $_POST["email"];
         $phone = filter_var($_POST["phone"], FILTER_SANITIZE_NUMBER_INT);
@@ -36,6 +37,7 @@
         if ($password === $confirm_password) {
             // STORE REGISTRATION DATA IN SESSION
             $_SESSION['registration_data'] = $_POST;
+
             $mail = new PHPMailer(true);
 
             // CHECK IF EMAIL ALREADY EXISTS IN DATABASE
@@ -60,7 +62,7 @@
                 ];
                 
                 // SET MAILER DEBUG LEVEL
-                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                $mail -> SMTPDebug = SMTP::DEBUG_SERVER;
                 $mail -> isSMTP();
                 $mail -> Host = 'smtp.gmail.com';
                 $mail -> SMTPAuth = true;
@@ -82,7 +84,7 @@
                 $mail -> Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
                 $mail -> send();
         
-                // CONNECT TO DATABASE
+                // CONNECT PHP MAILER TO DATABASE
                 $con = mysqli_connect("localhost: 3306", "root", "", "aquaflowdb");
                 if (!$con) {
                     throw new Exception("Database connection failed: " . mysqli_connect_error());
@@ -96,15 +98,21 @@
         
                 // GET THE AUTO-INCREMENTED USER_ID
                 $user_id = $stmt->insert_id;
-        
+                $_SESSION['user_id'] = $user_id;
                 // REDIRECT TO VERIFICATION PAGE WITH EMAIL AND USER_ID
                 header("Location: ../verification.php?email=" . urlencode($email) . "&user_id=" . $user_id);
+                
                 exit();
+
             } catch (Exception $e) {
                 // CATCH AND DISPLAY MAILER ERROR
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
-        }   
+        } else {
+            $_SESSION['message'] = "Password does not match";
+            header("Location: ../register.php");
+            exit();
+        }
     } else if (isset($_SESSION['registration_data'])) {
         // REGISTRATION DATA EXISTS IN SESSION
         $registration_data = $_SESSION['registration_data'];
@@ -116,7 +124,7 @@
         $confirm_password = $registration_data["confirm_password"];
         
         // VERIFICATION CODE LOGIC
-        if (!isset($_POST['user_id'])) {
+        if (!isset($_SESSION['user_id'])) {
             // USER ID IS NOT SET, HANDLE THE ERROR
             $_SESSION['message'] = "User ID is missing in the form";
             header("Location: ../register.php");
@@ -127,7 +135,6 @@
         if (isset($_POST['verifyBtn'])) {
             // RETRIEVE VERIFICATION CODE AND USER_ID FROM FORM
             $code = $_POST['verifyCode'];
-            $user_id = $_POST['user_id'];
         
             if (empty($code)) {
                 // IF CODE IS EMPTY, SET ERROR MESSAGE AND REDIRECT TO VERIFICATION PAGE
@@ -145,6 +152,7 @@
                 exit();
             }
             
+            $user_id = $_SESSION['user_id'];
             // QUERY TO RETRIEVE USER ID AND VERIFICATION CODE
             $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND user_id = ?";
             $stmt = $con->prepare($query);
@@ -186,7 +194,7 @@
                 }
             } else {
                 // IF NO VERIFICATION CODE FOUND, SET ERROR MESSAGE AND REDIRECT TO REGISTRATION PAGE
-                $_SESSION['message'] = "No verification code found for the provided email $email and user_id: $user_id";
+                $_SESSION['message'] = "No verification code found for the provided email: $email and user_id: $user_id";
                 header("Location: ../register.php");
                 exit();
             }
