@@ -33,7 +33,27 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
     // Retrieve product and category data
     $productId = isset($_POST['selectedProduct']) ? $_POST['selectedProduct'] : 1;
     $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : 1;
-    $quantity = isset($_POST['quantityInput']) ? $_POST['quantityInput'] : 1; // DEFAULT QUANTITY IS 1
+    $quantity = isset($_POST['selectedQuantity']) ? $_POST['selectedQuantity'] : 1; // DEFAULT QUANTITY IS 1
+    $availableStockQuery = "SELECT quantity FROM product WHERE id='$productId'";
+    
+    $stockResult = mysqli_query($con, $availableStockQuery);
+    if ($stockResult) {
+        $stockData = mysqli_fetch_assoc($stockResult);
+        $availableStock = $stockData['quantity'];
+    
+        // Check if the selected quantity exceeds the available stock
+        if ($quantity > $availableStock) {
+            $_SESSION['message'] = "Sorry, the selected quantity exceeds the available stock.";
+            header('Location: ../order.php');
+            exit;
+        }
+    } else {
+        // Handle the case when unable to fetch stock data
+        $_SESSION['message'] = "Failed to fetch stock data.";
+        header('Location: ../order.php');
+        exit;
+    }
+    
 
     if(empty($productId) || empty($categoryId)){ // CHECK IF PRODUCT ID OR CATEGORY ID IS EMPTY
         $_SESSION['message'] = "Please choose a product/category!";

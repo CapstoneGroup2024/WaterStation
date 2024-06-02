@@ -113,7 +113,7 @@ if(mysqli_num_rows($productsResult) > 0) {
                                 <?= $category['name']; ?> 
                                 <span style="color: #013D67; font-weight: lighter; font-size: 21px; float: right;">Add ₱<?= $category['additional_price']; ?>.00</span>
                             </h4>
-                            <p id="category-card-texxt-header" style="font-family: 'Poppins', sans-serif;"><?= $category['description']; ?></p>
+                            <p id="category-card-text-header" style="font-family: 'Poppins', sans-serif;"><?= $category['description']; ?></p>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@ if(mysqli_num_rows($productsResult) > 0) {
                     <div class="col-md-1 text-right" id="qty">
                         <div class="input-group mb-1" style="width:115px;">
                             <button class="input-group-text decrement-btn">-</button>
-                            <input type="text" class="form-control bg-white text-center quantityInput" name="quantityInput" value="1">
+                            <input type="text" class="form-control bg-white text-center quantityInput" name="selectedQuantity" value="1">
                             <button class="input-group-text increment-btn">+</button>
                         </div>
                     </div>
@@ -172,6 +172,52 @@ if(mysqli_num_rows($productsResult) > 0) {
   }
   ?>
 </script>
+<script>
+$(document).ready(function () {
+    $('.increment-btn').click(function (e) {
+        e.preventDefault();
+        var qtyInput = $('.quantityInput');
+        var qty = parseInt(qtyInput.val(), 10);
+        qty = isNaN(qty) ? 0 : qty;
 
+        if (qty < 100) { // Check if quantity is less than 100
+            qty++;
+            qtyInput.val(qty);
+        } else {
+            alert("Sorry, you cannot order more than 100 items.");
+        }
+    });
+
+    $('.decrement-btn').click(function (e) {
+        e.preventDefault();
+        var qtyInput = $('.quantityInput');
+        var qty = parseInt(qtyInput.val(), 10);
+        qty = isNaN(qty) ? 0 : qty;
+
+        if (qty > 0) {
+            qty--;
+            qtyInput.val(qty);
+        }
+    });
+
+    // Get the available stock quantity
+    var availableStock = <?= $availableStock ?>;
+
+    // Get the selected quantity input element
+    var quantityInput = document.querySelector('input[name="selectedQuantity"]');
+
+    // Add an event listener to the submit button
+    document.querySelector('button[name="cartBtn"]').addEventListener('click', function(event) {
+        // Get the selected quantity
+        var selectedQuantity = parseInt(quantityInput.value);
+        
+        // Check if the selected quantity exceeds the available stock
+        if (selectedQuantity > availableStock) {
+            alert("Sorry, the selected quantity exceeds the available stock.");
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+});
+</script> 
  <!--------------- FOOTER --------------->
  <?php include('includes/footer.php');?>
