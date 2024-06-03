@@ -226,7 +226,9 @@
                     'name' => $userdata['name'],
                     'email' => $userdata['email']
                 ];
+
                 $role = $userdata['role']; // Get user role
+                
                 $_SESSION['role'] = $role;
                 
                 // Redirect based on user role

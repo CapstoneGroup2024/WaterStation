@@ -199,24 +199,6 @@ $(document).ready(function () {
             qtyInput.val(qty);
         }
     });
-
-    // Get the available stock quantity
-    var availableStock = <?= $availableStock ?>;
-
-    // Get the selected quantity input element
-    var quantityInput = document.querySelector('input[name="selectedQuantity"]');
-
-    // Add an event listener to the submit button
-    document.querySelector('button[name="cartBtn"]').addEventListener('click', function(event) {
-        // Get the selected quantity
-        var selectedQuantity = parseInt(quantityInput.value);
-        
-        // Check if the selected quantity exceeds the available stock
-        if (selectedQuantity > availableStock) {
-            alert("Sorry, the selected quantity exceeds the available stock.");
-            event.preventDefault(); // Prevent form submission
-        }
-    });
 });
 </script> 
  <!--------------- FOOTER --------------->
