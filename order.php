@@ -31,7 +31,6 @@ if(mysqli_num_rows($productsResult) > 0) {
 
 <link rel="stylesheet" href="assets/css/order.css">   
 <script src="assets/js/toggle.js"></script>
-
 <section class="p-5 p-md-5 text-sm-start" id="Order">
     <div class="container" style="margin-top: 40px;">
         <div class="order-here">

@@ -75,7 +75,8 @@
                                 <button class="input-group-text decrement-btn changeQuantity">-</button>
                                 <input type="text" class="form-control bg-white text-center iqty input-qty" onchange="subTotal()" id="qty_<?= $cart['id']; ?>" value="<?= $cart['quantity']; ?>">
                                 <button class="input-group-text increment-btn changeQuantity">+</button>
-                                <input type="hidden" class="product_id" name="product_id" value="<?= $cart['id']; ?>">
+                                <input type="hidden" class="cart_id" name="cart_id" value="<?= $cart['id']; ?>">
+                                <input type="hidden" class="product_id" name="product_id" value="<?= $cart['product_id']; ?>">
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -172,13 +173,21 @@
 if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
 ?>
     alertify.set('notifier','position', 'top-right');
-    alertify.success('<?php echo $_SESSION['message']; ?>'); // DISPLAY MESSAGE NOTIF
+    
+    // Check if the message indicates success or failure
+    <?php if ($_SESSION['success'] === true): ?>
+        alertify.success('<?php echo $_SESSION['message']; ?>'); // DISPLAY SUCCESS MESSAGE NOTIF
+    <?php else: ?>
+        alertify.error('<?php echo $_SESSION['message']; ?>'); // DISPLAY ERROR MESSAGE NOTIF
+    <?php endif; ?>
+    
 <?php
     unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+    unset($_SESSION['success']); // UNSET THE SESSION SUCCESS VARIABLE
 }
 ?>
-
 </script>
+
 <script>
     <?php
         if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
@@ -187,6 +196,7 @@ if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
     <?php
         unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
         }
+        
     ?>
 </script>
 <!--------------- FOOTER --------------->

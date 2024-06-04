@@ -18,8 +18,6 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!--------------- MATERIAL ICONS --------------->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!--------------- ALERTIFY CSS --------------->
-  <link rel="stylesheet" href="path/to/alertify.css">
   <!--------------- FONT AWESOME --------------->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!--------------- JAVASCRIPT --------------->
@@ -40,8 +38,10 @@
       font-family: 'Poppins', sans-serif;
       font-size: 18px;
     }
-    .animated-check { /* CHECK ICON IN MODAL */
-      animation: rotate-scale-up 0.5s ease forwards;
+    .ajs-message.ajs-error { /* CHANGE DESIGN OF MODAL MESSAGE */
+      border-radius: 8px; 
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
     }
     @keyframes rotate-scale-up {
       0% {

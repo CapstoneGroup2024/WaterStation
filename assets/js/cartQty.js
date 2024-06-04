@@ -20,27 +20,7 @@ $(document).ready(function () {
             $('.additional-fee').text('₱' + finalAdd.toFixed(2));
             $('.grand-total').text('₱' + grandTotal.toFixed(2));
     
-            // Update database with new subtotal and grand total
-            $.ajax({
-                url: 'update_total_price.php',
-                method: 'POST',
-                data: { subtotal: subtotal, grandTotal: grandTotal },
-                success: function(response) {
-                    // Database updated successfully
-                }
-            });
         }
-
-    function updateQuantity(cartId, qty) {
-        $.ajax({
-            url: 'update_quantity.php',
-            method: 'POST',
-            data: { cart_id: cartId, quantity: qty },
-            success: function(response) {
-                updateTotalPrice();
-            }
-        });
-    }
 
     $('.increment-btn').click(function (e) {
         var qtyInput = $(this).siblings('.input-qty');
@@ -77,29 +57,48 @@ $(document).ready(function () {
         updateQuantity(cartId, qty);
     });
 
+    function updateQuantity(cartId, productId, qty) {
+        $.ajax({
+            url: 'update-to-cart.php',
+            method: 'POST',
+            data: { cart_id: cartId, product_id: productId, quantity: qty },
+            success: function(response) {
+                updateTotalPrice();
+            }
+        });
+    }
+    
     $('.changeQuantity').click(function (e) {
         e.preventDefault();
-
+    
         var quantity = $(this).closest(".input-group").find('.input-qty').val();
-        var product_id = $(this).closest(".input-group").find('.product_id').val();
-
+        var cartId = $(this).closest(".input-group").find('.cart_id').val();
+        var productId = $(this).closest(".input-group").find('.product_id').val(); // Get the product ID
+    
         var data = {
             'quantity': quantity,
-            'product_id': product_id,
+            'cart_id': cartId,
+            'product_id': productId // Include product ID in the data object
         };
-
+    
         $.ajax({
             url: 'update-to-cart.php',
             type: 'POST',
             data: data,
-            success: function () {
+            success: function (response) {
                 // Update total prices after successful update
                 updateTotalPrice();
                 // Reload the page or update other elements as needed
                 window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Display error message if AJAX request fails
+                alert('Failed to update quantity: ' + error);
             }
         });
     });
+    
+    
 
     updateTotalPrice(); // Initial call to set values
 });
