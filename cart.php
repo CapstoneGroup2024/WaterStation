@@ -166,7 +166,7 @@
                         <h5>Grand Total: <span class="grand-total" style="display: flex; float:right;"></span></h5>
                     </div>
                     <div>
-                        <input type="submit" class="btn text-white" style="background-color: #013D67; width: 100%; font-family: 'Suez one'; margin-top:10px" name="placeOrderBtn">Place Order</input>
+                        <input type="submit" class="btn text-white" style="background-color: #013D67; width: 100%; font-family: 'Suez one'; margin-top:10px" name="placeOrderBtn" value="Place Order"></input>
                     </div>
                 </div>
             </div>

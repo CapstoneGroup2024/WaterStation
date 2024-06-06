@@ -56,7 +56,7 @@ function getUserDetails($userId) {
     // QUERY TO SELECT CART ITEMS FOR A SPECIFIC ORDER
     $query = "SELECT oi.*, oi.total AS total_price FROM order_items oi WHERE oi.order_id = ?";
     $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $order_id);
+    mysqli_stmt_bind_param($stmt, 'i', $order_id); 
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -140,28 +140,32 @@ if ($userDetails) {
                     $cartItems = getCartItemsByUserId($userId);
                     $getTotal =  getItemsCart($order_id);
                     ?>               
-<?php foreach ($cartItems as $cartItem) { ?>
-    <div class="card shadow-sm p-3" style=" width: 780px; border-radius: 20px; display: flex; float:right; margin-bottom: 20px;">
-        <div class="row align-items-center ">
-            <div class="col-md-3" style="padding-left: 50px; margin-bottom: 0px">
-                <h5><?= $cartItem['quantity'] ?></h5>
-            </div>
-            <div class="col-md-2">
-                <img src="uploads/<?= $cartItem['product_image'] ?>" width="80px" alt="<?= $cartItem['product_name'] ?>" style="border-radius: 10px;">
-            </div>
-            <div class="col-md-3">
-                <h5><?= $cartItem['product_name'] ?></h5>
-            </div>
-            <div class="col-md-1">
-                <h5><?= $cartItem['selling_price'] ?></h5>
-            </div>
-            <!-- Access total_price instead of total -->
-            <div class="col-md-1">
-                <h5><?= isset($cartItem['total_price']) ? $cartItem['total_price'] : '' ?></h5>
-            </div>
-        </div>
-    </div>
-<?php } ?>
+                        <?php foreach ($cartItems as $cartItem) { 
+                            
+                            $itemTotal = $cartItem['quantity'] * $cartItem['selling_price'];
+                            ?>
+                            
+                            <div class="card shadow-sm p-3" style=" width: 780px; border-radius: 20px; display: flex; float:right; margin-bottom: 20px;">
+                                <div class="row align-items-center ">
+                                    <div class="col-md-3" style="padding-left: 50px; margin-bottom: 0px">
+                                        <h5><?= $cartItem['quantity'] ?></h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img src="uploads/<?= $cartItem['product_image'] ?>" width="80px" alt="<?= $cartItem['product_name'] ?>" style="border-radius: 10px;">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5><?= $cartItem['product_name'] ?></h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5><?= $cartItem['selling_price'] ?></h5>
+                                    </div>
+                                    <!-- Access total_price instead of total -->
+                                    <div class="col-md-2">
+                                        <h5>₱<?= $itemTotal ?></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
 
 
                 </div>
@@ -170,13 +174,13 @@ if ($userDetails) {
                     <div class="card-body shadow p-3" style="border-radius: 20px; width: 780px; display: flex; float:right; margin-top: 20px">
                         <div class="col align-items-center p-2">
                             <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;"><?= $subtotal ?></span></h5>
+                                <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;">₱<?= $subtotal ?></span></h5>
                             </div>
                             <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;"><?= $additional_fee ?></span></h5>
+                                <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;">₱<?= $additional_fee ?></span></h5>
                             </div>
                             <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                <h5>Total: <span class="grand-total" style="display: flex; float:right;"><?= $grandtotal ?></span></h5>
+                                <h5>Total: <span class="grand-total" style="display: flex; float:right;">₱<?= $grandtotal ?></span></h5>
                             </div>
                         </div>
                     </div>
