@@ -25,7 +25,7 @@
             <!--------------- CART BODY --------------->
             <div class="card-body shadow">
                 <div class="row align-items-center p-2">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
                     </div>
                     <div class="col-md-2">
@@ -33,6 +33,9 @@
                     </div>
                     <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Price</h6>
+                    </div>
+                    <div class="col-md-1">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Stocks</h6>
                     </div>
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Quantity</h6>
@@ -53,11 +56,16 @@
                         $productActive = isProductActive($cart['product_id'], $cart['category_id'], $con);
                         
                         if($productActive){
-            ?>
+                            // Retrieve available stock for the current product
+                            $availableStockQuery = "SELECT quantity FROM product WHERE id='{$cart['product_id']}'";
+                            $stockResult = mysqli_query($con, $availableStockQuery);
+                            $stockData = mysqli_fetch_assoc($stockResult);
+                            $availableStock = $stockData['quantity'];
+                    ?>
                 <!--------------- CART ITEMS --------------->
                 <div class="card shadow-sm mb-3 cart_data cartpage">
                     <div class="row align-items-center p-3">
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <img src="uploads/<?= $cart['product_image']; ?>" width="80px" alt="<?= $cart['product_name']; ?>" style="border-radius: 10px;">
                         </div>
                         <div class="col-md-2">
@@ -69,6 +77,9 @@
                         <div class="col-md-1">
                             <h5><span class="iprice"><?= $cart['selling_price']; ?></span></h5>
                             <span class="additional_price_hidden" style="display:none;"><?= $cart['additional_price']; ?></span>
+                        </div>
+                        <div class="col-md-1">
+                            <h5><?= $availableStock ?></h5>
                         </div>
                         <div class="col-md-2" id="qty">
                             <div class="input-group mb-1" style="width:115px;">
