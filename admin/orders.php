@@ -37,7 +37,12 @@
                                             <td>
                                                 <a href="orderDetails.php?id=<?= $item['id']; ?>" class="btn bg-primary text-white">View Details</a>
                                             </td>
-                                            
+                                            <td>
+                                            <form action="codes.php" method="POST">
+                                                    <input type="hidden" name="order_id" value="<?= $item['id'];?>">
+                                                    <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
+                                            </form>
+                                            </td>
                                         </tr>
                             <?php
                                     }

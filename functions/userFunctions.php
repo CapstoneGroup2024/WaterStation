@@ -173,3 +173,4 @@ function getOrderStatus($con, $order_id) {
 
     return $orderStatus;
 }
+

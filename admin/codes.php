@@ -171,5 +171,22 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("product.php","Something went wrong");
     }
+} else if(isset($_POST['deleteOrder_button'])){
+    $order_id = $_POST['order_id'];
+
+    // Delete from the orders table
+    $delete_order_query = "DELETE FROM orders WHERE id='$order_id'";
+    $delete_order_query_run = mysqli_query($con, $delete_order_query);
+
+    // Delete from the order_items table
+    $delete_items_query = "DELETE FROM order_items WHERE order_id='$order_id'";
+    $delete_items_query_run = mysqli_query($con, $delete_items_query);
+
+    if($delete_order_query_run && $delete_items_query_run){
+        redirect("orders.php","✔ Order Deleted Successfully");
+    } else{
+        redirect("orders.php","Something went wrong");
+    }
 }
+
 
