@@ -76,10 +76,8 @@ function getUserDetails($userId) {
 if (mysqli_connect_errno()) {
     include('config/dbconnect.php'); // Assuming dbconnect.php contains the connection code
 }
-
 // Now call getUserDetails()
 $userDetails = getUserDetails($userId);
-
 // Display user and order details
 if ($userDetails) {
     // Fetch order details from session
@@ -88,6 +86,19 @@ if ($userDetails) {
         $subtotal = $_SESSION['subtotal'];
         $additional_fee = $_SESSION['additional_fee'];
         $grandtotal = $_SESSION['grandtotal'];
+
+        $orderStatus = getOrderStatus($con, $order_id);
+
+
+    // Check if the status is available
+    if ($orderStatus !== "Status not available") {
+        // Display the order status
+        echo "Order Status: " . $orderStatus;
+    } else {
+        // Display a message if the status is not available
+        echo "Order status is not available.";
+    }
+
 
         // Display order receipt
         ?>
@@ -99,7 +110,7 @@ if ($userDetails) {
                     </div>
                 </div>
                 <!-- Display delivery details -->
-                <div class="container" style="width: 300px; display: flex; float:left;">
+                <div class="row" style="width: 300px; display: flex; float:left;">
                     <div class="card-body shadow p-3 mt-4" style="border-radius: 20px; font-family: 'Poppins';">
                         <div class="col align-items-center p-2">
                             <h4>Delivery Details</h4>
@@ -114,6 +125,16 @@ if ($userDetails) {
                             </div>
                         </div>
                     </div>
+                    <div class="row" style="width: 300px; display: flex; float:left">
+                    <div class="card-body shadow p-3 mt-4" style="border-radius: 20px; font-family: 'Poppins';">
+                        <div class="col align-items-center p-2">
+                            <h4>Order Status</h4>
+                            <div class="row-md-2 p-1" style="margin-top: 20px; margin-left: 10px">
+                                <h6><?= $orderStatus ?></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 

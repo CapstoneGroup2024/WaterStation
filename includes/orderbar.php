@@ -33,7 +33,7 @@
           <li class="nav-item px-lg-1" style="font-family: 'Poppins', sans-serif; color: #013D67; 
           font-weight: bold;">/</li>
           <li class="nav-item px-lg-1" style="margin-right: 20px;">
-            <a class="nav-link px-lg-1" id="contact" href="purchases.php#Purchase">Purchases</a>
+            <a class="nav-link px-lg-1" id="contact" href="purchases.php#Purchase">Transaction</a>
           </li>
         <!--------------- DROP DOWN FOR LOGOUT --------------->
         <?php

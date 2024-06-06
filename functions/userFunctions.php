@@ -149,5 +149,27 @@ function updateProductStatus($productId, $con) {
     $stmt->execute();
     $stmt->close();
 }
+function getOrderStatus($con, $order_id) {
+    // Prepare the SQL query
+    $query = "SELECT status FROM orders WHERE id = ?";
+    $stmt = $con->prepare($query);
 
-// Get all active products
+    // Bind parameters and execute the statement
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+
+    // Get result
+    $statusResult = $stmt->get_result();
+
+    // Check if the query executed successfully
+    if ($statusResult && $statusResult->num_rows > 0) {
+        $orderStatus = $statusResult->fetch_assoc()['status'];
+    } else {
+        // If no status found, display a default message
+        $orderStatus = "Status not available";
+    }
+
+    $stmt->close(); // Close the statement
+
+    return $orderStatus;
+}
