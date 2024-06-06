@@ -17,11 +17,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Customer Name</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Subtotal</th>
-                                <th>Delivery Fee</th>
-                                <th>Grand Total</th>
+                                <th>Order Status</th>
+                                <th>Details</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,11 +33,11 @@
                                         <tr>
                                             <td><?= $item['id']; ?></td>
                                             <td><?= $item['user_id']; ?></td>
-                                            <td><?= $item['product_id']; ?></td>
-                                            <td><?= $item['quantity']; ?></td>
-                                            <td><?= $item['subtotal']; ?></td>
-                                            <td><?= $item['delivery_fee']; ?></td>
-                                            <td><?= $item['grand_total']; ?></td>
+                                            <td><?= $item['status']; ?></td>
+                                            <td>
+                                                <a href="orderDetails.php?id=<?= $item['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                            </td>
+                                            
                                         </tr>
                             <?php
                                     }
