@@ -44,17 +44,22 @@
             <div class="card-body shadow">
                 <h2>Ongoing Orders</h2>
                 <div class="row align-items-center p-2">
+                    <div class="col-md-1">
+                    </div>
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>
                     </div>
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Status</h6>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-3">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Grand Total</h6>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Date</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">View Details</h6>
                     </div>
                 </div>
 
@@ -68,17 +73,22 @@
                             <!--------------- CART ITEMS --------------->
                             <div class="card shadow-sm mb-3 cart_data">
                                 <div class="row align-items-center p-3">
+                                <div class="col-md-1">
+                                </div>
                                     <div class="col-md-2">
                                         <h5><?= $order['id']; ?></h5>
                                     </div>
                                     <div class="col-md-2">
                                         <h5><?= $order['status']; ?></h5>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3" style="margin-left:20px;">
                                         <h5>₱<?= $order['grand_total']; ?></h5>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2" style="margin-left:-20px;">
                                         <h5><?= $order['order_at']; ?></h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
                                     </div>
                                 </div>
                             </div>

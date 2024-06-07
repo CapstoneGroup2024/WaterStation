@@ -194,7 +194,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             mysqli_commit($con);
             $_SESSION['message'] = "Order placed successfully. Order ID: $orderId, Subtotal: $subtotal, Additional Fee: $additionalFee, Grand Total: $grandTotal";
             unset($_SESSION['cart']); // Clear the cart after successful order placement
-            header('Location: ../payment.php');
+            header('Location: ../payment.php?id=' . $orderId);
             exit;
         } else {
             mysqli_rollback($con);
