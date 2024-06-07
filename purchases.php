@@ -11,7 +11,7 @@
     $userId = $_SESSION['user_id'];
 
     function getId($table, $userId) {
-        global $con; // Assuming $con is your database connection variable
+        global $con; // Assuming $con is your database conne ction variable
     
         // Query to select data from the table by ID
         $query = "SELECT * FROM $table WHERE user_id='$userId'";
@@ -53,6 +53,9 @@
                     <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Grand Total</h6>
                     </div>
+                    <div class="col-md-1">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Date</h6>
+                    </div>
                 </div>
 
                 <?php
@@ -73,6 +76,9 @@
                                     </div>
                                     <div class="col-md-2">
                                         <h5>₱<?= $order['grand_total']; ?></h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5><?= $order['order_at']; ?></h5>
                                     </div>
                                 </div>
                             </div>
@@ -97,6 +103,9 @@
                     </div>
                     <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Grand Total</h6>
+                    </div>
+                    <div class="col-md-1">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Date</h6>
                     </div>
                 </div>
 
