@@ -16,14 +16,18 @@
         $query = "SELECT * FROM cart_items WHERE user_id = '$userId'";
         $result = mysqli_query($con, $query);
     
-        if ($result && mysqli_num_rows($result) > 0) {
-            return $result; // Return the result set
-        } else {
+        // Check if the query executed successfully
+        if ($result === false) {
             // DISPLAY ERROR MESSAGE IF QUERY FAILED
-            echo "Error retrieving cart items: " . mysqli_error($con);
+            echo "Error executing query: " . mysqli_error($con);
             return false;
         }
+    
+        // Return the result set
+        return $result;
     }
+    
+    
     
 
     // FUNCTION TO GET RECORD BY ID FROM A SPECIFIED TABLE

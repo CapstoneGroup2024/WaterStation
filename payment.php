@@ -180,7 +180,7 @@ if ($userDetails) {
                                 <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;">₱<?= $additional_fee ?></span></h5>
                             </div>
                             <div class="row-md-2 shadow-sm p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                <h5>Total: <span class="grand-total" style="display: flex; float:right;">₱<?= $grandtotal ?></span></h5>
+                                <h5>Grand Total: <span class="grand-total" style="display: flex; float:right;">₱<?= $grandtotal ?></span></h5>
                             </div>
                         </div>
                     </div>
