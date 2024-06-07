@@ -48,7 +48,7 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
             if($userDetails){
                 if($product){
 ?>
-                <tr>
+                <tr style="text-align: center; vertical-align: middle;">
                     <td><?= $order['id']; ?></td>
                     <td><?= $userDetails['name']; ?></td> <!-- Display user's name -->
                     <td><?= $order['status']; ?></td>
@@ -66,8 +66,8 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
 <?php
                 } else {
                     ?>
-                    <tr>
-                        <td colspan="4">Error: Failed to fetch product details for order ID <?= $order['id']; ?></td>
+                    <tr style="text-align: center; vertical-align: middle;">
+                        <td colspan="5" style="color:red;">Error: Failed to fetch product details for order ID: <?= $order['id']; ?></td>
                         <td>
                             <form action="codes.php" method="POST">
                                 <input type="hidden" name="order_id" value="<?= $order['id'];?>">
@@ -79,15 +79,16 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                 } 
             } else {
                 ?>
-                <tr>
-                    <td colspan="4">Error: No user details found for user ID <?= $order['id']; ?></td>
-                    <td>
-                        <form action="codes.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id'];?>">
-                            <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
-                        </form>
-                    </td>
-                </tr>
+                    <tr style="text-align: center; vertical-align: middle;">
+                        <td colspan="5" style="color:red;">Error: No user details found for user ID: <?= $order['id']; ?></td>
+                        <td>
+                            <form action="codes.php" method="POST">
+                                <input type="hidden" name="order_id" value="<?= $order['id'];?>">
+                                <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
                 <?php
             }
         }
