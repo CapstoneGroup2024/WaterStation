@@ -184,7 +184,6 @@ function getProductsByOrderId($order_id) {
             'price' => $row['price']
         );
     }
-
     // Close the statement and database connection
     $statement->close();
     $con->close();
@@ -192,4 +191,37 @@ function getProductsByOrderId($order_id) {
     // Return the array of products
     return $products;
 }
+
+function getFirstProductByOrderId($orderId) {
+    global $con;
+
+    // Prepare and execute the SQL query to fetch the first product based on order ID
+    $query = "SELECT * FROM order_items WHERE order_id = ? LIMIT 1";
+    $statement = $con->prepare($query);
+    $statement->bind_param("i", $orderId);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    // Fetch the first product and return its details
+    if ($row = $result->fetch_assoc()) {
+        // Assuming you have a products table where you can retrieve product details based on product ID
+        $product_id = $row['product_id'];
+        $product_query = "SELECT * FROM product WHERE id = ? LIMIT 1";
+        $product_statement = $con->prepare($product_query);
+        $product_statement->bind_param("i", $product_id);
+        $product_statement->execute();
+        $product_result = $product_statement->get_result();
+        $product = $product_result->fetch_assoc();
+
+        // Return the product details
+        return array(
+            'product_name' => $product['name']
+        );
+    } else {
+        // If no product found, return null
+        return null;
+    }
+}
+
+
 

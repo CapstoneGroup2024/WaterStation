@@ -41,18 +41,21 @@
                 </div>
             </div>
             <!--------------- ONGOING ORDERS --------------->
-            <div class="card-body shadow">
+            <div class="card-body shadow align-items-center text-center">
                 <h2>Ongoing Orders</h2>
                 <div class="row align-items-center p-2">
                     <div class="col-md-1">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
                     </div>
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Status</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Grand Total</h6>
                     </div>
                     <div class="col-md-2">
@@ -69,51 +72,75 @@
                 if (mysqli_num_rows($orderItems) > 0) { // ITERATE THROUGH EACH ORDER
                     foreach ($orderItems as $order) {
                         if ($order['status'] == 'Ongoing') {
+                            // Fetch the first product for this order
+                            $productItem = getFirstProductByOrderId($order['id']);
+
+                            // Check if productItem is not null before accessing its elements
+                            if ($productItem !== null) {
                 ?>
-                            <!--------------- CART ITEMS --------------->
-                            <div class="card shadow-sm mb-3 cart_data">
-                                <div class="row align-items-center p-3">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h5><?= $order['id']; ?></h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h5><?= $order['status']; ?></h5>
-                                    </div>
-                                    <div class="col-md-3" style="margin-left:20px;">
-                                        <h5>₱<?= $order['grand_total']; ?></h5>
-                                    </div>
-                                    <div class="col-md-2" style="margin-left:-20px;">
-                                        <h5><?= $order['order_at']; ?></h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                <!--------------- CART ITEMS --------------->
+                                <div class="card shadow-sm mb-3 cart_data">
+                                    <div class="row align-items-center p-3">
+                                        <div class="col-md-1">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <h5><?= $order['id']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><?= $productItem['product_name']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><?= $order['status']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2" style="margin-left:20px;">
+                                            <h5>₱<?= $order['grand_total']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2" style="margin-left:-20px;">
+                                            <h5><?= $order['order_at']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                 <?php
+                            } else {
+                                ?>
+                                <div class="card shadow-sm mb-3 cart_data">
+                                    <div class="row align-items-center p-3">
+                                        <div>
+                                            <h5 style="color:red;">No product found for order ID: <?= $order['id']; ?></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
                         }
                     }
                 } else {
                     echo "No ongoing orders found";
                 }
-                ?>
+?>
+
+
             </div>
 
             <!--------------- COMPLETED ORDERS --------------->
-            <div class="card-body shadow">
+            <div class="card-body shadow text-center">
                 <h2>Completed Orders</h2>
                 <div class="row align-items-center p-2">
-                <div class="col-md-1">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-1">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>
                     </div>
                     <div class="col-md-2">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
                     </div>
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Status</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Grand Total</h6>
                     </div>
                     <div class="col-md-2">
@@ -130,36 +157,55 @@
                 if (mysqli_num_rows($orderItems) > 0) { // ITERATE THROUGH EACH ORDER
                     foreach ($orderItems as $order) {
                         if ($order['status'] == 'Completed') {
+                            // Fetch the first product for this order
+                            $productItem = getFirstProductByOrderId($order['id']);
+
+                            // Check if productItem is not null before accessing its elements
+                            if ($productItem !== null) {
                 ?>
-                            <!--------------- CART ITEMS --------------->
-                            <div class="card shadow-sm mb-3 cart_data">
-                                <div class="row align-items-center p-3">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h5><?= $order['id']; ?></h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h5><?= $order['status']; ?></h5>
-                                    </div>
-                                    <div class="col-md-3" style="margin-left:20px;">
-                                        <h5>₱<?= $order['grand_total']; ?></h5>
-                                    </div>
-                                    <div class="col-md-2" style="margin-left:-20px;">
-                                        <h5><?= $order['order_at']; ?></h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                <!--------------- CART ITEMS --------------->
+                                <div class="card shadow-sm mb-3 cart_data">
+                                    <div class="row align-items-center p-3">
+                                        <div class="col-md-1">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <h5><?= $order['id']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><?= $productItem['product_name']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5><?= $order['status']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2" style="margin-left:20px;">
+                                            <h5>₱<?= $order['grand_total']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2" style="margin-left:-20px;">
+                                            <h5><?= $order['order_at']; ?></h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                 <?php
+                            } else {
+                                ?>
+                                <div class="card shadow-sm mb-3 cart_data">
+                                    <div class="row align-items-center p-3">
+                                        <div>
+                                            <h5 style="color:red;">No product found for order ID: <?= $order['id']; ?></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
                         }
                     }
                 } else {
-                    echo "No completed orders found";
+                    echo "No ongoing orders found";
                 }
-                ?>
+?>
             </div>
         </div>
     </form>
