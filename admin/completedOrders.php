@@ -13,19 +13,20 @@
                 <div class="card-body">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Ongoing Orders</a>
+                        <a class="nav-link" href="orders.php" style="color:black;">Ongoing Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="completedOrders.php" style="color:black;">Completed Orders</a>
+                        <a class="nav-link active" aria-current="page" href="#">Completed Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="cancelledOrders.php" style="color:black;">Cancelled Orders</a>
                     </li>
                     </ul>
                     <!--------------- PRODUCTS TABLE --------------->
-                    <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Ongoing Orders</h6>
+                    <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Completed Orders</h6>
                     <table class="table table-bordered table-striped">
                         <thead>
+                            Completed Transactions
                             <tr>
                                 <th>ID</th>
                                 <th>Customer Name</th>
@@ -40,7 +41,7 @@
                             $orders = getData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
                             if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                                 foreach($orders as $order){
-                                    if ($order['status'] == 'Ongoing'){// ITERATE THROUGH EACH ORDER
+                                    if ($order['status'] == 'Completed'){// ITERATE THROUGH EACH ORDER
                             ?>
                                         <tr>
                                             <td><?= $order['id']; ?></td>
