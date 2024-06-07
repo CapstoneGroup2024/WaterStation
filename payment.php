@@ -50,58 +50,38 @@ function getUserDetails($userId) {
     }
 }
 
-    function getItemsCart($order_id) {
-    global $con;
-
-    // QUERY TO SELECT CART ITEMS FOR A SPECIFIC ORDER
-    $query = "SELECT oi.*, oi.total AS total_price FROM order_items oi WHERE oi.order_id = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $order_id); 
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        return $result; // Return the result set
-    } else {
-        // DISPLAY ERROR MESSAGE IF QUERY FAILED
-        echo "Error retrieving cart items: " . mysqli_error($con);
-        return false;
-    }
-}
-
-
-
-
 // Reconnect to the database if necessary
 if (mysqli_connect_errno()) {
     include('config/dbconnect.php'); // Assuming dbconnect.php contains the connection code
 }
-// Now call getUserDetails()
+
 $userDetails = getUserDetails($userId);
-// Display user and order details
+
 if ($userDetails) {
     // Fetch order details from session
-    if (isset($_SESSION['order_id'])) {
-        $order_id = $_SESSION['order_id'];
-        $subtotal = $_SESSION['subtotal'];
-        $additional_fee = $_SESSION['additional_fee'];
-        $grandtotal = $_SESSION['grandtotal'];
+    if(isset($_GET['id'])){
+        $order_id = $_GET['id'];
 
-        $orderStatus = getOrderStatus($con, $order_id);
+        // Call getOrderDetails to fetch order details
+        $orderDetails = getOrderDetails($con, $order_id);
 
+        $orderStatus = $orderDetails['orderStatus'];
+        $subtotal = $orderDetails['orderSubTotal'];
+        $additional_fee = $orderDetails['orderAddFee'];
+        $grandtotal = $orderDetails['orderGrandTotal'];
 
-    // Check if the status is available
-    if ($orderStatus !== "Status not available") {
-        // Display the order status
-        echo "Order Status: " . $orderStatus;
-    } else {
-        // Display a message if the status is not available
-        echo "Order status is not available.";
-    }
-
-
+        // Check if the status is available
+        if ($orderStatus !== "Not available") {
+            // Display the order status
+            echo "Order Status: " . $orderStatus;
+        } else {
+            // Display a message if the status is not available
+            echo "Order status is not available.";
+        }
         // Display order receipt
         ?>
+
+        
         <section class="p-5 p-md-5 text-sm-start">
             <div class="container" style="margin-top: 60px;">
                 <div class="row">
@@ -158,12 +138,11 @@ if ($userDetails) {
                     <!-- Display order summary -->
                     <?php
                     // Fetch cart items from the session
-                    $cartItems = getCartItemsByUserId($userId);
-                    $getTotal =  getItemsCart($order_id);
+                    $cartItems = getProductsByOrderId($order_id);
                     ?>               
                         <?php foreach ($cartItems as $cartItem) { 
                             
-                            $itemTotal = $cartItem['quantity'] * $cartItem['selling_price'];
+                            $itemTotal = $cartItem['quantity'] * $cartItem['price'];
                             ?>
                             
                             <div class="card shadow-sm p-3" style=" width: 780px; border-radius: 20px; display: flex; float:right; margin-bottom: 20px;">
@@ -178,7 +157,7 @@ if ($userDetails) {
                                         <h5><?= $cartItem['product_name'] ?></h5>
                                     </div>
                                     <div class="col-md-2">
-                                        <h5><?= $cartItem['selling_price'] ?></h5>
+                                        <h5><?= $cartItem['price'] ?></h5>
                                     </div>
                                     <!-- Access total_price instead of total -->
                                     <div class="col-md-2">

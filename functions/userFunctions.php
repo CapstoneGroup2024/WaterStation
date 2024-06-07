@@ -92,6 +92,65 @@
         return $productIsActive && $categoryIsActive;
     }
 
+function getAllActiveProducts($con) { 
+    $query = "SELECT * FROM product WHERE status='1'"; 
+    return mysqli_query($con, $query); 
+}
+
+// Function to update product status to unavailable
+function updateProductStatus($productId, $con) {
+
+    global $con;
+    $query = "UPDATE product SET status = '0' WHERE id = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $productId);
+    $stmt->execute();
+    $stmt->close();
+}
+function getOrderDetails($con, $order_id) {
+    // Prepare the SQL query
+    $query = "SELECT * FROM orders WHERE id = ?";
+    $stmt = $con->prepare($query);
+
+    // Bind parameters and execute the statement
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+
+    // Get result
+    $orderResult = $stmt->get_result();
+
+    // Check if the query executed successfully
+    if ($orderResult && $orderResult->num_rows > 0) {
+        // Fetch the order details
+        $orderDetails = $orderResult->fetch_assoc();
+
+        // Extract the required fields
+        $orderId = $orderDetails['id'];
+        $orderStatus = $orderDetails['status'];
+        $orderSubTotal = $orderDetails['subtotal'];
+        $orderAddFee = $orderDetails['additional_fee'];
+        $orderGrandTotal = $orderDetails['grand_total'];
+    } else {
+        // If no results found, set default values
+        $orderId = "Not available";
+        $orderStatus = "Not available";
+        $orderSubTotal = "Not available";
+        $orderAddFee = "Not available";
+        $orderGrandTotal = "Not available";
+    }
+
+    $stmt->close(); // Close the statement
+
+    // Return all variables as an associative array
+    return array(
+        'orderId' => $orderId,
+        'orderStatus' => $orderStatus,
+        'orderSubTotal' => $orderSubTotal,
+        'orderAddFee' => $orderAddFee,
+        'orderGrandTotal' => $orderGrandTotal
+    );
+}
+
 // Function to fetch products based on order ID from the database
 function getProductsByOrderId($order_id) {
     global $con;
@@ -120,6 +179,7 @@ function getProductsByOrderId($order_id) {
         $products[] = array(
             'product_id' => $product['id'],
             'product_name' => $product['name'],
+            'product_image' => $product['image'],
             'quantity' => $row['quantity'],
             'price' => $row['price']
         );
@@ -131,46 +191,5 @@ function getProductsByOrderId($order_id) {
 
     // Return the array of products
     return $products;
-}
-
-
-function getAllActiveProducts($con) { 
-    $query = "SELECT * FROM product WHERE status='1'"; 
-    return mysqli_query($con, $query); 
-}
-
-// Function to update product status to unavailable
-function updateProductStatus($productId, $con) {
-
-    global $con;
-    $query = "UPDATE product SET status = '0' WHERE id = ?";
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("i", $productId);
-    $stmt->execute();
-    $stmt->close();
-}
-function getOrderStatus($con, $order_id) {
-    // Prepare the SQL query
-    $query = "SELECT status FROM orders WHERE id = ?";
-    $stmt = $con->prepare($query);
-
-    // Bind parameters and execute the statement
-    $stmt->bind_param("i", $order_id);
-    $stmt->execute();
-
-    // Get result
-    $statusResult = $stmt->get_result();
-
-    // Check if the query executed successfully
-    if ($statusResult && $statusResult->num_rows > 0) {
-        $orderStatus = $statusResult->fetch_assoc()['status'];
-    } else {
-        // If no status found, display a default message
-        $orderStatus = "Status not available";
-    }
-
-    $stmt->close(); // Close the statement
-
-    return $orderStatus;
 }
 
