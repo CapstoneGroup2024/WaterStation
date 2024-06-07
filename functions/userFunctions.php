@@ -27,8 +27,6 @@
         return $result;
     }
     
-    
-    
 
     // FUNCTION TO GET RECORD BY ID FROM A SPECIFIED TABLE
     function getByID($table, $id){ 

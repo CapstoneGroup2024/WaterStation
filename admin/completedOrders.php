@@ -24,9 +24,8 @@
                     </ul>
                     <!--------------- PRODUCTS TABLE --------------->
                     <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Completed Orders</h6>
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped text-center">
                         <thead>
-                            Completed Transactions
                             <tr>
                                 <th>ID</th>
                                 <th>Customer Name</th>
@@ -38,15 +37,21 @@
                         <tbody>
                         <?php            
                             // GET DATA FOR ORDERS
-                            $orders = getData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
+                            $orders = getOrderData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
                             if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                                 foreach($orders as $order){
                                     if ($order['status'] == 'Completed'){// ITERATE THROUGH EACH ORDER
+                                        // Fetch user details for the current order
+                                        $userDetails = getUserDetails($order['user_id']);
+                                        $product = getFirstProductByOrderId($order['id']);
+                                        if($userDetails ){
+                                            if($product){
                             ?>
                                         <tr>
                                             <td><?= $order['id']; ?></td>
-                                            <td><?= $order['user_id']; ?></td>
+                                            <td><?= $userDetails['name']; ?></td> <!-- Display user's name -->
                                             <td><?= $order['status']; ?></td>
+                                            <td><?= $product['product_name']; ?></td>
                                             <td>
                                                 <a href="orderDetails.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
                                             </td>
@@ -58,13 +63,20 @@
                                             </td>
                                         </tr>
                             <?php
+                                        } else{
+                                            echo "Error: Failed to fetch product details for user ID: " . $order['user_id'];
+                                        }
+                                    }
+                                        else {
+                                            // Handle case when user details are not found
+                                            echo "Error: Failed to fetch user details for user ID: " . $order['user_id'];
+                                        }
                                     }
                                 }
                             } else {
                                 echo "No ongoing orders found";
                             }
                             ?>
-
                         </tbody>
                     </table>
                 </div>
