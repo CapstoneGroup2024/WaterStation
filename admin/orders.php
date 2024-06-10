@@ -60,7 +60,7 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
             $userDetails = getUserDetails($order['user_id']);
             $product = getFirstProductByOrderId($order['id']);
             if($userDetails){
-                if($product){
+                if($product !== null){
 ?>
                 <tr style="text-align: center; vertical-align: middle;">
                     <td><?= $order['id']; ?></td>
@@ -106,7 +106,7 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
             } else {
                 ?>
                     <tr style="text-align: center; vertical-align: middle;">
-                        <td colspan="5" style="color:red;">Error: No user details found for user ID: <?= $order['id']; ?></td>
+                        <td colspan="5" style="color:red;">Error: No user details found for order ID: <?= $order['id']; ?></td>
                         <td>
                             <form action="codes.php" method="POST">
                                 <input type="hidden" name="order_id" value="<?= $order['id'];?>">

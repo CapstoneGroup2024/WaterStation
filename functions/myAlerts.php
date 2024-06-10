@@ -72,62 +72,44 @@
         $statement->execute();
         $result = $statement->get_result();
     
-        // Fetch the first product and return its details
+        // Fetch the first product and return its details if found
         if ($row = $result->fetch_assoc()) {
             // Assuming you have a products table where you can retrieve product details based on product ID
-            $product_id = $row['product_id'];
-            $product_query = "SELECT * FROM product WHERE id = ? LIMIT 1";
-            $product_statement = $con->prepare($product_query);
-            $product_statement->bind_param("i", $product_id);
-            $product_statement->execute();
-            $product_result = $product_statement->get_result();
-            $product = $product_result->fetch_assoc();
+            if (isset($row['product_id'])) { // Check if product_id is set
+                $product_id = $row['product_id'];
+                $product_query = "SELECT * FROM product WHERE id = ? LIMIT 1";
+                $product_statement = $con->prepare($product_query);
+                $product_statement->bind_param("i", $product_id);
+                $product_statement->execute();
+                $product_result = $product_statement->get_result();
+                $product = $product_result->fetch_assoc();
     
-            // Return the product details
-            return array(
-                'product_name' => $product['name']
-            );
+                // Return the product details
+                if ($product !== null) {
+                    return array(
+                        'product_name' => $product['name']
+                    );
+                } else {
+                    // Handle the case where $product is null
+                    return null;
+                }
+                
+            } else {
+                // Handle the case where product_id is not set
+                return null;
+            }
         } else {
             // If no product found, return null
             return null;
         }
     }
+    
 
     function getOrderData($table, $timestamp_column = 'order_at') {
         global $con;
         $query = "SELECT * FROM $table ORDER BY $timestamp_column DESC"; // SQL query to select all data from the table and order by timestamp_column in descending order
         return $query_run = mysqli_query($con, $query); // Execute query and return result
     }
-
-    function getProductTransac($orderId) {
-        global $con;
     
-        // Prepare and execute the SQL query to fetch the first product based on order ID
-        $query = "SELECT * FROM order_transac WHERE order_id = ? LIMIT 1";
-        $statement = $con->prepare($query);
-        $statement->bind_param("i", $orderId);
-        $statement->execute();
-        $result = $statement->get_result();
-    
-        // Fetch the first product and return its details
-        if ($row = $result->fetch_assoc()) {
-            // Assuming you have a products table where you can retrieve product details based on product ID
-            $product_id = $row['product_id'];
-            $product_query = "SELECT * FROM product WHERE id = ? LIMIT 1";
-            $product_statement = $con->prepare($product_query);
-            $product_statement->bind_param("i", $product_id);
-            $product_statement->execute();
-            $product_result = $product_statement->get_result();
-            $product = $product_result->fetch_assoc();
-    
-            // Return the product details
-            return array(
-                'product_name' => $product['name']
-            );
-        } else {
-            // If no product found, return null
-            return null;
-        }
-    }
     
 ?>

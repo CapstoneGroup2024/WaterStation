@@ -138,15 +138,12 @@
                                 <?php while ($cartItem = mysqli_fetch_assoc($cartItems)) { 
                                     $itemTotal = $cartItem['quantity'] * $cartItem['selling_price'];
                                 ?>
-                                    <div class="card p-1" style="box-shadow: none; width: 600px; border-radius: 20px; display: flex; float:left;">
+                                    <div class="card p-1 text-center" style="box-shadow: none; width: 600px; border-radius: 20px; display: flex; float:left;">
                                         <div class="row align-items-center ">
-                                            <div class="col-md-3" style="padding-left: 50px; margin-bottom: 0px">
+                                            <div class="col-md-2" style="padding-left: 50px; margin-bottom: 0px">
                                                 <h5><?= $cartItem['quantity'] ?></h5>
                                             </div>
-                                            <div class="col-md-2">
-                                                <img src="uploads/<?= $cartItem['product_image'] ?>" width="80px" alt="<?= $cartItem['product_name'] ?>" style="border-radius: 10px;">
-                                            </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <h5><?= $cartItem['product_name'] ?></h5>
                                             </div>
                                             <div class="col-md-2">
