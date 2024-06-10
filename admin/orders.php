@@ -38,6 +38,20 @@
                         <tbody>
                         <?php            
 // GET DATA FOR ORDERS
+$query = "SHOW COLUMNS FROM orders WHERE Field = 'status'";
+$result = mysqli_query($con, $query);
+
+// Extract enum values from the query result
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    // Extract the enum values from the "Type" column
+    preg_match_all("/'(.*?)'/", $row['Type'], $matches);
+    $statusOptions = $matches[1];
+} else {
+    // Handle error if the query fails
+    $statusOptions = array(); // Provide a default empty array
+}
+
 $orders = getOrderData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
 if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
     foreach($orders as $order){
@@ -51,7 +65,19 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                 <tr style="text-align: center; vertical-align: middle;">
                     <td><?= $order['id']; ?></td>
                     <td><?= $userDetails['name']; ?></td> <!-- Display user's name -->
-                    <td><?= $order['status']; ?></td>
+                    <td>
+                        <form action="codes.php" method="POST">
+                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                            <select name="status">
+                                <?php foreach ($statusOptions as $option): ?>
+                                    <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <input type="submit" name="editOrderStatus" value="Update">
+                        </form>
+                    </td>
+
+                    </td>
                     <td><?= $product['product_name']; ?></td>
                     <td>
                         <a href="orderDetails.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>

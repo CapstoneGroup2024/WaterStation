@@ -187,6 +187,8 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("orders.php","Something went wrong");
     }
+} else if(isset($_POST['editOrderStatus'])){
+    echo "Helo";
 }
 
 

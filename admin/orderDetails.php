@@ -2,7 +2,7 @@
     include('includes/header.php');
     include('../middleware/adminMid.php');
 
-    function getUserDetails($user_id) {
+    function getUserDetail($user_id) {
         global $con;
     
         // Check if $con is a valid MySQLi connection
@@ -73,7 +73,7 @@
             $grand_total = $row['grand_total'];
     
             // Now you have the user_id and order details, you can proceed to fetch user details and other necessary data
-            $userDetails = getUserDetails($user_id);
+            $userDetails = getUserDetail($user_id);
             // Proceed with the rest of your code using $userDetails and $orderStatus
             ?>
             <div class="container">
