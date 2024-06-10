@@ -191,48 +191,95 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $order_id = $_POST['order_id'];
     $newStatus = $_POST['status'];
 
-    // Update the order status in the orders table
-    $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
-    $newResult = mysqli_query($con, $updateQuery);
+    // Initialize variables
+    $insertResult = null;
+    $updateProductQuantitiesResult = null;
 
-    // Insert necessary data into the order_transac table
-    $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, subtotal, additional_fee, grand_total, order_at)
-                    SELECT
-                        o.id AS order_id,
-                        u.user_id AS user_id,
-                        u.name AS user_name,
-                        u.phone AS phone,
-                        u.address AS address,
-                        oi.product_id AS product_id,
-                        p.name AS product_name,
-                        oi.quantity AS quantity,
-                        p.selling_price AS price,
-                        (oi.quantity * p.selling_price) AS total,
-                        o.subtotal AS subtotal,
-                        o.additional_fee AS additional_fee,
-                        o.grand_total AS grand_total,
-                        o.order_at AS order_at
-                    FROM
-                        orders o
-                    INNER JOIN
-                        order_items oi ON o.id = oi.order_id
-                    INNER JOIN
-                        users u ON o.user_id = u.user_id
-                    INNER JOIN
-                        product p ON oi.product_id = p.id
-                    WHERE
-                        o.id = '$order_id'";
-    $insertResult = mysqli_query($con, $insertQuery);
+    if ($newStatus === 'Cancelled'){
+        $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
+        $newResult = mysqli_query($con, $updateQuery);
 
-    // Update product quantities in the product table
-    $updateProductQuantities = "UPDATE product p
-                                INNER JOIN order_items oi ON p.id = oi.product_id
-                                SET p.quantity = p.quantity - oi.quantity
-                                WHERE oi.order_id = '$order_id'";
-    $updateProductQuantitiesResult = mysqli_query($con, $updateProductQuantities);
+        // Insert necessary data into the order_transac table
+        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, subtotal, additional_fee, grand_total, order_at)
+                        SELECT
+                            o.id AS order_id,
+                            u.user_id AS user_id,
+                            u.name AS user_name,
+                            u.phone AS phone,
+                            u.address AS address,
+                            oi.product_id AS product_id,
+                            p.name AS product_name,
+                            oi.quantity AS quantity,
+                            p.selling_price AS price,
+                            (oi.quantity * p.selling_price) AS total,
+                            o.subtotal AS subtotal,
+                            o.additional_fee AS additional_fee,
+                            o.grand_total AS grand_total,
+                            o.order_at AS order_at
+                        FROM
+                            orders o
+                        INNER JOIN
+                            order_items oi ON o.id = oi.order_id
+                        INNER JOIN
+                            users u ON o.user_id = u.user_id
+                        INNER JOIN
+                            product p ON oi.product_id = p.id
+                        WHERE
+                            o.id = '$order_id'";
+        $insertResult = mysqli_query($con, $insertQuery);
+    } else if ($newStatus === 'Completed'){
+        // Update the order status in the orders table
+        $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
+        $newResult = mysqli_query($con, $updateQuery);
 
-    if($newResult && $insertResult && $updateProductQuantitiesResult){
-        redirect("orders.php", "✔ Status updated successfully, data inserted into order_transac, and product quantities updated"); 
+        // Insert necessary data into the order_transac table
+        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, subtotal, additional_fee, grand_total, order_at)
+                        SELECT
+                            o.id AS order_id,
+                            u.user_id AS user_id,
+                            u.name AS user_name,
+                            u.phone AS phone,
+                            u.address AS address,
+                            oi.product_id AS product_id,
+                            p.name AS product_name,
+                            oi.quantity AS quantity,
+                            p.selling_price AS price,
+                            (oi.quantity * p.selling_price) AS total,
+                            o.subtotal AS subtotal,
+                            o.additional_fee AS additional_fee,
+                            o.grand_total AS grand_total,
+                            o.order_at AS order_at
+                        FROM
+                            orders o
+                        INNER JOIN
+                            order_items oi ON o.id = oi.order_id
+                        INNER JOIN
+                            users u ON o.user_id = u.user_id
+                        INNER JOIN
+                            product p ON oi.product_id = p.id
+                        WHERE
+                            o.id = '$order_id'";
+        $insertResult = mysqli_query($con, $insertQuery);
+
+        // Update product quantities in the product table
+        $updateProductQuantities = "UPDATE product p
+                                    INNER JOIN order_items oi ON p.id = oi.product_id
+                                    SET p.quantity = p.quantity - oi.quantity
+                                    WHERE oi.order_id = '$order_id'";
+        $updateProductQuantitiesResult = mysqli_query($con, $updateProductQuantities);
+    } else {
+        // For any other status change, simply update the order status
+        $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
+        $newResult = mysqli_query($con, $updateQuery);
+    }
+    
+    // Check conditions based on status change
+    if($newResult && $insertResult !== null && $updateProductQuantitiesResult !== null && $newStatus === 'Completed'){
+        redirect("orders.php", "✔ Order marked as Completed, data inserted into order_transac, and product quantities updated"); 
+    } elseif ($newResult && $insertResult !== null && $newStatus === 'Cancelled') {
+        redirect("orders.php", "✔ Order marked as Cancelled, and data inserted into order_transac"); 
+    } elseif ($newResult) {
+        redirect("orders.php", "✔ Status updated successfully"); 
     } else {
         redirect("orders.php", "Something went wrong"); 
     }
