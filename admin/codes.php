@@ -188,7 +188,17 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         redirect("orders.php","Something went wrong");
     }
 } else if(isset($_POST['editOrderStatus'])){
-    echo "Helo";
+    $order_id = $_POST['order_id'];
+    $newStatus = $_POST['status'];
+
+    $query = "UPDATE orders SET status ='$newStatus' WHERE id='$order_id'";
+    $result = mysqli_query($con, $query);
+
+    if($result){
+        redirect("orders.php", "✔ Status updated successfully"); 
+    } else {
+        redirect("orders.php", "Something went wrong"); 
+    }
 }
 
 
