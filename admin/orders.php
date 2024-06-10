@@ -24,13 +24,13 @@
                     </ul>
                     <!--------------- PRODUCTS TABLE --------------->
                     <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Ongoing Orders</h6>
-                    <table class="table table-bordered table-striped text-center">
+                    <table class="table table-hover text-center">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Customer Name</th>
-                                <th>Items</th>
                                 <th>Order Status</th>
+                                <th>Items</th>
                                 <th>Details</th>
                                 <th>Delete</th>
                             </tr>
@@ -68,24 +68,24 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                     <td>
                         <form action="codes.php" method="POST">
                             <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <select name="status">
+                            <select name="status" style="padding: 8px; border-radius: 10px;">
                                 <?php foreach ($statusOptions as $option): ?>
                                     <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <input type="submit" name="editOrderStatus" value="Update">
+                            <input type="submit" style="margin-top: 10px;" class="btn bg-primary text-white" name="editOrderStatus" value="Update">
                         </form>
                     </td>
 
                     </td>
                     <td><?= $product['product_name']; ?></td>
                     <td>
-                        <a href="orderDetails.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                        <a href="orderDetails.php?id=<?= $order['id']; ?>"style="margin-top: 10px;" class="btn bg-primary text-white">View Details</a>
                     </td>
                     <td>
                         <form action="codes.php" method="POST">
                             <input type="hidden" name="order_id" value="<?= $order['id'];?>">
-                            <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
+                            <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -97,7 +97,7 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                         <td>
                             <form action="codes.php" method="POST">
                                 <input type="hidden" name="order_id" value="<?= $order['id'];?>">
-                                <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
+                                <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -110,7 +110,7 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                         <td>
                             <form action="codes.php" method="POST">
                                 <input type="hidden" name="order_id" value="<?= $order['id'];?>">
-                                <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
+                                <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
                             </form>
                         </td>
                     </tr>

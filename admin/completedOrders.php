@@ -30,53 +30,76 @@
                                 <th>ID</th>
                                 <th>Customer Name</th>
                                 <th>Order Status</th>
+                                <th>Items</th>
                                 <th>Details</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <?php            
-                            // GET DATA FOR ORDERS
-                            $orders = getOrderData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
-                            if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
-                                foreach($orders as $order){
-                                    if ($order['status'] == 'Completed'){// ITERATE THROUGH EACH ORDER
-                                        // Fetch user details for the current order
-                                        $userDetails = getUserDetails($order['user_id']);
-                                        $product = getFirstProductByOrderId($order['id']);
-                                        if($userDetails ){
-                                            if($product){
-                            ?>
-                                        <tr>
-                                            <td><?= $order['id']; ?></td>
-                                            <td><?= $userDetails['name']; ?></td> <!-- Display user's name -->
-                                            <td><?= $order['status']; ?></td>
-                                            <td><?= $product['product_name']; ?></td>
-                                            <td>
-                                                <a href="orderDetails.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
-                                            </td>
-                                            <td>
-                                                <form action="codes.php" method="POST">
-                                                    <input type="hidden" name="order_id" value="<?= $order['id'];?>">
-                                                    <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
                             <?php
-                                        } else{
-                                            echo "Error: Failed to fetch product details for user ID: " . $order['user_id'];
-                                        }
-                                    }
-                                        else {
-                                            // Handle case when user details are not found
-                                            echo "Error: Failed to fetch user details for user ID: " . $order['user_id'];
-                                        }
-                                    }
-                                }
-                            } else {
-                                echo "No ongoing orders found";
-                            }
-                            ?>
+                        $orders = getOrderData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
+                        if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
+                            foreach($orders as $order){
+                                if ($order['status'] == 'Completed'){// ITERATE THROUGH EACH ORDER
+                                    // Fetch user details for the current order
+                                    $userDetails = getUserDetails($order['user_id']);
+                                    $product = getFirstProductByOrderId($order['id']);
+                                    if($userDetails){
+                                        if($product){
+                        ?>
+                <tr style="text-align: center; vertical-align: middle;">
+                    <td><?= $order['id']; ?></td>
+                    <td><?= $userDetails['name']; ?></td> <!-- Display user's name -->
+                    <td><?= $order['status']; ?></td>
+                    <td><?= $product['product_name']; ?></td>
+                    <td>
+                        <a href="orderDetails.php?id=<?= $order['id']; ?>"style="margin-top: 10px;" class="btn bg-primary text-white">View Details</a>
+                    </td>
+                    <td>
+                        <form action="codes.php" method="POST">
+                            <input type="hidden" name="order_id" value="<?= $order['id'];?>">
+                            <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+<?php
+                } else {
+                    ?>
+                    <tr style="text-align: center; vertical-align: middle;">
+                        <td colspan="5" style="color:red;">Error: Failed to fetch product details for order ID: <?= $order['id']; ?></td>
+                        <td>
+                            <form action="codes.php" method="POST">
+                                <input type="hidden" name="order_id" value="<?= $order['id'];?>">
+                                <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                } 
+            } else {
+                ?>
+                    <tr style="text-align: center; vertical-align: middle;">
+                        <td colspan="5" style="color:red;">Error: No user details found for user ID: <?= $order['id']; ?></td>
+                        <td>
+                            <form action="codes.php" method="POST">
+                                <input type="hidden" name="order_id" value="<?= $order['id'];?>">
+                                <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                <?php
+            }
+        }
+    }
+} else {
+    ?>
+    <tr>
+        <td colspan="6">No ongoing orders found</td>
+    </tr>
+    <?php
+}
+?>
                         </tbody>
                     </table>
                 </div>

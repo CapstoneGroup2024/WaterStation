@@ -191,13 +191,47 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $order_id = $_POST['order_id'];
     $newStatus = $_POST['status'];
 
-    $query = "UPDATE orders SET status ='$newStatus' WHERE id='$order_id'";
-    $result = mysqli_query($con, $query);
+    // Update the order status in the orders table
+    $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
+    $newresult = mysqli_query($con, $updateQuery);
 
-    if($result){
-        redirect("orders.php", "✔ Status updated successfully"); 
+    if($newresult){
+        // Insert necessary data into the order_transac table
+        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, subtotal, additional_fee, grand_total, order_at)
+                        SELECT
+                            o.id AS order_id,
+                            u.user_id AS user_id,
+                            u.name AS user_name,
+                            u.phone AS phone,
+                            u.address AS address,
+                            oi.product_id AS product_id,
+                            p.name AS product_name,
+                            oi.quantity AS quantity,
+                            p.selling_price AS price,
+                            (oi.quantity * p.selling_price) AS total,
+                            o.subtotal AS subtotal,
+                            o.additional_fee AS additional_fee,
+                            o.grand_total AS grand_total,
+                            o.order_at AS order_at
+                        FROM
+                            orders o
+                        INNER JOIN
+                            order_items oi ON o.id = oi.order_id
+                        INNER JOIN
+                            users u ON o.user_id = u.user_id
+                        INNER JOIN
+                            product p ON oi.product_id = p.id
+                        WHERE
+                            o.id = '$order_id'";
+        $insertResult = mysqli_query($con, $insertQuery);
+
+        if($insertResult){
+            redirect("orders.php", "✔ Status updated successfully and data inserted into order_transac"); 
+        } else {
+            redirect("orders.php", "Status updated successfully, but failed to insert data into order_transac"); 
+        }
     } else {
-        redirect("orders.php", "Something went wrong"); 
+        redirect("orders.php", "Something went wrong while updating the order status"); 
     }
 }
 
