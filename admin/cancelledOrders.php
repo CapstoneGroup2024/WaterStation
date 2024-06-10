@@ -37,27 +37,27 @@
                         <tbody>
                         <?php            
                             // GET DATA FOR ORDERS
-                            $orders = getOrderData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
+                            $orders = getOrderData("order_transac"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
                             if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                                 foreach($orders as $order){
                                     if ($order['status'] == 'Cancelled'){// ITERATE THROUGH EACH ORDER
                                         // Fetch user details for the current order
                                         $userDetails = getUserDetails($order['user_id']);
-                                        $product = getFirstProductByOrderId($order['id']);
+                                        $product = getProductTransac($order['order_id']);
                                         if($userDetails ){
                                             if($product){
                             ?>
                                         <tr>
-                                            <td><?= $order['id']; ?></td>
+                                            <td><?= $order['order_id']; ?></td>
                                             <td><?= $userDetails['name']; ?></td> <!-- Display user's name -->
                                             <td><?= $order['status']; ?></td>
                                             <td><?= $product['product_name']; ?></td>
                                             <td>
-                                                <a href="orderDetails.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                                <a href="orderDetails.php?id=<?= $order['order_id']; ?>" class="btn bg-primary text-white">View Details</a>
                                             </td>
                                             <td>
                                                 <form action="codes.php" method="POST">
-                                                    <input type="hidden" name="order_id" value="<?= $order['id'];?>">
+                                                    <input type="hidden" name="order_id" value="<?= $order['order_id'];?>">
                                                     <button type="submit" class="btn btn-danger text-white" name="deleteOrder_button">Delete</button>
                                                 </form>
                                             </td>

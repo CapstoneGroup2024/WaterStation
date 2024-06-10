@@ -200,7 +200,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         $newResult = mysqli_query($con, $updateQuery);
 
         // Insert necessary data into the order_transac table
-        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, subtotal, additional_fee, grand_total, order_at)
+        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
                         SELECT
                             o.id AS order_id,
                             u.user_id AS user_id,
@@ -212,6 +212,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                             oi.quantity AS quantity,
                             p.selling_price AS price,
                             (oi.quantity * p.selling_price) AS total,
+                            o.status AS status,
                             o.subtotal AS subtotal,
                             o.additional_fee AS additional_fee,
                             o.grand_total AS grand_total,
@@ -233,7 +234,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         $newResult = mysqli_query($con, $updateQuery);
 
         // Insert necessary data into the order_transac table
-        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, subtotal, additional_fee, grand_total, order_at)
+        $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
                         SELECT
                             o.id AS order_id,
                             u.user_id AS user_id,
@@ -245,6 +246,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                             oi.quantity AS quantity,
                             p.selling_price AS price,
                             (oi.quantity * p.selling_price) AS total,
+                            o.status AS status,
                             o.subtotal AS subtotal,
                             o.additional_fee AS additional_fee,
                             o.grand_total AS grand_total,
