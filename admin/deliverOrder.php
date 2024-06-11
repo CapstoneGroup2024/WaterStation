@@ -13,10 +13,10 @@
                 <div class="card-body">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Pending Orders</a>
+                        <a class="nav-link" style="color:black;" href="orders.php">Pending Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="deliverOrder.php" style="color:black;">Orders for Delivery</a>
+                        <a class="nav-link active" aria-current="page" href="#" style="color:black;">Orders for Delivery</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="completedOrders.php" style="color:black;">Completed Orders</a>
@@ -26,7 +26,7 @@
                     </li>
                     </ul>
                     <!--------------- PRODUCTS TABLE --------------->
-                    <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Pending Orders</h6>
+                    <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Orders for Delivery</h6>
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>

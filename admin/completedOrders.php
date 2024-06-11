@@ -12,9 +12,12 @@ include('../middleware/adminMid.php');
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link" href="orders.php" style="color:black;">Ongoing Orders</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.php" style="color:black;">Pending Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="deliverOrder.php" style="color:black;">Orders for Delivery</a>
+                    </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Completed Orders</a>
                         </li>

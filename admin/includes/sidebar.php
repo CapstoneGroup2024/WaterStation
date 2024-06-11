@@ -23,6 +23,15 @@
             <span class="nav-link-text ms-1" id="side-bar-title">Dashboard</span>
           </a>
         </li>
+                <!--------------- ORDERS --------------->
+                <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="orders.php" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">shopping_bag</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Orders</span>
+          </a>
+        </li>
         <!--------------- ADD CATEGORY --------------->
         <li class="nav-item">
           <a class="nav-link text-dark-blue " href="category.php" id="side-bar-link-box">
@@ -57,15 +66,6 @@
               <i class="material-icons opacity-10" id="side-bar-icon">add</i>
             </div>
             <span class="nav-link-text ms-1" id="side-bar-title">Add Products</span>
-          </a>
-        </li>
-        <!--------------- ORDERS --------------->
-        <li class="nav-item">
-          <a class="nav-link text-dark-blue " href="orders.php" id="side-bar-link-box">
-            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10" id="side-bar-icon">shopping_bag</i>
-            </div>
-            <span class="nav-link-text ms-1" id="side-bar-title">Orders</span>
           </a>
         </li>
         <!--------------- CUSTOMER --------------->
