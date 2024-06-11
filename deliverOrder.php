@@ -41,18 +41,14 @@
                 </div>
             </div>
             <div class="list-group list-group-horizontal-md text-center">
-                    <a class="list-group-item list-group-item-action act" href="#">Pending Orders</a>
-                    <a class="list-group-item list-group-item-action" href="deliverOrder.php" >Orders for Delivery</a>
+                    <a class="list-group-item list-group-item-action" href="purchases.php">Pending Orders</a>
+                    <a class="list-group-item list-group-item-action act" href="#" >Orders for Delivery</a>
                     <a class="list-group-item list-group-item-action" href="completedOrder.php" >Completed Orders</a>
                     <a class="list-group-item list-group-item-action" href="cancelOrder.php">Cancelled Orders</a>
             </div>
-
-                
-            
-
             <!--------------- ONGOING ORDERS --------------->
             <div class="card-body shadow">
-                <h2 style="padding: 20px;">Pending Orders</h2>
+                <h2 style="padding: 20px;">Orders for Delivery</h2>
                 <div class="row align-items-center p-2 text-center">
                     <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>

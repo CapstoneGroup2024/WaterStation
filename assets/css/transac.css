@@ -1,0 +1,39 @@
+/* To remove bullets and default list styles */
+.list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* To align list items horizontally */
+.list-group .list-group-item {
+    display: inline-block;
+}
+
+/* To style active list item */
+.list-group .list-group-item.act {
+    background-color: #f8f9fa; /* Change as needed */
+    border: 1px solid #dee2e6; /* Change as needed */
+    border-bottom-color: transparent; /* To prevent double border at the bottom */
+    border-radius: 0.25rem 0.25rem 0 0; /* Rounded corners for the top */
+    position: relative; /* Positioning for pseudo-element */
+}
+
+/* To style active list item's link */
+.list-group .list-group-item.act a {
+    color: #000; /* Change as needed */
+    text-decoration: none; /* Remove underline */
+    padding: 0.5rem 1rem; /* Adjust padding */
+    display: block; /* Make link take full width of list item */
+}
+
+/* To add indicator for active list item */
+.list-group .list-group-item.act::after {
+    content: ''; /* Required for pseudo-element */
+    position: absolute; /* Positioning */
+    bottom: -1px; /* Position below the list item */
+    left: 0; /* Align with left edge of list item */
+    width: 100%; /* Full width */
+    height: 2px; /* Height of indicator */
+    background-color: #007bff; /* Color of indicator */
+}

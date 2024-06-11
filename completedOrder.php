@@ -41,19 +41,15 @@
                 </div>
             </div>
             <div class="list-group list-group-horizontal-md text-center">
-                    <a class="list-group-item list-group-item-action act" href="#">Pending Orders</a>
+                    <a class="list-group-item list-group-item-action" href="purchases.php">Pending Orders</a>
                     <a class="list-group-item list-group-item-action" href="deliverOrder.php" >Orders for Delivery</a>
-                    <a class="list-group-item list-group-item-action" href="completedOrder.php" >Completed Orders</a>
+                    <a class="list-group-item list-group-item-action act" href="#" >Completed Orders</a>
                     <a class="list-group-item list-group-item-action" href="cancelOrder.php">Cancelled Orders</a>
             </div>
-
-                
-            
-
-            <!--------------- ONGOING ORDERS --------------->
-            <div class="card-body shadow">
-                <h2 style="padding: 20px;">Pending Orders</h2>
-                <div class="row align-items-center p-2 text-center">
+                <!--------------- COMPLETED ORDERS --------------->
+                <div class="card-body shadow">
+                <h2 style="padding: 20px">Completed Orders</h2>
+                <div class="row align-items-center p-3 text-center">
                     <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>
                     </div>
@@ -75,25 +71,20 @@
                 </div>
 
                 <?php
-                $orderItems = getId('orders', $userId); // GET ORDERS BASED ON USER ID
+                $orderItems = getId('order_transac', $userId); // GET ORDERS BASED ON USER ID
 
                 if (mysqli_num_rows($orderItems) > 0) { // ITERATE THROUGH EACH ORDER
                     foreach ($orderItems as $order) {
-                        if ($order['status'] == 'Ongoing') {
-                            // Fetch the first product for this order
-                            $productItem = getFirstProductByOrderId($order['id']);
-
-                            // Check if productItem is not null before accessing its elements
-                            if ($productItem !== null) {
+                        if ($order['status'] === 'Completed') {
                 ?>
                                 <!--------------- CART ITEMS --------------->
                                 <div class="card shadow-sm mb-3 cart_data text-center">
                                     <div class="row align-items-center p-3">
                                         <div class="col-md-1">
-                                            <h5><?= $order['id']; ?></h5>
+                                            <h5><?= $order['order_id']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <h5><?= $productItem['product_name']; ?></h5>
+                                            <h5><?= $order['product_name']; ?></h5>
                                         </div>
                                         <div class="col-md-3">
                                             <h5><?= $order['status']; ?></h5>
@@ -105,33 +96,17 @@
                                             <h5><?= $order['order_at']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                            <a href="payment.php?id=<?= $order['order_id']; ?>" class="btn bg-primary text-white">View Details</a>
                                         </div>
                                     </div>
                                 </div>
                 <?php
-                            } else {
-                                ?>
-                                <div class="card shadow-sm mb-3 cart_data text-center">
-                                    <div class="row align-items-center p-3">
-                                        <div class="col-md-10">
-                                            <h5 style="color:red;">No product found for order ID: <?= $order['id']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="hidden" name="cart_id_<?= $cart['id']; ?>" value="<?= $cart['id']; ?>">
-                                            <input type="submit" class="btn btn-danger text-white" name="deleteOngoingOrderBtn" value="Cancel Order"></input>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-                            }
+                            } 
                         }
-                    }
                 } else {
-                    echo "No ongoing orders found";
+                    echo "No Cancelled orders found";
                 }
 ?>
-            </div>
             </div>
         </div>
     </form>
