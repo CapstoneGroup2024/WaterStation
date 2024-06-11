@@ -316,7 +316,31 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else {
         redirect("orders.php", "Something went wrong"); 
     }
-} 
+} else if(isset($_POST['deleteCompleteTransacOrder_button'])){
+    $order_transac_id = $_POST['order_transac_id'];
+
+    // Delete from the orders table
+    $delete_order_query = "DELETE FROM order_transac WHERE order_transac_id ='$order_transac_id'";
+    $delete_order_query_run = mysqli_query($con, $delete_order_query);
+
+    if($delete_order_query_run){
+        redirect("completedOrders.php","✔ Order Transaction Deleted Successfully");
+    } else{
+        redirect("completedOrders.php","Something went wrong");
+    }
+} else if(isset($_POST['deleteCancelledTransacOrder_button'])){
+    $order_transac_id = $_POST['order_transac_id'];
+
+    // Delete from the orders table
+    $delete_order_query = "DELETE FROM order_transac WHERE order_transac_id='$order_transac_id'";
+    $delete_order_query_run = mysqli_query($con, $delete_order_query);
+
+    if($delete_order_query_run){
+        redirect("cancelledOrders.php","✔ Order Transaction Deleted Successfully");
+    } else{
+        redirect("cancelledOrders.php","Something went wrong");
+    }
+}
 
 
 

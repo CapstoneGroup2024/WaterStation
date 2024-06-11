@@ -191,38 +191,53 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
 
         // Commit or rollback transaction
         // Commit or rollback transaction
-            if ($orderItemsSuccess) {
-                // Subtract ordered quantity from product quantity in the product table
-                foreach ($cartItems as $cart) {
-                    $productId = $cart['product_id'];
-                    $quantity = $cart['quantity'];
-
-                    // Update product quantity in the product table
-                    $updateProductQuery = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
-                    $stmt = mysqli_prepare($con, $updateProductQuery);
-                    mysqli_stmt_bind_param($stmt, "ii", $quantity, $productId);
-                    $updateSuccess = mysqli_stmt_execute($stmt);
-
-                    // If update fails, rollback and break the loop
-                    if (!$updateSuccess) {
-                        mysqli_rollback($con);
-                        $_SESSION['message'] = "Failed to update product quantity.";
-                        header('Location: ../cart.php');
-                        exit;
-                    }
+        if ($orderItemsSuccess) {
+            // Subtract ordered quantity from product quantity in the product table
+            foreach ($cartItems as $cart) {
+                $productId = $cart['product_id'];
+                $quantity = $cart['quantity'];
+        
+                // Update product quantity in the product table
+                $updateProductQuery = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
+                $stmt = mysqli_prepare($con, $updateProductQuery);
+                mysqli_stmt_bind_param($stmt, "ii", $quantity, $productId);
+                $updateSuccess = mysqli_stmt_execute($stmt);
+        
+                // If update fails, rollback and break the loop
+                if (!$updateSuccess) {
+                    mysqli_rollback($con);
+                    $_SESSION['message'] = "Failed to update product quantity.";
+                    header('Location: ../cart.php');
+                    exit;
                 }
-
-                mysqli_commit($con);
-                $_SESSION['message'] = "Order placed successfully. Order ID: $orderId, Subtotal: $subtotal, Additional Fee: $additionalFee, Grand Total: $grandTotal";
-                unset($_SESSION['cart']); // Clear the cart after successful order placement
-                header('Location: ../payment.php?id=' . $orderId);
-                exit;
-            } else {
+            }
+        
+            // Delete cart items after successfully adding to order items
+            $deleteCartItemsQuery = "DELETE FROM cart_items WHERE user_id = ?";
+            $stmt = mysqli_prepare($con, $deleteCartItemsQuery);
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            $deleteCartItemsSuccess = mysqli_stmt_execute($stmt);
+        
+            // If deletion fails, rollback
+            if (!$deleteCartItemsSuccess) {
                 mysqli_rollback($con);
-                $_SESSION['message'] = "Failed to add order items.";
+                $_SESSION['message'] = "Failed to delete cart items.";
                 header('Location: ../cart.php');
                 exit;
             }
+        
+            mysqli_commit($con);
+            $_SESSION['message'] = "Order placed successfully. Order ID: $orderId, Subtotal: $subtotal, Additional Fee: $additionalFee, Grand Total: $grandTotal";
+            unset($_SESSION['cart']); // Clear the cart after successful order placement
+            header('Location: ../payment.php?id=' . $orderId);
+            exit;
+        } else {
+            mysqli_rollback($con);
+            $_SESSION['message'] = "Failed to add order items.";
+            header('Location: ../cart.php');
+            exit;
+        }
+        
 
     } else {
         // Order insertion failed

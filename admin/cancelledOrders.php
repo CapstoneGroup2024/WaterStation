@@ -55,8 +55,8 @@ include('../middleware/adminMid.php');
                                 </td>
                                 <td>
                                     <form action="codes.php" method="POST">
-                                        <input type="hidden" name="order_id" value="<?= $order['order_transac_id']; ?>">
-                                        <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteOrder_button">Delete</button>
+                                        <input type="hidden" name="order_transac_id" value="<?= $order['order_transac_id']; ?>">
+                                        <button type="submit" class="btn btn-danger text-white" style="margin-top: 10px;" name="deleteCancelledTransacOrder_button">Delete</button>
                                     </form>
                                 </td>
                             </tr>
