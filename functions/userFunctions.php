@@ -213,17 +213,19 @@ function getFirstProductByOrderId($orderId) {
         $product_statement->bind_param("i", $product_id);
         $product_statement->execute();
         $product_result = $product_statement->get_result();
-        $product = $product_result->fetch_assoc();
 
-        // Return the product details
-        return array(
-            'product_name' => $product['name']
-        );
+        // Check if product result is not null before fetching product details
+        if ($product_result && $product = $product_result->fetch_assoc()) {
+            // Return the product details
+            return array(
+                'product_name' => $product['name']
+            );
+        } else {
+            // If no product found, return null
+            return null;
+        }
     } else {
-        // If no product found, return null
+        // If no order item found, return null
         return null;
     }
 }
-
-
-

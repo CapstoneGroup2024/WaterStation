@@ -10,11 +10,11 @@
     // GET USER ID FROM SESSION
     $userId = $_SESSION['user_id'];
 
-    function getId($table, $userId) {
+    function getOrderData($table, $userId, $timestamp_column = 'order_at') {
         global $con; // Assuming $con is your database conne ction variable
     
         // Query to select data from the table by ID
-        $query = "SELECT * FROM $table WHERE user_id='$userId'";
+        $query = "SELECT * FROM $table WHERE user_id='$userId' ORDER BY $timestamp_column DESC ";
     
         // Execute the query
         $result = mysqli_query($con, $query);
@@ -71,7 +71,7 @@
                 </div>
 
                 <?php
-                $orderItems = getId('order_transac', $userId); // GET ORDERS BASED ON USER ID
+                $orderItems = getOrderData('order_transac', $userId); // GET ORDERS BASED ON USER ID
 
                 if (mysqli_num_rows($orderItems) > 0) { // ITERATE THROUGH EACH ORDER
                     foreach ($orderItems as $order) {
