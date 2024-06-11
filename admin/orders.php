@@ -30,7 +30,7 @@
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Order ID</th>
                                 <th>Customer Name</th>
                                 <th>Order Status</th>
                                 <th>Items</th>

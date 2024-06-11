@@ -30,7 +30,7 @@ include('../middleware/adminMid.php');
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Order ID</th>
                                 <th>Customer Name</th>
                                 <th>Order Status</th>
                                 <th>Items</th>
@@ -46,7 +46,7 @@ include('../middleware/adminMid.php');
                                     if ($order['status'] == 'Cancelled') { // ITERATE THROUGH EACH ORDER
                             ?>
                             <tr style="text-align: center; vertical-align: middle;">
-                                <td><?= $order['order_transac_id']; ?></td>
+                                <td><?= $order['order_id']; ?></td>
                                 <td><?= $order['user_name']; ?></td> <!-- Display user's name -->
                                 <td><?= $order['status']; ?></td> <!-- Assuming status exists in the transaction details -->
                                 <td><?= $order['product_name']; ?></td> <!-- Assuming product_name exists in the transaction details -->

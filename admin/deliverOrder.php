@@ -30,7 +30,7 @@
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Order ID</th>
                                 <th>Customer Name</th>
                                 <th>Order Status</th>
                                 <th>Items</th>
@@ -58,7 +58,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 $orders = getOrderData("orders"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
 if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
     foreach($orders as $order){
-        if ($order['status'] == 'Ongoing'){// ITERATE THROUGH EACH ORDER
+        if ($order['status'] === 'Out for Delivery'){// ITERATE THROUGH EACH ORDER
             // Fetch user details for the current order
             $userDetails = getUserDetails($order['user_id']);
             $product = getFirstProductByOrderId($order['id']);
@@ -72,9 +72,9 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                         <form action="codes.php" method="POST">
                             <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
                             <select name="status" style="padding: 8px; border-radius: 10px;">
-                                <?php foreach ($statusOptions as $option): ?>
-                                    <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
-                                <?php endforeach; ?>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
                             </select>
                             <input type="submit" style="margin-top: 10px;" class="btn bg-primary text-white" name="editOrderStatus" value="Update">
                         </form>
