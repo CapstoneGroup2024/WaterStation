@@ -228,6 +228,19 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         WHERE
                             o.id = '$order_id'";
         $insertResult = mysqli_query($con, $insertQuery);
+
+        if($newResult && $insertResult){
+
+            // Delete from the orders table
+            $delete_order_query = "DELETE FROM orders WHERE id='$order_id'";
+            $delete_order_query_run = mysqli_query($con, $delete_order_query);
+        
+            // Delete from the order_items table
+            $delete_items_query = "DELETE FROM order_items WHERE order_id='$order_id'";
+            $delete_items_query_run = mysqli_query($con, $delete_items_query);
+        
+        }
+
     } else if ($newStatus === 'Cancelled'){
         // Update the order status in the orders table
         $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
@@ -269,6 +282,18 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                     SET p.quantity = p.quantity + oi.quantity
                                     WHERE oi.order_id = '$order_id'";
         $updateProductQuantitiesResult = mysqli_query($con, $updateProductQuantities);
+
+        if($newResult && $insertResult){
+
+            // Delete from the orders table
+            $delete_order_query = "DELETE FROM orders WHERE id='$order_id'";
+            $delete_order_query_run = mysqli_query($con, $delete_order_query);
+        
+            // Delete from the order_items table
+            $delete_items_query = "DELETE FROM order_items WHERE order_id='$order_id'";
+            $delete_items_query_run = mysqli_query($con, $delete_items_query);
+        
+        }
     } else if($newStatus === 'Out for Delivery'){
         $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
         $deliverResult = mysqli_query($con, $updateQuery);
@@ -280,9 +305,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     }
     
     // Check conditions based on status change
-    if($newResult && $insertResult !== null && $updateProductQuantitiesResult !== null && $newStatus === 'Cancelled'){
+    if($newResult && $insertResult !== null && $updateProductQuantitiesResult !== null && $newStatus === 'Cancelled' && $delete_order_query_run && $delete_items_query_run){
         redirect("deliverOrder.php", "✔ Order Cancelled"); 
-    } elseif ($newResult && $insertResult !== null && $newStatus === 'Completed') {
+    } elseif ($newResult && $insertResult !== null && $newStatus === 'Completed' && $delete_order_query_run && $delete_items_query_run) {
         redirect("deliverOrder.php", "✔ Order Completed"); 
     } elseif ($newResult) {
         redirect("orders.php", "✔ Ongoing Order"); 
@@ -291,7 +316,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else {
         redirect("orders.php", "Something went wrong"); 
     }
-}
+} 
 
 
 
