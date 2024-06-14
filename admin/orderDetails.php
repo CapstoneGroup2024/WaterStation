@@ -35,25 +35,6 @@
         }
     }
     
-    function getItemsCart($order_id) {
-        global $con;
-    
-        // QUERY TO SELECT CART ITEMS FOR A SPECIFIC ORDER
-        $query = "SELECT oi.*, oi.total AS total_price FROM order_items oi WHERE oi.order_id = ?";
-        $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, 'i', $order_id); 
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-    
-        if ($result && mysqli_num_rows($result) > 0) {
-            return $result; // Return the result set
-        } else {
-            // DISPLAY ERROR MESSAGE IF QUERY FAILED
-            echo "Error retrieving cart items: " . mysqli_error($con);
-            return false;
-        }
-    }
-
     if(isset($_GET['id'])){
         $order_id = $_GET['id']; // Assuming the order ID is passed in the URL parameter 'id'
     
@@ -132,12 +113,12 @@
                                 <!-- Display order summary -->
                                 <?php
                                 // Fetch cart items from the session
-                                $cartItems = getCartItemsByUserId($user_id);
-                                $getTotal =  getItemsCart($order_id);
+                                $cartItems = getProductsByOrderId($order_id);
                                 ?>               
-                                <?php while ($cartItem = mysqli_fetch_assoc($cartItems)) { 
-                                    $itemTotal = $cartItem['quantity'] * $cartItem['selling_price'];
-                                ?>
+                                <?php foreach ($cartItems as $cartItem) { 
+                                    
+                                    $itemTotal = $cartItem['quantity'] * $cartItem['price'];
+                                ?>      
                                     <div class="card p-1 text-center" style="box-shadow: none; width: 600px; border-radius: 20px; display: flex; float:left;">
                                         <div class="row align-items-center ">
                                             <div class="col-md-2" style="padding-left: 50px; margin-bottom: 0px">
@@ -147,7 +128,7 @@
                                                 <h5><?= $cartItem['product_name'] ?></h5>
                                             </div>
                                             <div class="col-md-2">
-                                                <h5><?= $cartItem['selling_price'] ?></h5>
+                                                <h5><?= $cartItem['price'] ?></h5>
                                             </div>
                                             <!-- Access total_price instead of total -->
                                             <div class="col-md-2">

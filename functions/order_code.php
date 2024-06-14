@@ -30,17 +30,26 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
 
     $userId = $_SESSION['user_id'];
 
-    // Retrieve product and category data
-    $productId = isset($_POST['selectedProduct']) ? $_POST['selectedProduct'] : 1;
-    $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : 1;
+    // Retrieve product, category, and quantity data
+    $productId = isset($_POST['selectedProduct']) ? $_POST['selectedProduct'] : null;
+    $categoryId = isset($_POST['selectedCategory']) ? $_POST['selectedCategory'] : null;
     $quantity = isset($_POST['selectedQuantity']) ? $_POST['selectedQuantity'] : 1; // DEFAULT QUANTITY IS 1
+
+    // Validate if product and category are selected
+    if(empty($productId) || empty($categoryId)){ // CHECK IF PRODUCT ID OR CATEGORY ID IS EMPTY
+        $_SESSION['message'] = "Please choose both a product and a category!";
+        header('Location: ../order.php');
+        exit; // Terminate further execution
+    }
+
+    // Retrieve available stock for the selected product
     $availableStockQuery = "SELECT quantity FROM product WHERE id='$productId'";
-    
     $stockResult = mysqli_query($con, $availableStockQuery);
+
     if ($stockResult) {
         $stockData = mysqli_fetch_assoc($stockResult);
         $availableStock = $stockData['quantity'];
-    
+
         // Check if the selected quantity exceeds the available stock
         if ($quantity > $availableStock) {
             $_SESSION['message'] = "Sorry, the selected quantity exceeds the available stock.";
@@ -76,6 +85,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             'productName' => $product['name'],
             'productImage' => $product['image'],
             'sellingPrice' => $product['selling_price'],
+            'product_quantity' => $product['quantity'],
             'categoryId' => $categoryId,
             'categoryName' => $category['name'],
             'additionalPrice' => $category['additional_price'],
@@ -91,9 +101,21 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
 
                 // Check if the query executed successfully
                 if($insert_query_run){
+                    // Update product quantity in the product table
+                    $updateProductQuery = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
+                    $stmt = mysqli_prepare($con, $updateProductQuery);
+                    mysqli_stmt_bind_param($stmt, "ii", $quantity, $productId);
+                    $updateSuccess = mysqli_stmt_execute($stmt);
+
+                    // If update fails, show error message
+                    if (!$updateSuccess) {
+                        $_SESSION['message'] = "Failed to update product quantity.";
+                        header('Location: ../cart.php');
+                        exit;
+                    }
+
                     $_SESSION['message'] = "ITEM ADDED TO CART SUCCESSFULLY!";
                     header('Location: ../cart.php');  
-                      
                 } else {
                     $_SESSION['message'] = "Error: " . mysqli_error($con); // Get detailed error message
                     header('Location: ../register.php');
@@ -105,9 +127,17 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         }
     }
 } else if(isset($_POST['deleteOrderBtn'])){
+    $cart_id = $_POST['cart_id'];
+
     foreach($_POST as $key => $value) {
         if (strpos($key, 'cart_id') === 0) {
             $cart_id = mysqli_real_escape_string($con, $value);
+
+            $updateProductQuantities = "UPDATE product p
+                    INNER JOIN cart_items ci ON p.id = ci.product_id
+                    SET p.quantity = p.quantity + ci.quantity
+                    WHERE ci.id = '$cart_id'";
+            $updateProductQuantitiesResult = mysqli_query($con, $updateProductQuantities);
 
             $cart_query = "SELECT * FROM cart_items WHERE id='$cart_id'";
             $cart_query_run = mysqli_query($con, $cart_query);
@@ -117,14 +147,18 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             $delete_query = "DELETE FROM cart_items WHERE id='$cart_id'";
             $delete_query_run = mysqli_query($con, $delete_query);
 
-            if($delete_query_run){
+            if($updateProductQuantitiesResult && $delete_query_run){
                 $_SESSION['message'] = "✔ Cart Item Deleted Successfully";
                 header('Location: ../cart.php');
-                exit; // Terminate further execution
+                exit; 
             } else{
-                $_SESSION['message'] = "Something went wrong";
+                if(!$updateProductQuantitiesResult || !$delete_query_run) {
+                    $_SESSION['message'] = "Error: " . mysqli_error($con);
+                } else {
+                    $_SESSION['message'] = "Something went wrong";
+                }
                 header('Location: ../cart.php');
-                exit; // Terminate further execution
+                exit; 
             }
         }
     }
@@ -192,25 +226,6 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         // Commit or rollback transaction
         // Commit or rollback transaction
         if ($orderItemsSuccess) {
-            // Subtract ordered quantity from product quantity in the product table
-            foreach ($cartItems as $cart) {
-                $productId = $cart['product_id'];
-                $quantity = $cart['quantity'];
-        
-                // Update product quantity in the product table
-                $updateProductQuery = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
-                $stmt = mysqli_prepare($con, $updateProductQuery);
-                mysqli_stmt_bind_param($stmt, "ii", $quantity, $productId);
-                $updateSuccess = mysqli_stmt_execute($stmt);
-        
-                // If update fails, rollback and break the loop
-                if (!$updateSuccess) {
-                    mysqli_rollback($con);
-                    $_SESSION['message'] = "Failed to update product quantity.";
-                    header('Location: ../cart.php');
-                    exit;
-                }
-            }
         
             // Delete cart items after successfully adding to order items
             $deleteCartItemsQuery = "DELETE FROM cart_items WHERE user_id = ?";

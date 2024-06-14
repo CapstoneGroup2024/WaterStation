@@ -79,8 +79,9 @@
                             <span class="additional_price_hidden" style="display:none;"><?= $cart['additional_price']; ?></span>
                         </div>
                         <div class="col-md-1">
-                            <h5><?= $availableStock ?></h5>
+                            <h5 class="available-stock"><?= $availableStock ?></h5>
                         </div>
+
                         <div class="col-md-2" id="qty">
                             <div class="input-group mb-1" style="width:115px;">
                                 <button class="input-group-text decrement-btn changeQuantity">-</button>
@@ -120,14 +121,13 @@
                                         <h5></h5>
                                     </div>
                                     <div class="col-md-1">
-                                        <input type="hidden" name="cart_id_<?= $cart['id']; ?>" value="<?= $cart['id']; ?>">
+                                        <input type="hidden" name="cart_id" value="<?= $cart['id']; ?>">
                                         <input type="submit" class="btn btn-danger text-white" name="deleteOrderBtn" value="Delete"></input>
                                     </div>
                                 </div>
                             </div>
                             <?php
                         }
-                        
                     }
                 } else {
                     echo "No records found";
@@ -197,18 +197,6 @@ if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
     unset($_SESSION['success']); // UNSET THE SESSION SUCCESS VARIABLE
 }
 ?>
-</script>
-
-<script>
-    <?php
-        if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
-    ?>
-    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
-    <?php
-        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-        }
-        
-    ?>
 </script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php'); ?>

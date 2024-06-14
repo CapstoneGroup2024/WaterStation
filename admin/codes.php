@@ -308,7 +308,14 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                     WHERE oi.order_id = '$order_id'";
         $updateProductQuantitiesResult = mysqli_query($con, $updateProductQuantities);
 
-        if($newResult && $insertResult){
+        $updateProductStatus = "UPDATE product p
+                                    INNER JOIN order_items oi ON p.id = oi.product_id
+                                    SET p.status ='1'
+                                    WHERE oi.order_id = '$order_id'";
+
+        $updateProductStatusQuery = mysqli_query($con, $updateProductStatus);
+
+        if($newResult && $insertResult &&$updateProductQuantitiesResult && $updateProductStatusQuery){
 
             // Delete from the orders table
             $delete_order_query = "DELETE FROM orders WHERE id='$order_id'";
@@ -331,9 +338,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     
     // Check conditions based on status change
     if($newResult && $insertResult !== null && $updateProductQuantitiesResult !== null && $newStatus === 'Cancelled' && $delete_order_query_run && $delete_items_query_run){
-        redirect("deliverOrder.php", "✔ Order Cancelled"); 
+        redirect("cancelledOrders.php", "✔ Order Cancelled"); 
     } elseif ($newResult && $insertResult !== null && $newStatus === 'Completed' && $delete_order_query_run && $delete_items_query_run) {
-        redirect("deliverOrder.php", "✔ Order Completed"); 
+        redirect("completedOrders.php", "✔ Order Completed"); 
     } elseif ($newResult) {
         redirect("orders.php", "✔ Ongoing Order"); 
     } elseif ($deliverResult){

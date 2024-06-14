@@ -21,35 +21,37 @@ $(document).ready(function () {
             $('.grand-total').text('₱' + grandTotal.toFixed(2));
     
         }
-
-    $('.increment-btn').click(function (e) {
-        var qtyInput = $(this).siblings('.input-qty');
-        var qty = parseInt(qtyInput.val(), 10);
-        qty = isNaN(qty) ? 0 : qty;
-        var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
-
-        if (qty < 100) {
-            qty++;
-        } else {
-            qty = 1;
-        }
-        qtyInput.val(qty);
-        updateQuantity(cartId, qty);
-    });
-
-    $('.decrement-btn').click(function (e) {
-        e.preventDefault();
-        var qtyInput = $(this).siblings('.input-qty');
-        var qty = parseInt(qtyInput.val(), 10);
-        qty = isNaN(qty) ? 0 : qty;
-        var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
-
-        if (qty > 1) {
-            qty--;
-        }
-        qtyInput.val(qty);
-        updateQuantity(cartId, qty);
-    });
+        $('.increment-btn').click(function (e) {
+            var qtyInput = $(this).siblings('.input-qty');
+            var qty = parseInt(qtyInput.val(), 10);
+            qty = isNaN(qty) ? 0 : qty;
+            var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
+            var productId = $(this).closest('.cart_data').find('input[name="product_id"]').val(); // Add this line to get product ID
+        
+            if (qty < 100) {
+                qty++;
+            } else {
+                qty = 1;
+            }
+            qtyInput.val(qty);
+            updateQuantity(cartId, productId, qty); // Pass all three parameters
+        });
+        
+        $('.decrement-btn').click(function (e) {
+            e.preventDefault();
+            var qtyInput = $(this).siblings('.input-qty');
+            var qty = parseInt(qtyInput.val(), 10);
+            qty = isNaN(qty) ? 0 : qty;
+            var cartId = $(this).closest('.cart_data').find('input[name="cart_id"]').val();
+            var productId = $(this).closest('.cart_data').find('input[name="product_id"]').val(); // Add this line to get product ID
+        
+            if (qty > 1) {
+                qty--;
+            }
+            qtyInput.val(qty);
+            updateQuantity(cartId, productId, qty); // Pass all three parameters
+        });
+        
 
     $('.input-qty').on('change', function() {
         var qty = parseInt($(this).val(), 10);
