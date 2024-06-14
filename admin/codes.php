@@ -61,9 +61,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                 unlink("../uploads/".$old_image);
             }
         }
-        redirect("editCategory.php?id=$category_id","✔ Category Updated Successfully");
+        redirect("category.php","✔ Category Updated Successfully");
     } else{
-        redirect("editCategory.php?id=$category_id","Something went wrong");
+        redirect("category.php","Something went wrong");
     }
 } else if(isset($_POST['deleteCategory_button'])){
     $category_id = $_POST['category_id'];
@@ -147,9 +147,9 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                 unlink("../uploads/".$old_image);
             }
         }
-        redirect("editProduct.php?id=$product_id","✔ Product Updated Successfully");
+        redirect("product.php","✔ Product Updated Successfully");
     } else{
-        redirect("editProduct.php?id=$product_id","Something went wrong");
+        redirect("product.php","Something went wrong");
     }
 } else if(isset($_POST['deleteProduct_button'])){
     $product_id = $_POST['product_id'];
@@ -341,6 +341,5 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         redirect("cancelledOrders.php","Something went wrong");
     }
 }
-
 
 

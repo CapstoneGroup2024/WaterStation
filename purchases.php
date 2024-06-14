@@ -33,7 +33,6 @@
 
 <link rel="stylesheet" href="assets/css/transac.css">
 <section class="p-5 p-md-5 text-sm-start" id="Purchases" style="margin-bottom: 100px">
-    <form action="admin/codes.php" method="POST">
         <div class="container" style="margin-top: 60px;">
             <div class="row">
                 <div class="col-md-10">
@@ -60,10 +59,10 @@
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Status</h6>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">Total</h6>
                     </div>
                     <div class="col-md-2">
@@ -71,6 +70,9 @@
                     </div>
                     <div class="col-md-2">
                         <h6 style="font-family: 'Poppins'; font-size: 22px;">View Details</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Cancel Order</h6>
                     </div>
                 </div>
 
@@ -95,10 +97,10 @@
                                         <div class="col-md-2">
                                             <h5><?= $productItem['product_name']; ?></h5>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <h5><?= $order['status']; ?></h5>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <h5>₱<?= $order['grand_total']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
@@ -107,6 +109,14 @@
                                         <div class="col-md-2">
                                             <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
                                         </div>
+                                        
+                                        <div class="col-md-2">
+                                        <form action="functions/order_code.php" method="POST">
+                                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                                            <input type="submit" class="btn btn-danger text-white" name="cancelOrderBtn" value="Cancel Order"></input>
+                                        </form>
+                                        </div>
+                                 
                                     </div>
                                 </div>
                 <?php
@@ -118,8 +128,10 @@
                                             <h5 style="color:red;">No product found for order ID: <?= $order['id']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <input type="hidden" name="cart_id_<?= $cart['id']; ?>" value="<?= $cart['id']; ?>">
-                                            <input type="submit" class="btn btn-danger text-white" name="deleteOngoingOrderBtn" value="Cancel Order"></input>
+                                        <form action="functions/order_code.php" method="POST">
+                                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                                            <input type="submit" class="btn btn-danger text-white" name="cancelOrderBtn" value="Cancel Order"></input>
+                                        </form>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +146,6 @@
             </div>
             </div>
         </div>
-    </form>
 </section>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>

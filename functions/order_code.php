@@ -128,7 +128,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             }
         }
     }
-} else if (isset($_POST['placeOrderBtn'])) {
+} else if(isset($_POST['placeOrderBtn'])) {
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
         $_SESSION['message'] = "Please log in to add items to your cart.";
@@ -245,4 +245,79 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         header('Location: ../cart.php');
         exit;
     }
+} else if(isset($_POST['cancelOrderBtn'])){
+    $order_id = $_POST['order_id'];
+
+    $updateQuery = "UPDATE orders SET status = 'Cancelled' WHERE id = ?";
+    $statement = mysqli_prepare($con, $updateQuery);
+
+    // Bind the parameter and execute the statement
+    mysqli_stmt_bind_param($statement, "i", $order_id);
+    $result = mysqli_stmt_execute($statement);
+
+    // Insert necessary data into the order_transac table
+    $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
+                    SELECT
+                        o.id AS order_id,
+                        u.user_id AS user_id,
+                        u.name AS user_name,
+                        u.phone AS phone,
+                        u.address AS address,
+                        oi.product_id AS product_id,
+                        p.name AS product_name,
+                        oi.quantity AS quantity,
+                        p.selling_price AS price,
+                        (oi.quantity * p.selling_price) AS total,
+                        o.status AS status,
+                        o.subtotal AS subtotal,
+                        o.additional_fee AS additional_fee,
+                        o.grand_total AS grand_total,
+                        o.order_at AS order_at
+                    FROM
+                        orders o
+                    INNER JOIN
+                        order_items oi ON o.id = oi.order_id
+                    INNER JOIN
+                        users u ON o.user_id = u.user_id
+                    INNER JOIN
+                        product p ON oi.product_id = p.id
+                    WHERE
+                        o.id = ?";
+    $statement2 = mysqli_prepare($con, $insertQuery);
+    mysqli_stmt_bind_param($statement2, "i", $order_id);
+    $insertResult = mysqli_stmt_execute($statement2);
+
+    // Update product quantities in the product table
+    $updateProductQuantities = "UPDATE product p
+                                INNER JOIN order_items oi ON p.id = oi.product_id
+                                SET p.quantity = p.quantity + oi.quantity
+                                WHERE oi.order_id = ?";
+    $statement3 = mysqli_prepare($con, $updateProductQuantities);
+    mysqli_stmt_bind_param($statement3, "i", $order_id);
+    $updateProductQuantitiesResult = mysqli_stmt_execute($statement3);
+
+    if($result && $insertResult && $updateProductQuantitiesResult){
+
+        // Delete from the orders table
+        $delete_order_query = "DELETE FROM orders WHERE id=?";
+        $statement4 = mysqli_prepare($con, $delete_order_query);
+        mysqli_stmt_bind_param($statement4, "i", $order_id);
+        $delete_order_query_run = mysqli_stmt_execute($statement4);
+    
+        // Delete from the order_items table
+        $delete_items_query = "DELETE FROM order_items WHERE order_id=?";
+        $statement5 = mysqli_prepare($con, $delete_items_query);
+        mysqli_stmt_bind_param($statement5, "i", $order_id);
+        $delete_items_query_run = mysqli_stmt_execute($statement5);
+
+        $_SESSION['message'] = "Order Cancelled!";
+        header('Location: ../purchases.php');
+        exit;
+    
+    } else{
+        $_SESSION['message'] = "Error: " . mysqli_error($con);
+        header('Location: ../purchases.php');
+        exit;
+    }
 }
+
