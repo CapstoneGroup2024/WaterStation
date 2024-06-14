@@ -147,7 +147,32 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                 unlink("../uploads/".$old_image);
             }
         }
-        redirect("product.php","✔ Product Updated Successfully");
+        $quantity_query = "SELECT quantity FROM product WHERE id='$product_id'";
+        $quantity_query_run = mysqli_query($con, $quantity_query);
+
+        $update_query_run = mysqli_query($con, $update_query);
+
+        if ($update_query_run) {
+            // Update the status if quantity is zero
+            if ($quantity == 0) {
+                $status_query = "UPDATE product SET status='0' WHERE id='$product_id'";
+                $status_query_run = mysqli_query($con, $status_query);
+            } else {
+                // Otherwise, set status to 1
+                $status_query = "UPDATE product SET status='1' WHERE id='$product_id'";
+                $status_query_run = mysqli_query($con, $status_query);
+            }
+        
+            if ($_FILES['image']['name'] != "") {
+                move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$update_filename);
+                if (file_exists("../uploads/".$old_image)) {
+                    unlink("../uploads/".$old_image);
+                }
+            }
+            redirect("product.php","✔ Product Updated Successfully");
+        } else {
+            redirect("product.php","Something went wrong");
+        }
     } else{
         redirect("product.php","Something went wrong");
     }
