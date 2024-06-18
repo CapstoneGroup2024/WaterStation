@@ -20,7 +20,6 @@ function getItemsCart($userId) {
 }
  
 if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUEST
-   
     // RETRIEVE SELECTED PRODUCT, CATEGORY, AND QUANTITY FROM POST REQUEST
     if(!isset($_SESSION['user_id'])){
         $_SESSION['message'] = "Please log in to add items to your cart.";
@@ -42,91 +41,81 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         exit; // Terminate further execution
     }
 
-    // Retrieve available stock for the selected product
-    $availableStockQuery = "SELECT quantity FROM product WHERE id='$productId'";
-    $stockResult = mysqli_query($con, $availableStockQuery);
-
-    if ($stockResult) {
-        $stockData = mysqli_fetch_assoc($stockResult);
-        $availableStock = $stockData['quantity'];
-
-        // Check if the selected quantity exceeds the available stock
-        if ($quantity > $availableStock) {
-            $_SESSION['message'] = "Sorry, the selected quantity exceeds the available stock.";
+    // Check if the same product and category already exists in cart_items
+    $productCheck = "SELECT * FROM cart_items WHERE user_id='$userId' AND product_id='$productId' AND category_id='$categoryId'";
+    $productCheck_query = mysqli_query($con, $productCheck);
+    
+    if ($productCheck_query) {
+        if (mysqli_num_rows($productCheck_query) > 0) {
+            // Product with the same category exists in cart_items
+            $_SESSION['message'] = "This item is already in your cart.";
             header('Location: ../order.php');
             exit;
         }
     } else {
-        // Handle the case when unable to fetch stock data
-        $_SESSION['message'] = "Failed to fetch stock data.";
+        $_SESSION['message'] = "Error checking existing product in cart: " . mysqli_error($con);
         header('Location: ../order.php');
         exit;
     }
     
+    // If everything is valid, proceed to insert the item into cart_items
+    // FETCH PRODUCT AND CATEGORY DATA FROM DATABASE
+    $product_query = "SELECT * FROM product WHERE id = '$productId'";
+    $category_query = "SELECT * FROM categories WHERE id = '$categoryId'";
 
-    if(empty($productId) || empty($categoryId)){ // CHECK IF PRODUCT ID OR CATEGORY ID IS EMPTY
-        $_SESSION['message'] = "Please choose a product/category!";
-        header('Location: ../order.php');
-        exit; // Terminate further execution
-    } else {
-        // FETCH PRODUCT AND CATEGORY DATA FROM DATABASE
-        $product_query = "SELECT * FROM product WHERE id = '$productId'";
-        $category_query = "SELECT * FROM categories WHERE id = '$categoryId'";
+    $product_result = mysqli_query($con, $product_query);
+    $category_result = mysqli_query($con, $category_query);
 
-        $product_result = mysqli_query($con, $product_query);
-        $category_result = mysqli_query($con, $category_query);
+    $product = mysqli_fetch_assoc($product_result);
+    $category = mysqli_fetch_assoc($category_result);
 
-        $product = mysqli_fetch_assoc($product_result);
-        $category = mysqli_fetch_assoc($category_result);
+    // STORE CART ITEM DETAILS IN AN ARRAY
+    $cartItem = array(
+        'productId' => $productId,
+        'productName' => $product['name'],
+        'productImage' => $product['image'],
+        'sellingPrice' => $product['selling_price'],
+        'product_quantity' => $product['quantity'],
+        'categoryId' => $categoryId,
+        'categoryName' => $category['name'],
+        'additionalPrice' => $category['additional_price'],
+        'quantity' => $quantity
+    );
 
-        // STORE CART ITEM DETAILS IN AN ARRAY
-        $cartItem = array(
-            'productId' => $productId,
-            'productName' => $product['name'],
-            'productImage' => $product['image'],
-            'sellingPrice' => $product['selling_price'],
-            'product_quantity' => $product['quantity'],
-            'categoryId' => $categoryId,
-            'categoryName' => $category['name'],
-            'additionalPrice' => $category['additional_price'],
-            'quantity' => $quantity
-        );
+    // INSERT CART ITEM INTO DATABASE TABLE
+    if($userId){
+        $insert_query = "INSERT INTO cart_items (user_id, product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
+                        VALUES ('$userId', '$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
+        $insert_query_run = mysqli_query($con, $insert_query);
 
-        // INSERT CART ITEM INTO DATABASE TABLE
-        if($userId){
-            // Insert cart item into the database table
-            $insert_query = "INSERT INTO cart_items (user_id, product_id, product_name, product_image, selling_price, category_id, category_name, additional_price, quantity) 
-                             VALUES ('$userId', '$productId', '{$product['name']}', '{$product['image']}', '{$product['selling_price']}', '$categoryId', '{$category['name']}', '{$category['additional_price']}', '$quantity')";
-            $insert_query_run = mysqli_query($con, $insert_query);
+        if ($insert_query_run) {
+            // Update product quantity in the product table
+            $updateProductQuery = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
+            $stmt = mysqli_prepare($con, $updateProductQuery);
+            mysqli_stmt_bind_param($stmt, "ii", $quantity, $productId);
+            $updateSuccess = mysqli_stmt_execute($stmt);
 
-                // Check if the query executed successfully
-                if($insert_query_run){
-                    // Update product quantity in the product table
-                    $updateProductQuery = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
-                    $stmt = mysqli_prepare($con, $updateProductQuery);
-                    mysqli_stmt_bind_param($stmt, "ii", $quantity, $productId);
-                    $updateSuccess = mysqli_stmt_execute($stmt);
-
-                    // If update fails, show error message
-                    if (!$updateSuccess) {
-                        $_SESSION['message'] = "Failed to update product quantity.";
-                        header('Location: ../cart.php');
-                        exit;
-                    }
-
-                    $_SESSION['message'] = "ITEM ADDED TO CART SUCCESSFULLY!";
-                    header('Location: ../cart.php');  
-                } else {
-                    $_SESSION['message'] = "Error: " . mysqli_error($con); // Get detailed error message
-                    header('Location: ../register.php');
-                }
+            if ($updateSuccess) {
+                $_SESSION['message'] = "ITEM ADDED TO CART SUCCESSFULLY!";
+                header('Location: ../cart.php');
+                exit;
+            } else {
+                $_SESSION['message'] = "Failed to update product quantity.";
+                header('Location: ../order.php');
+                exit;
+            }
         } else {
-            // Handle the case when product or category data cannot be fetched
-            $_SESSION['message'] = "Failed to fetch product or category data.";
-            header('Location: ../admin/index.php');
+            $_SESSION['message'] = "Error adding item to cart: " . mysqli_error($con);
+            header('Location: ../order.php');
+            exit;
         }
+    } else {
+        // Handle the case when product or category data cannot be fetched
+        $_SESSION['message'] = "Failed to fetch product or category data.";
+        header('Location: ../admin/index.php');
     }
-} else if(isset($_POST['deleteOrderBtn'])){
+}
+ else if(isset($_POST['deleteOrderBtn'])){
     $cart_id = $_POST['cart_id'];
 
     foreach($_POST as $key => $value) {

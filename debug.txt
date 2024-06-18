@@ -1,6 +1,0 @@
-Array
-(
-    [quantity] => 6
-    [cart_id] => 146
-    [product_id] => 16
-)
