@@ -372,6 +372,18 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("cancelledOrders.php","Something went wrong");
     }
+} else if(isset($_POST['editRole'])){
+    $customer_id = $_POST['customer_id'];
+    $newRole = $_POST['role'];
+
+    if ($newRole == 1){
+        $role_query = "UPDATE users SET role = $newRole WHERE user_id = $customer_id";
+        $role_query_run = mysqli_query($con, $role_query);
+
+        if($role_query_run){
+            redirect("users.php","✔ User Role Updated Successfully");
+        }
+    }
 }
 
 
