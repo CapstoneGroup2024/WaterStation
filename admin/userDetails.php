@@ -27,25 +27,31 @@
                                             <div class="form-group">
                                                 <input type="hidden" name="category_id" value="<?=$data['user_id']; ?>">
                                                 <label for="">Name</label>
-                                                <input type="text" value="<?=$data['name']; ?>" class="form-control" name="name" id="name">
+                                                <input type="text" value="<?=$data['name']; ?>" class="form-control" name="name" id="name" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-6"> 
                                             <div class="form-group">
                                                 <label for="">Email</label>
-                                                <input type="text" value="<?=$data['email']; ?>" class="form-control" name="email">
+                                                <input type="text" value="<?=$data['email']; ?>" class="form-control" name="email" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12"> 
+                                            <div class="form-group">
+                                                <label for="">Phone</label>
+                                                <input type="text" value="<?=$data['phone']; ?>" class="form-control" name="phone" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-12"> 
                                             <div class="form-group">
                                                 <label for="">Address</label>
-                                                <textarea class="form-control" name="address" id="description" rows="3"><?=$data['address']; ?></textarea>
+                                                <textarea class="form-control" name="address" id="description" rows="3" disabled><?=$data['address']; ?></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-4"> 
                                             <div class="form-group">
                                                 <label for="">Role (Check if Admin) </label><br>
-                                                <input type="checkbox" <?= $data['role'] ? "checked":""?> name="role">
+                                                <input type="checkbox" <?= $data['role'] ? "checked":""?> name="role" disabled>
                                             </div>
                                         </div>
                                     </div>
