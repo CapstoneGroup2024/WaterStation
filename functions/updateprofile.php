@@ -75,8 +75,11 @@ if(isset($_POST['profileUpdateBtn'])){
         $stmt->execute();
         $stmt->close();
 
+        $id = mysqli_insert_id($con);
+        $_SESSION['id'] = $id;
+
         // Redirect to verification page with email and user_id
-        header("Location: ../verify_email.php?email=" . urlencode($email) . "&user_id=" . $user_id);
+        header("Location: ../verify_email.php?email=" . urlencode($email));
         exit();
 
     } catch (Exception $e) {
@@ -89,9 +92,10 @@ if(isset($_POST['profileUpdateBtn'])){
     $code = $_POST['code'];
     $email = $_SESSION['email'];
     $user_id = $_SESSION['user_id'];
+    $id = $_SESSION['id'];
 
     // Retrieve verification code from database
-    $code_query = "SELECT verification_code FROM verification_codes WHERE email='$email' AND user_id='$user_id'";
+    $code_query = "SELECT verification_code FROM verification_codes WHERE email='$email' AND user_id='$user_id' AND id='$id'";
     $code_query_result = mysqli_query($con, $code_query);
 
     if($code_query_result){
@@ -104,23 +108,20 @@ if(isset($_POST['profileUpdateBtn'])){
             $update_email_result = mysqli_query($con, $update_email_sql);
 
             if($update_email_result){
-                $delete_code = "DELETE FROM verification_codes WHERE user_id='$user_id' AND email='$email'";
+                $delete_code = "DELETE FROM verification_codes WHERE user_id='$user_id' AND email='$email' AND id='$id'";
                 $delete_code_query = mysqli_query($con, $delete_code);
 
                 if($delete_code_query){
+                    unset($_SESSION['id']);
+                    unset($_SESSION['email']);
                     $_SESSION['message'] = "Email Updated Successfully";
                     header("Location: ../profile.php");
                     exit();
                 }
             } else {
-                $delete_code = "DELETE FROM verification_codes WHERE user_id='$user_id' AND email='$email'";
-                $delete_code_query = mysqli_query($con, $delete_code);
-
-                if($delete_code_query){
-                    $_SESSION['message'] = "Email Update Failed";
-                    header("Location: ../editProfile.php");
-                    exit();
-                }
+                $_SESSION['message'] = "Email Update Failed";
+                header("Location: ../editProfile.php");
+                exit();
             }
         } else {
             $_SESSION['message'] = "Verification Code does not match . $stored_code";

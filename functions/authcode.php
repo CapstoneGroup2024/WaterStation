@@ -91,19 +91,21 @@
                 }
                 
                 // INSERT VERIFICATION CODE INTO DATABASE
+                // INSERT VERIFICATION CODE INTO DATABASE
                 $sql = "INSERT INTO verification_codes(email, verification_code) VALUES (?, ?)";
                 $stmt = $con->prepare($sql);
                 $stmt->bind_param("ss", $email, $verification_code);
                 $stmt->execute();
-        
-                // GET THE AUTO-INCREMENTED USER_ID
-                $user_id = $stmt->insert_id;
-                $_SESSION['user_id'] = $user_id;
-                // REDIRECT TO VERIFICATION PAGE WITH EMAIL AND USER_ID
-                header("Location: ../verification.php?email=" . urlencode($email) . "&user_id=" . $user_id);
-                
-                exit();
 
+                // Retrieve the newly inserted user_id
+                $user_id = mysqli_insert_id($con);
+
+                // Store user_id in session for later use
+                $_SESSION['user_id'] = $user_id;
+
+                // Redirect to verification page with email
+                header("Location: ../verification.php?email=" . urlencode($email));
+                exit();
             } catch (Exception $e) {
                 // CATCH AND DISPLAY MAILER ERROR
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -113,8 +115,9 @@
             header("Location: ../register.php");
             exit();
         }
-    } else if (isset($_SESSION['registration_data'])) {
+    } else if (isset($_SESSION['registration_data']['user_id'])) {
         // REGISTRATION DATA EXISTS IN SESSION
+        $user_id = $_SESSION['registration_data']['user_id'];
         $registration_data = $_SESSION['registration_data'];
         $name = $registration_data["name"];
         $email = $registration_data["email"];
@@ -123,14 +126,6 @@
         $password = $registration_data["password"];
         $confirm_password = $registration_data["confirm_password"];
         
-        // VERIFICATION CODE LOGIC
-        if (!isset($_SESSION['user_id'])) {
-            // USER ID IS NOT SET, HANDLE THE ERROR
-            $_SESSION['message'] = "User ID is missing in the form";
-            header("Location: ../register.php");
-            exit();
-        }
-    
         // VERIFICATION CODE LOGIC
         if (isset($_POST['verifyBtn'])) {
             // RETRIEVE VERIFICATION CODE AND USER_ID FROM FORM
@@ -152,9 +147,8 @@
                 exit();
             }
             
-            $user_id = $_SESSION['user_id'];
             // QUERY TO RETRIEVE USER ID AND VERIFICATION CODE
-            $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND user_id = ?";
+            $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND id= ?";
             $stmt = $con->prepare($query);
             $stmt->bind_param("si", $email, $user_id);
             $stmt->execute();
@@ -180,21 +174,26 @@
                     $stmt->bind_param("sssss", $name, $email, $phone, $address, $encrypted_password);
                     $stmt->execute();
                     // UNSET THE USER ID AND REGISTRATION DATA SESSION VARIABLES AFTER SUCCESSFUL REGISTRATION
-                    unset($_SESSION['registration_data']);
-                    unset($_SESSION['user_id']);
-                    // SET SUCCESS MESSAGE AND REDIRECT TO REGISTRATION PAGE
-                    $_SESSION['message'] = "Registered Successfully";
-                    header("Location: ../register.php");
-                    exit();
+
+                    $delete_code = "DELETE FROM verification_codes WHERE email='$email' AND id='$user_id'";
+                    $delete_code_query = mysqli_query($con, $delete_code);
+    
+                    if($delete_code_query){
+                        // UNSET THE USER ID AND REGISTRATION DATA SESSION VARIABLES AFTER SUCCESSFUL REGISTRATION
+                        unset($_SESSION['registration_data']);
+                        unset($_SESSION['user_id']);
+                        $_SESSION['message'] = "Registered Successfully";
+                        header("Location: ../register.php");
+                        exit();
+                    }
                 } else {
-                    // IF CODES DO NOT MATCH, SET ERROR MESSAGE AND REDIRECT TO REGISTRATION PAGE
                     $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
                     header("Location: ../register.php?email=" . urlencode($email));
                     exit();
                 }
             } else {
                 // IF NO VERIFICATION CODE FOUND, SET ERROR MESSAGE AND REDIRECT TO REGISTRATION PAGE
-                $_SESSION['message'] = "No verification code found for the provided email: $email and user_id: $user_id";
+                $_SESSION['message'] = "No verification code found for the provided email: $email";
                 header("Location: ../register.php");
                 exit();
             }
@@ -312,7 +311,10 @@
             $stmt->bind_param("ss", $email, $verification_code); // BIND PARAMETERS
             $stmt->execute(); // EXECUTE THE QUERY
 
+            $user_id = mysqli_insert_id($con);
 
+            // Store user_id in session for future use
+            $_SESSION['user_id'] = $user_id;
             // CHECK IF STATEMENT EXECUTED SUCCESSFULLY
             if ($stmt) {
                 // REDIRECT TO VERIFICATION PAGE WITH SUCCESS MESSAGE
@@ -334,6 +336,7 @@
     } else if (isset($_POST['forgotVerifyBtn'])) {
         // RETRIEVE EMAIL FROM SESSION DATA OR SET TO NULL
         $email = $_SESSION['forgotPass_data']['email'] ?? null;
+        $user_id = $_SESSION['user_id'];
         // RETRIEVE VERIFICATION CODE AND USER ID FROM POST DATA
         $code = $_POST['forgotVerifyCode'];
 
@@ -356,9 +359,9 @@
         }
 
         // PREPARE SQL STATEMENT TO SELECT VERIFICATION CODE BASED ON EMAIL AND USER ID
-        $query = "SELECT verification_code FROM verification_codes WHERE email = ?";
+        $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND id=?";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("s", $email);
+        $stmt->bind_param("si", $email, $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -371,11 +374,12 @@
 
             // CHECK IF ENTERED CODE MATCHES STORED CODE
             if ($code === $stored_verification_code) {
-                $delete_code = "DELETE FROM verification_codes WHERE email='$email'";
+                $delete_code = "DELETE FROM verification_codes WHERE email='$email' AND id='$user_id'";
                 $delete_code_query = mysqli_query($con, $delete_code);
 
                 if($delete_code_query){
                     // SET SUCCESS MESSAGE AND REDIRECT TO changePassword.php WITH EMAIL AND USER ID PARAMETERS
+                    unset($_SESSION['user_id']);
                     $_SESSION['message'] = "Verification Correct";
                     header("Location: ../changePassword.php?email=" . urlencode($email));
                     exit();
@@ -383,7 +387,7 @@
             } else {
                 // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
                 $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
-                header("Location: ../forgot-passVerify.php?email=" . urlencode($email) . $code . $stored_verification_code);
+                header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
                 exit();
             }
         } else {
