@@ -44,9 +44,12 @@
                             <input type="text" id="phone" name="phone" class="us" placeholder="Enter your phone number" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>">
                         </div>
                     </li>
+                    <?php
+    echo $_SESSION['user_id'];
+    ?>
                     <li>
                         <input type="hidden" name="confirmUpdate" value="1">
-                        <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'];?>">
+                        <input type="hidden" name="user_id" value="<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : ''; ?>">
                         <button type="submit" id="submitbtn" name="profileUpdateBtn" class="button-text">Submit</button>
                     </li>
                 </ul>
@@ -54,8 +57,12 @@
         </div>
     </div>
 </section>
-
-
+<div></div>
+<section>
+    <?php
+    echo $_SESSION['user_id'];
+    ?>
+</section>
 <section>
     <?php
     echo $_SESSION['user_id'];
@@ -63,38 +70,15 @@
 </section>
 <!--------------- ALERTIFY JS --------------->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<?php if(isset($_SESSION['confirm_message'])): ?>
-    <!-- Your alertify.js code -->
-    <script>
-    alertify.confirm('Confirm Update', '<?php echo $_SESSION['confirm_message']; ?>', 
-        function() {
-            // User confirmed, submit the form with confirmUpdate set
-            document.querySelector('form').submit();
-        },
-        function() {
-            alertify.error('Update Canceled');
-        });
-    <?php unset($_SESSION['confirm_message']); // Clear the session message ?>
-<?php endif; ?>
-</script>
 <script>
-<?php
-if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
-?>
-    alertify.set('notifier','position', 'top-right');
-    
-    // Check if the message indicates success or failure
-    <?php if ($_SESSION['success'] === true): ?>
-        alertify.success('<?php echo $_SESSION['message']; ?>'); // DISPLAY SUCCESS MESSAGE NOTIF
-    <?php else: ?>
-        alertify.error('<?php echo $_SESSION['message']; ?>'); // DISPLAY ERROR MESSAGE NOTIF
-    <?php endif; ?>
-    
-<?php
-    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-    unset($_SESSION['success']); // UNSET THE SESSION SUCCESS VARIABLE
-}
-?>
+    <?php
+        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
+    ?>
+    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
+    <?php
+        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
+        }
+    ?>
 </script>
 
 
