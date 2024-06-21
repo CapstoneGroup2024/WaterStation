@@ -2,16 +2,63 @@
     include('includes/header.php');
     include('../middleware/adminMid.php');
     include('dashboard.php');
+
+    $query = "SELECT WEEK(order_at) - WEEK(DATE_FORMAT(order_at, '%Y-%m-01')) + 1 AS week_number, 
+    SUM(grand_total) AS total_sales
+    FROM order_transac
+    WHERE status = 'Completed'
+    AND MONTH(order_at) = MONTH(CURRENT_DATE())
+    AND YEAR(order_at) = YEAR(CURRENT_DATE())
+    GROUP BY week_number
+    HAVING week_number BETWEEN 1 AND 5";
+
+    
+    $result = $con->query($query);
+
+    $data = array();
+    $data[] = ['Week', 'Sales']; // Initialize array with column headers
+    
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Format week number (optional)
+            $week_label = 'Week ' . $row['week_number'];
+    
+            // Add data to $data array
+            $data[] = [$week_label, (float) $row['total_sales']];
+        }
+    }
+    
 ?>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(<?php echo json_encode($data); ?>);
+
+        var options = {
+            title: 'Weekly Sales',
+            curveType: 'none',
+            legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+    }
+</script>
+
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 position-relative z-index-2">
             <div class="card card-plain mb-4">
-                <div class="card-body p-3">
+                <div class="card-body p-4">
                     <div class="row">
                         <div class="col-lg-8">
-                                <h2 class="font-weight-bolder mb-0">General Statistics</h2>
+                                <h2 class="font-weight-bolder mb-0 mt-4">General Statistics</h2>
                             </div>
                         </div>
                     </div>  
@@ -109,11 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div id="dashboard_div">
-                <!--Divs that will hold each control and chart-->
-                <div id="filter_div">ffd</div>
-                <div id="chart_div">fdfdfd</div>
-            </div>
+            <div id="curve_chart" style="width: 900px; height: 500px"></div>
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
      <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <p class="navbar-brand m-0" href="" target="_blank">
-        <span class="ms-1 m-0 font-weight-bold text-dark-blue">Aqua Flow</span>
+        <span class="ms-1 m-0 font-weight-bold text-dark-blue" style="font-size: 25px; font-weight: bold">Aqua Flow</span>
       </p>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -12,11 +12,11 @@
       <ul class="navbar-nav">
         <!--------------- MARKETING --------------->
         <li class="nav-item" style="margin-left: 15px">
-            <span class="nav-link-text ms-1" id="side-bar-sub-title">MARKETING</span>
+            <span class="nav-link-text ms-1" id="side-bar-sub-title" style="color: black;">MARKETING</span>
         </li>
         <!--------------- DASHBOARD --------------->
         <li class="nav-item">
-          <a class="nav-link text-dark-blue font-weight-bold bg-primary" href="index.php">
+          <a class="nav-link text-dark-blue" href="index.php">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10" id="side-bar-icon">dashboard</i>
             </div>
