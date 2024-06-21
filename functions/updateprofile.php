@@ -19,6 +19,10 @@ if(isset($_POST['profileUpdateBtn'])){
 
     // Store email and user_id in session for verification
     $_SESSION['email'] = $email;
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    $_SESSION['address'] = $address;
+
     // Assuming you have a way to get user_id, assign it here
     $user_id = $_SESSION['user_id']; // Make sure user_id is set before this point
 
@@ -91,6 +95,9 @@ if(isset($_POST['profileUpdateBtn'])){
     // Handle verification code submission
     $code = $_POST['code'];
     $email = $_SESSION['email'];
+    $name = $_SESSION['name'];
+    $address = $_SESSION['address'];
+    $phone = $_SESSION['phone'];
     $user_id = $_SESSION['user_id'];
     $id = $_SESSION['id'];
 
@@ -104,7 +111,7 @@ if(isset($_POST['profileUpdateBtn'])){
 
         if($code === $stored_code){
             // Verification code matches, update email in database
-            $update_email_sql = "UPDATE users SET email='$email' WHERE user_id ='$user_id'";
+            $update_email_sql = "UPDATE users SET email='$email', name='$name', address='$address', phone='$phone' WHERE user_id ='$user_id'";
             $update_email_result = mysqli_query($con, $update_email_sql);
 
             if($update_email_result){
@@ -114,12 +121,15 @@ if(isset($_POST['profileUpdateBtn'])){
                 if($delete_code_query){
                     unset($_SESSION['id']);
                     unset($_SESSION['email']);
-                    $_SESSION['message'] = "Email Updated Successfully";
+                    unset($_SESSION['name']);
+                    unset($_SESSION['address']);
+                    unset($_SESSION['phone']);
+                    $_SESSION['message'] = "Profile Updated Successfully";
                     header("Location: ../profile.php");
                     exit();
                 }
             } else {
-                $_SESSION['message'] = "Email Update Failed";
+                $_SESSION['message'] = "Profile Update Failed";
                 header("Location: ../editProfile.php");
                 exit();
             }
