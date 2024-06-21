@@ -312,13 +312,12 @@
             $stmt->bind_param("ss", $email, $verification_code); // BIND PARAMETERS
             $stmt->execute(); // EXECUTE THE QUERY
 
-            $user_id = $stmt->insert_id; // GET THE INSERTED USER ID
 
             // CHECK IF STATEMENT EXECUTED SUCCESSFULLY
             if ($stmt) {
                 // REDIRECT TO VERIFICATION PAGE WITH SUCCESS MESSAGE
                 $_SESSION['message'] = "Verification Code Sent to Email";
-                header("Location: ../forgot-passVerify.php?email=" . urlencode($email) . "&user_id=" . $user_id);
+                header("Location: ../forgot-passVerify.php?email=" . urlencode($email) );
                 exit();
             } else {
                 // REDIRECT TO INDEX PAGE WITH ERROR MESSAGE
@@ -337,10 +336,9 @@
         $email = $_SESSION['forgotPass_data']['email'] ?? null;
         // RETRIEVE VERIFICATION CODE AND USER ID FROM POST DATA
         $code = $_POST['forgotVerifyCode'];
-        $user_id = $_POST['user_id'];
 
         // CHECK IF ANY FIELD IS EMPTY
-        if (empty($code) || empty($user_id)) {
+        if (empty($code)) {
             // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
             $_SESSION['message'] = "Please fill in all fields";
             header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
@@ -358,9 +356,9 @@
         }
 
         // PREPARE SQL STATEMENT TO SELECT VERIFICATION CODE BASED ON EMAIL AND USER ID
-        $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND user_id = ?";
+        $query = "SELECT verification_code FROM verification_codes WHERE email = ?";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("si", $email, $user_id);
+        $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -373,14 +371,19 @@
 
             // CHECK IF ENTERED CODE MATCHES STORED CODE
             if ($code === $stored_verification_code) {
-                // SET SUCCESS MESSAGE AND REDIRECT TO changePassword.php WITH EMAIL AND USER ID PARAMETERS
-                $_SESSION['message'] = "Verification Correct";
-                header("Location: ../changePassword.php?email=" . urlencode($email) . "&user_id=" . $user_id);
-                exit();
+                $delete_code = "DELETE FROM verification_codes WHERE email='$email'";
+                $delete_code_query = mysqli_query($con, $delete_code);
+
+                if($delete_code_query){
+                    // SET SUCCESS MESSAGE AND REDIRECT TO changePassword.php WITH EMAIL AND USER ID PARAMETERS
+                    $_SESSION['message'] = "Verification Correct";
+                    header("Location: ../changePassword.php?email=" . urlencode($email));
+                    exit();
+                }
             } else {
                 // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
                 $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
-                header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
+                header("Location: ../forgot-passVerify.php?email=" . urlencode($email) . $code . $stored_verification_code);
                 exit();
             }
         } else {
