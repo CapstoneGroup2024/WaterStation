@@ -71,6 +71,8 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                     <td>
                         <form action="codes.php" method="POST">
                             <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                            <input type="hidden" name="user_id" value="<?= $userDetails['user_id']; ?>">
+                            <input type="hidden" name="email" value="<?= $userDetails['email']; ?>">
                             <select name="status" style="padding: 8px; border-radius: 10px;">
                                 <?php foreach ($statusOptions as $option): ?>
                                     <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
