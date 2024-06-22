@@ -367,7 +367,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         border: 1px solid #ccc;
                     }
                     .header {
-                        background-color: #4CAF50;
+                        background-color: #3192D3;
                         color: white;
                         text-align: center;
                         padding: 10px;

@@ -12,12 +12,12 @@ include('../middleware/adminMid.php');
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" href="orders.php" style="color:black;">Pending Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="deliverOrder.php" style="color:black;">Orders for Delivery</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="orders.php" style="color:black;">Pending Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="deliverOrder.php" style="color:black;">Orders for Delivery</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Completed Orders</a>
                         </li>
@@ -41,15 +41,15 @@ include('../middleware/adminMid.php');
                         <tbody>
                             <?php
                             $orders = getOrderData("order_transac"); // FUNCTION TO FETCH ORDER DATA FROM THE DATABASE
-                            if(mysqli_num_rows($orders) > 0) { // CHECK IF THERE ARE ANY ORDERS
-                                foreach($orders as $order) {
-                                    if ($order['status'] == 'Completed') { // ITERATE THROUGH EACH ORDER
+                            if ($orders && mysqli_num_rows($orders) > 0) { // CHECK IF THERE ARE ANY ORDERS
+                                foreach ($orders as $order) {
+                                    if ($order['status'] == 'Completed') { // CHECK IF ORDER STATUS IS COMPLETED
                             ?>
                             <tr style="text-align: center; vertical-align: middle;">
                                 <td><?= $order['order_id']; ?></td>
                                 <td><?= $order['user_name']; ?></td> <!-- Display user's name -->
-                                <td><?= $order['status']; ?></td> <!-- Assuming status exists in the transaction details -->
-                                <td><?= $order['product_name']; ?></td> <!-- Assuming product_name exists in the transaction details -->
+                                <td><?= $order['status']; ?></td> <!-- Display order status -->
+                                <td><?= $order['product_name']; ?></td> <!-- Display product name or item details -->
                                 <td>
                                     <a href="completeCancelledDetails.php?id=<?= $order['order_transac_id']; ?>" style="margin-top: 10px;" class="btn bg-primary text-white">View Details</a>
                                 </td>
@@ -61,8 +61,8 @@ include('../middleware/adminMid.php');
                                 </td>
                             </tr>
                             <?php
-                                        }
                                     }
+                                }
                             } else {
                             ?>
                             <tr>

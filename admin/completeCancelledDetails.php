@@ -77,6 +77,7 @@
                                     mysqli_stmt_bind_param($stmt, 'i', $orderDetails['order_id']);
                                     mysqli_stmt_execute($stmt);
                                     $itemsResult = mysqli_stmt_get_result($stmt);
+                                    
 
                                     if ($itemsResult && mysqli_num_rows($itemsResult) > 0) {
                                         while ($item = mysqli_fetch_assoc($itemsResult)) {
