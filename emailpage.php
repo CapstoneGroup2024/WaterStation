@@ -14,38 +14,29 @@
         }
     }
 ?>
-<link rel="stylesheet" href="assets/css/profile.css">   
+<link rel="stylesheet" href="assets/css/details.css">   
 <section class="p-5 text-sm-start mt-4">
-    <div class="Register p-1 mt-4">
-        <div class="heading mt-4">Manage Account</div>
+    <div class="Register mt-4">
+        <div class="heading mt-4">Change Email</div>
         <div class="profile-card">
-            <div class="regform">
+            <form class="regform" action="functions/updateprofile.php" method="POST">
                 <div class="text-dark">
                 <div class="col mt-1">
                         <div class="row">
                         <div class="input-wrapper ">
-                            Email: <input type="text" disabled name="email" class="full-width" style="margin-left: 10px" value="<?= isset($data['email']) ? $data['email'] : '' ?>">
-                            <div class="p-2" style="font-size:14px">
-                            <a href="emailpage.php">Change Email</a>
-                            </div>
+                            <span class="p-2">New Email: </span><input type="text" placeholder="Enter new email" name="email">
                         </div>
-                        </div>
-                        <div class="row-md-6 mt-3">
-                            <div class="input-wrapper">
-                                Password: <input type="password" disabled name="password" class="us" style="margin-left: 10px" value="<?= isset($data['password']) ? $data['password'] : '' ?>">
-                                <div class="p-2" style="font-size:14px">
-                                    <a href="">Change Password</a>
-                                </div>
-                            </div>
+                        <li>
+                            <button type="submit" id="submitbtn" name="emailUpdateBtn" class="button-text mt-4">Submit</button>
+                        </li>
                         </div>
                     </div>
                 </div>
-</div>
+                </form>
             </div>
         </div>
     </div>
 </section>
-
 
 <section>
     <?php

@@ -15,8 +15,8 @@ body {
 }
 
 .Register {
-    width: 120%;
-    max-width: 1200px; /* Adjusted maximum width */
+    width: 80%;
+    max-width: 500px; /* Adjusted maximum width */
     background-color: #ffffff;
     border: none;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
@@ -82,7 +82,7 @@ body {
 }
 
 .regform input {
-    width: 100%;
+    width: 76%;
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
