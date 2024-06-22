@@ -393,6 +393,24 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         header("Location: users.php");
         exit();
     }
+} else if(isset($_POST['deleteUser_button'])){
+    $user_id = $_POST['customer_id']; // Adjusted to 'customer_id' as per the form input name
+
+    // Fetch user data (optional, for logging or additional operations)
+    $user_query = "SELECT * FROM users WHERE user_id='$user_id'";
+    $user_query_run = mysqli_query($con, $user_query);
+    $user_data = mysqli_fetch_array($user_query_run);
+
+    // Delete the user
+    $delete_query = "DELETE FROM users WHERE user_id='$user_id'";
+    $delete_query_run = mysqli_query($con, $delete_query);
+
+    if($delete_query_run){
+        redirect("users.php","User Deleted Successfully");
+    } else {
+        redirect("users.php","Error: Unable to delete user");
+    }
 }
+
 
 
