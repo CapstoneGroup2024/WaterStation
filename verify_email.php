@@ -22,7 +22,6 @@
                         echo $_SESSION['user_id'];
                         ?>
                     <li>
-                    <input type="hidden" name="user_id" value="<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : ''; ?>">
                         <button type="submit" id="submitbtn" name="codeBtn" class="button-text">Submit</button>
                     </li>
                 </ul>

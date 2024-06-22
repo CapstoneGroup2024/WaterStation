@@ -25,28 +25,24 @@
                 <a href="editProfile.php" class="editDetails" style="text-decoration: none; color:black;">Edit Details</a>
             </div>
             <div class="regform">
-                <ul>
-                    <li>
-                        <label for="username">Name:</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="username" name="name" class="us" placeholder="Enter your name" value="<?= isset($data['name']) ? $data['name'] : '' ?>" disabled>
+                <div class="text-dark">
+                <div class="row ">
+                        <div class="col-md-6">
+                        <div class="input-wrapper ">
+                            Name: <input type="text" id="username" name="name" disabled class="full-width" placeholder="Enter your name" style="margin-left: 10px" value="<?= isset($data['name']) ? $data['name'] : '' ?>">
                         </div>
-                        <label for="email">Email:</label>
-                        <div class="input-wrapper">
-                            <input type="email" id="email" name="email" class="us" placeholder="Enter your email" value="<?= isset($data['email']) ? $data['email'] : '' ?>" disabled>
                         </div>
-                    </li>
-                    <li>
-                        <label for="address">Address:</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="address" name="address" class="us" placeholder="Enter your address" value="<?= isset($data['address']) ? $data['address'] : '' ?>" disabled>
+                        <div class="col-md-6">
+                            <div class="input-wrapper">
+                                Phone: <input type="text" id="phone" name="phone" disabled class="us" placeholder="Enter your phone number"  style="margin-left: 10px" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>">
+                            </div>
                         </div>
-                        <label for="phone">Phone:</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="phone" name="phone" class="us" placeholder="Enter your phone number" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>" disabled>
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                        <div class="input-wrapper mt-3">
+                                Address: <input type="text" id="address" name="address" disabled class="us" placeholder="Enter your address"   style="margin-left: 10px" value="<?= isset($data['address']) ? $data['address'] : '' ?>">
+                            </div>
+                </div>
+</div>
             </div>
         </div>
     </div>

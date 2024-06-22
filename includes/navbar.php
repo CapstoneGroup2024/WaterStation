@@ -37,6 +37,7 @@
                 <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-family:'Poppins'; font-weight: bold; color: #013D67;text-transform: uppercase;"><?= $_SESSION['auth_user']['name']?></a> <!----- GET USER AND NAME ----->
                 <ul class="dropdown-menu" style="margin-left: -100px;">
                   <li><a class="dropdown-item" href="profile.php" style="font-family: 'poppins', sans-serif;">Profile</a></li>
+                  <li><a class="dropdown-item" href="manageAccount.php" style="font-family: 'poppins', sans-serif;">Manage Account</a></li>
                   <li><a class="dropdown-item" href="logout.php" style="font-family: 'poppins', sans-serif;">Log out</a></li>
                 </ul>
               </div>
