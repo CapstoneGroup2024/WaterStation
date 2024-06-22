@@ -53,14 +53,13 @@
                                             <td name="product_id"><?= $item['user_id']; ?></td>
                                             <td><?= $item['name']; ?></td>
                                             <td>
-                                                <form action="update_role.php" method="POST">
-                                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
+                                                <form action="codes.php" method="POST">
+                                                    <input type="hidden" name="user_id" value="<?= $item['user_id']; ?>">
                                                     <select name="user_role" style="padding: 8px; border-radius: 10px;">
-                                                        <?php foreach ($roleOptions as $value => $label): ?>
-                                                            <option value="<?php echo $value; ?>" <?php echo ($value == $current_role) ? 'selected' : ''; ?>><?php echo $label; ?></option>
-                                                        <?php endforeach; ?>
+                                                        <option value="1" <?= ($item['role'] == 1) ? 'selected' : ''; ?>>Admin</option>
+                                                        <option value="0" <?= ($item['role'] == 0) ? 'selected' : ''; ?>>User</option>
                                                     </select>
-                                                    <input type="submit" style="margin-top: 10px;" class="btn bg-primary text-white" name="updateRole" value="Update">
+                                                    <input type="submit" class="btn bg-primary text-white" name="updateRole" value="Update">
                                                 </form>
                                             </td>
                                             <td>

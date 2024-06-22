@@ -372,17 +372,26 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     } else{
         redirect("cancelledOrders.php","Something went wrong");
     }
-} else if(isset($_POST['editRole'])){
-    $customer_id = $_POST['customer_id'];
-    $newRole = $_POST['role'];
+} else if(isset($_POST['updateRole'])){
+    $customer_id = $_POST['user_id'];
+    $newRole = $_POST['user_role'];
 
-    if ($newRole == 1){
-        $role_query = "UPDATE users SET role = $newRole WHERE user_id = $customer_id";
-        $role_query_run = mysqli_query($con, $role_query);
+    // Validate inputs (ensure $customer_id and $newRole are properly set and sanitized)
 
-        if($role_query_run){
-            redirect("users.php","✔ User Role Updated Successfully");
-        }
+    // Update user role in the database
+    $role_query = "UPDATE users SET role ='$newRole' WHERE user_id = $customer_id";
+    $role_query_run = mysqli_query($con, $role_query);
+    
+    if($role_query_run){
+        // Role update successful
+        $_SESSION['message'] = "User Role Updated Successfully";
+        header("Location: users.php");
+        exit();
+    } else {
+        // Role update failed
+        $_SESSION['message'] = "Failed to update user role";
+        header("Location: users.php");
+        exit();
     }
 }
 
