@@ -6,16 +6,19 @@
 <link rel="stylesheet" href="assets/css/details.css">   
 <section class="p-5 text-sm-start mt-4">
     <div class="Register mt-4">
-        <div class="heading mt-4">Change Email</div>
+        <div class="heading mt-4">Change Password</div>
         <div class="profile-card text-dark">
             <form class="regform" action="functions/updateprofile.php" method="POST">
                 <div class="col mt-1">
-                        <div class="row">
+                <div class="input-wrapper ">
+                            <span class="p-2">New Password: </span><input type="password" placeholder="Enter new password" name="password">
+                        </div>
+                    <div class="row">
                         <div class="input-wrapper ">
-                            <span class="p-2">New Email: </span><input type="text" placeholder="Enter new email" name="email">
+                            <span class="p-2">Confirm Password: </span><input type="password" placeholder="Confirm new password" name="confirm_password">
                         </div>
                         <li>
-                            <button type="submit" id="submitbtn" name="emailUpdateBtn" class="button-text mt-4">Submit</button>
+                            <button type="submit" id="submitbtn" name="passwordUpdateBtn" class="button-text mt-4">Submit</button>
                         </li>
                         </div>
                     </div>
