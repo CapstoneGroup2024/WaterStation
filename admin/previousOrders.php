@@ -31,10 +31,10 @@ $orders = getOrderTime("order_transac", "Completed");
                     <h6 style="font-family: 'Suez One', sans-serif; font-size: 30px; padding-top:20px;">Completed Orders</h6>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#" style="color:black;">Recent Orders</a>
+                            <a class="nav-link" href="completedOrders.php" style="color:black;">Recent Orders</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="previousOrders.php" style="color:black;">Previous Orders</a>
+                            <a class="nav-link active" aria-current="page" href="#" style="color:black;">Previous Orders</a>
                         </li>
                     </ul>
                     <table class="table table-hover text-center">
@@ -51,8 +51,8 @@ $orders = getOrderTime("order_transac", "Completed");
                         </thead>
                         <tbody>
                                     <?php
-                                    if ($orders['recentOrders'] && mysqli_num_rows($orders['recentOrders']) > 0) {
-                                        while ($order = mysqli_fetch_assoc($orders['recentOrders'])) {
+                                    if ($orders['pastOrders'] && mysqli_num_rows($orders['pastOrders']) > 0) {
+                                        while ($order = mysqli_fetch_assoc($orders['pastOrders'])) {
                                     ?>
                                     <tr style="text-align: center; vertical-align: middle;">
                                         <td><?= $order['order_id']; ?></td>
@@ -75,12 +75,12 @@ $orders = getOrderTime("order_transac", "Completed");
                                     } else {
                                     ?>
                                     <tr>
-                                        <td colspan="7">No recent orders found</td>
+                                        <td colspan="7">No past orders found</td>
                                     </tr>
                                     <?php
                                     }
                                     ?>
-                        </tbody>
+                                </tbody>
                     </table>
                 </div>
             </div>

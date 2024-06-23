@@ -149,5 +149,52 @@
         return $query_run = mysqli_query($con, $query); // Execute query and return result
     }
     
+    function formatDate($date) {
+        // Convert date string to a Unix timestamp
+        $timestamp = strtotime($date);
+        
+        // Format the timestamp into desired date format
+        $formattedDate = date('F j, Y', $timestamp);
+        $formattedTime = date('g:i a', $timestamp);
+        
+        // Return formatted date and time with a line break in between
+        return $formattedDate . "<br> " . $formattedTime;
+    }
+    
+    
+
+    function getOrderTime($table, $status = null, $timestamp_column = 'order_at') {
+        global $con;
+        
+        $today = date('Y-m-d'); // Get today's date in YYYY-MM-DD format
+        
+        // Query for recent orders (today's orders)
+        $queryRecent = "SELECT * FROM $table WHERE DATE($timestamp_column) = '$today'";
+        
+        // Query for past orders (excluding today's orders)
+        $queryPast = "SELECT * FROM $table WHERE DATE($timestamp_column) < '$today'";
+        
+        if ($status !== null) {
+            $queryRecent .= " AND status = '$status'";
+            $queryPast .= " AND status = '$status'";
+        }
+        
+        $queryRecent .= " ORDER BY $timestamp_column DESC";
+        $queryPast .= " ORDER BY $timestamp_column DESC";
+        
+        $recentOrders = mysqli_query($con, $queryRecent); // Execute recent orders query
+        $pastOrders = mysqli_query($con, $queryPast); // Execute past orders query
+        
+        if (!$recentOrders || !$pastOrders) {
+            // Handle query execution errors here
+            die('Query execution error: ' . mysqli_error($con));
+        }
+        
+        return array(
+            'recentOrders' => $recentOrders,
+            'pastOrders' => $pastOrders
+        );
+    }
+    
     
 ?>
