@@ -1,10 +1,10 @@
 <!----- START SESSION ----->
 <?php session_start(); ?>
 <!--------------- NAVBAR --------------->
-<nav class="navbar fixed-top navbar-expand-lg bg-custom-success navbar-dark py-2 " id="navbg">
+<nav class="navbar shadow-sm fixed-top navbar-expand-lg py-0" id="navbg">
   <div class="container-fluid" id="navbar"> 
     <a class="navbar-brand"> <!----- LOGO ----->
-    <img src="assets/images/Aquatic.png" style="margin-right: 10px;" alt="Bootstrap" width="40" height="40"class="d-inline-block align-text-center" id="aquaflowtext">AquaFlow</a>
+    <img src="assets/images/Aquatic.png" style="margin-right: 10px;" alt="Bootstrap" width="40" height="40"class="d-inline-block align-text-center" id="aquaflowtext">Aqua Flow</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span> <!----- TOGGLER FOR NAVBAR ----->
     </button>
@@ -16,44 +16,54 @@
       </div>
       <div class="offcanvas-body bg-custom-success">
         <!--------------- LINKS --------------->
-        <ul class="navbar-nav ml-auto px-lg-3 justify-content-end align-items-center flex-grow-1 pe-3">
-          <li class="nav-item px-lg-4">
-            <a class="nav-link px-lg-2" aria-current="page" href="homepage.php#Home">Home</a>
+        <ul class="navbar-nav ml-auto px-lg-1 justify-content-end align-items-center flex-grow-1 pe-3">
+          <li class="nav-item px-lg-3">
+            <a class="nav-link px-lg-1" aria-current="page" href="homepage.php#Home">Home</a>
           </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link px-lg-2" href="homepage.php#Services">Services</a>
+          <li class="nav-item px-lg-3">
+            <a class="nav-link px-lg-1" href="homepage.php#Services">Services</a>
           </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link px-lg-2" href="homepage.php#AboutUs">About Us</a>
+          <li class="nav-item px-lg-3">
+            <a class="nav-link px-lg-1" href="homepage.php#AboutUs">About Us</a>
           </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link px-lg-2" id="contact" href="homepage.php#contacts">Contact</a>
+          <li class="nav-item px-lg-3">
+            <a class="nav-link px-lg-1" id="contact" href="homepage.php#contacts">Contact</a>
           </li>
         <!--------------- DROP DOWN FOR LOGOUT --------------->
-        <?php
-          if(isset($_SESSION['auth'])){ // CHECKS IF USER LOGGED IN
-            ?>
-              <div class="dropdown" style="margin-right: 10px;">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-family:'Poppins'; font-weight: bold; color: #013D67;text-transform: uppercase;"><?= $_SESSION['auth_user']['name']?></a> <!----- GET USER AND NAME ----->
-                <ul class="dropdown-menu" style="margin-left: -100px;">
-                  <li><a class="dropdown-item" href="profile.php" style="font-family: 'poppins', sans-serif;">Profile</a></li>
-                  <li><a class="dropdown-item" href="manageAccount.php" style="font-family: 'poppins', sans-serif;">Manage Account</a></li>
-                  <li><a class="dropdown-item" href="logout.php" style="font-family: 'poppins', sans-serif;">Log out</a></li>
-                </ul>
-              </div>
-            <?php
-          } else{ // DISPLAY REG AND LOGIN IF NOT LOGGED IN
-              ?>
-                <li class="nav-item px-lg-4">
-                  <a class="nav-link px-lg-2" href="register.php">Register</a>
-                </li>
-                <li class="nav-item px-lg-4">
-                  <a class="nav-link px-lg-2" id="contact" href="index.php">Login</a>
-                </li>
-              <?php
-          }
-        ?>
-        </ul>
+        <?php if(isset($_SESSION['auth'])) { // CHECKS IF USER LOGGED IN ?>
+            <li class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <?= $_SESSION['auth_user']['name'] ?>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                <li><a class="dropdown-item" href="manageAccount.php">Manage Account</a></li>
+                <li><a class="dropdown-item" href="logout.php">Log out</a></li>
+              </ul>
+            </li>
+          <?php } else { // DISPLAY REG AND LOGIN IF NOT LOGGED IN ?>
+            <li class="nav-item">
+              <a class="nav-link" href="register.php">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contact" href="index.php">Login</a>
+            </li>
+          <?php } ?>
+          </ul>
+        <!--------------- DIRECT LINKS FOR LOGOUT (ON SMALL SCREENS) --------------->
+        <?php if(isset($_SESSION['auth'])) { // CHECKS IF USER LOGGED IN ?>
+          <ul class="navbar-nav ml-auto px-lg-0 justify-content-end align-items-center flex-grow-1 pe-1 d-lg-none">
+            <li class="nav-item px-lg-3">
+              <a class="nav-link" href="profile.php">Profile</a>
+            </li>
+            <li class="nav-item px-lg-3">
+              <a class="nav-link" href="manageAccount.php">Manage Account</a>
+            </li>
+            <li class="nav-item px-lg-3">
+              <a class="nav-link" href="logout.php">Log out</a>
+            </li>
+          </ul>
+        <?php } ?>
       </div>
     </div>
   </div>
