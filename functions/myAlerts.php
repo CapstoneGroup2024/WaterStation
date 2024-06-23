@@ -161,7 +161,6 @@
         return $formattedDate . "<br> " . $formattedTime;
     }
     
-    
 
     function getOrderTime($table, $status = null, $timestamp_column = 'order_at') {
         global $con;
