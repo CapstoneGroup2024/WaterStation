@@ -333,97 +333,125 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         $mail->isHTML(true); // SET EMAIL FORMAT TO HTML
         
                         // SET EMAIL SUBJECT AND BODY CONTENT
-                        $mail->Subject = 'Order Receipt and Status';
+                        $mail->Subject = 'Order Receipt';
                         $mail->Body = '
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Order Receipt and Status</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                    }
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-bottom: 20px;
-                    }
-                    table, th, td {
-                        border: 1px solid black;
-                    }
-                    th, td {
-                        padding: 10px;
-                        text-align: left;
-                    }
-                    th {
-                        background-color: #f2f2f2;
-                    }
-                    .receipt-container {
-                        max-width: 600px;
-                        margin: auto;
-                        padding: 20px;
-                        border: 1px solid #ccc;
-                    }
-                    .header {
-                        background-color: #3192D3;
-                        color: white;
-                        text-align: center;
-                        padding: 10px;
-                        margin-bottom: 20px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="receipt-container">
-                    <div class="header">
-                        <h2>Order Receipt and Status</h2>
-                    </div>
-                    
-                    <p>Order ID: ' . $order_id . '</p>
-                    <p>Order Status: ' . $status . '</p>
-                    <p>Order Date: ' . date('Y-m-d H:i:s', strtotime($order_at)) . '</p>
+                                        <!DOCTYPE html>
+                                        <html lang="en">
+                                        <head>
+                                            <meta charset="UTF-8">
+                                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                            <title>Order Receipt</title>
+                                            <style>
+                                                body {
+                                                    font-family: Arial, sans-serif;
+                                                }
+                                                table {
+                                                    width: 100%;
+                                                    border-collapse: collapse;
+                                                    margin-bottom: 20px;
+                                                }
+                                                table, th, td {
+                                                    border: 1px solid black;
+                                                }
+                                                th, td {
+                                                    padding: 10px;
+                                                    text-align: left;
+                                                }
+                                                th {
+                                                    background-color: #f2f2f2;
+                                                }
+                                                .receipt-container {
+                                                    max-width: 600px;
+                                                    margin: auto;
+                                                    padding: 20px;
+                                                    border: 1px solid #ccc;
+                                                }
+                                                .header {
+                                                    background-color: #3192D3;
+                                                    color: white;
+                                                    text-align: center;
+                                                    padding: 10px;
+                                                    margin-bottom: 20px;
+                                                }
+                                                h3{
+                                                    color: #6CBDF2;
+                                                }
+                                                .billing-address {
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    list-style-type: none;
+                                                    color: white;
+                                                }
+                                            </style>
+                                        </head>
+                                        <body>
+                                            <div class="receipt-container">
+                                                <div class="header">
+                                                    <h2>Your order is complete</h2>
+                                                </div>
+                                                
+                                                <p style="color: white;">Hi ' . $user_name . ',</p>
+                                                <p style="color: white;">Your recent order on Aqua Flow has been completed. Your order details are shown below for your reference: </p>
+ 
+                                                <p>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</p>
+                                                
+                                                <h3>Items Ordered:</h3>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Name</th>
+                                                            <th>Quantity</th>
+                                                            <th>Unit Price</th>
+                                                            <th>Total Price</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>';
 
-                    <h3>Items Ordered:</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Unit Price</th>
-                                <th>Total Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
+                                        // Loop through products and display them in the table
+                                        foreach ($products as $product) {
+                                            $mail->Body .= '
+                                            <tr>
+                                                <td>' . $product['product_name'] . '</td>
+                                                <td>' . $product['quantity'] . '</td>
+                                                <td>₱' . number_format($product['price'], 2) . '</td>
+                                                <td>₱' . number_format($product['total'], 2) . '</td>
+                                            </tr>';
+                                        }
 
-                        // Loop through products and display them in the table
-                        foreach ($products as $product) {
-                            $mail->Body .= '
-                            <tr>
-                                <td>' . $product['product_name'] . '</td>
-                                <td>' . $product['quantity'] . '</td>
-                                <td>₱' . number_format($product['price'], 2) . '</td>
-                                <td>₱' . number_format($product['total'], 2) . '</td>
-                            </tr>';
-                        }
-                        
-                        $mail->Body .= '
-                        </tbody>
-                    </table>
+                                        $mail->Body .= '
+                                                    </tbody>
+                                                </table>
 
-                    <h3>Order Summary:</h3>
-                    <ul>
-                        <li>Subtotal: ₱' . number_format($subtotal, 2) . '</li>
-                        <li>Additional Fee: ₱' . number_format($additional_fee, 2) . '</li>
-                        <li><strong>Grand Total: ₱' . number_format($grand_total, 2) . '</strong></li>
-                    </ul>
+                                                <h3>Order Summary:</h3>
+                                                <table>
+                                                    <tr>
+                                                        <th>Subtotal</th>
+                                                        <td>₱' . number_format($subtotal, 2) . '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Additional Fee</th>
+                                                        <td>₱' . number_format($additional_fee, 2) . '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Grand Total</th>
+                                                        <td><strong>₱' . number_format($grand_total, 2) . '</strong></td>
+                                                    </tr>
+                                                </table>
 
-                    <p>Thank you for your order. If you have any questions, please contact our support team.</p>
-                </div>
-            </body>
-            </html>
-        ';
+                                                <h3>Billing Address:</h3>
+                                                <ul class="billing-address"> 
+                                                    <li>' . $user_name . '</li>
+                                                    <li>' . $address . '</li>
+                                                    <li>' . $phone . '</li>
+                                                    <li>' . $email . '</li>
+                                                </ul>
+
+                                                <p>Thank you for your order. If you have any questions, please contact our support team.</p>
+                                            </div>
+                                        </body>
+                                        </html>
+                                        ';
+
                         // Send email
                         $mail->send();
                         echo 'Email sent successfully';
@@ -456,10 +484,12 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         } else {
             echo "Failed to update order status: " . mysqli_error($con);
         }
-    } elseif ($newStatus === 'Cancelled') {
+    } else if ($newStatus === 'Cancelled') {
         // Update order status in the orders table
-        $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
-        $newResult = mysqli_query($con, $updateQuery);
+        $updateQuery = "UPDATE orders SET status = ? WHERE id = ?";
+        $stmt = mysqli_prepare($con, $updateQuery);
+        mysqli_stmt_bind_param($stmt, "si", $newStatus, $order_id);
+        $newResult = mysqli_stmt_execute($stmt);
 
         if ($newResult) {
             // Insert order details into 'order_transac' table
@@ -489,34 +519,179 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                             INNER JOIN
                                 product p ON oi.product_id = p.id
                             WHERE
-                                o.id = '$order_id'";
-            $insertResult = mysqli_query($con, $insertQuery);
+                                o.id = ?";
+            $stmt = mysqli_prepare($con, $insertQuery);
+            mysqli_stmt_bind_param($stmt, "i", $order_id);
+            $insertResult = mysqli_stmt_execute($stmt);
 
-            // Update product quantities in the product table
-            $updateProductQuantities = "UPDATE product p
-                                        INNER JOIN order_items oi ON p.id = oi.product_id
-                                        SET p.quantity = p.quantity + oi.quantity
-                                        WHERE oi.order_id = '$order_id'";
-            $updateProductQuantitiesResult = mysqli_query($con, $updateProductQuantities);
+            if ($insertResult) {
+                // Send cancellation email
+                $mail = new PHPMailer(true);
+                try {
+                    $mail->SMTPOptions = [
+                        'ssl' => [
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true,
+                        ],
+                    ];
+                    
+                    $mail->SMTPDebug = SMTP::DEBUG_SERVER; // ENABLE DEBUG OUTPUT
+                    $mail->isSMTP(); // SET MAILER TO USE SMTP
+                    $mail->Host = 'smtp.gmail.com'; // SPECIFY SMTP SERVER
+                    $mail->SMTPAuth = true; // ENABLE SMTP AUTHENTICATION
+                    $mail->Username = 'aquaflow024@gmail.com'; // SMTP USERNAME
+                    $mail->Password = 'pamu swlw fxyj pavq'; // SMTP PASSWORD
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ENABLE TLS ENCRYPTION
+                    $mail->Port = 587; // TCP PORT TO CONNECT TO
+    
+                    // SET EMAIL SENDER AND RECIPIENT
+                    $mail->setFrom('aquaflow024@gmail.com', 'AquaFlow');
+                    $mail->addAddress($email, 'AquaFlow'); // ADD RECIPIENT EMAIL
+                    $mail->isHTML(true); // SET EMAIL FORMAT TO HTML
+    
+                    // SET EMAIL SUBJECT AND BODY CONTENT
+                    $mail->Subject = 'Order Receipt and Status';
+                    $mail->Body = '
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Order Receipt and Status</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }
+                table, th, td {
+                    border: 1px solid black;
+                }
+                th, td {
+                    padding: 10px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                .receipt-container {
+                    max-width: 600px;
+                    margin: auto;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                }
+                .header {
+                    background-color: #3192D3;
+                    color: white;
+                    text-align: center;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="receipt-container">
+                <div class="header">
+                    <h2>Order Receipt and Status</h2>
+                </div>
+                
+                <p>Notification to let you know - Order #' . $order_id .' belonging to  </p>
+                <p>Order ID: ' . $order_id . '</p>
+                <p>Order Status: ' . $status . '</p>
+                <p>Order Date: ' . date('Y-m-d H:i:s', strtotime($order_at)) . '</p>
 
-            // Update product status in the product table
-            $updateProductStatus = "UPDATE product p
-                                    INNER JOIN order_items oi ON p.id = oi.product_id
-                                    SET p.status ='1'
-                                    WHERE oi.order_id = '$order_id'";
-            $updateProductStatusQuery = mysqli_query($con, $updateProductStatus);
-            $delete_order_query = "DELETE FROM orders WHERE id='$order_id'";
-            $delete_order_query_run = mysqli_query($con, $delete_order_query);
+                <h3>Items Ordered:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
 
-            $delete_items_query = "DELETE FROM order_items WHERE order_id='$order_id'";
-            $delete_items_query_run = mysqli_query($con, $delete_items_query);
+                    // Loop through products and display them in the table
+                    foreach ($products as $product) {
+                        $mail->Body .= '
+                        <tr>
+                            <td>' . $product['product_name'] . '</td>
+                            <td>' . $product['quantity'] . '</td>
+                            <td>₱' . number_format($product['price'], 2) . '</td>
+                            <td>₱' . number_format($product['total'], 2) . '</td>
+                        </tr>';
+                    }
+                    
+                    $mail->Body .= '
+                    </tbody>
+                </table>
 
-            // Redirect to cancelled orders page
-            header('Location: cancelledOrders.php');
-            exit();
-        } else {
-            echo "Failed to update order status: " . mysqli_error($con);
-        }
+                <h3>Order Summary:</h3>
+                <ul>
+                    <li>Subtotal: ₱' . number_format($subtotal, 2) . '</li>
+                    <li>Additional Fee: ₱' . number_format($additional_fee, 2) . '</li>
+                    <li><strong>Grand Total: ₱' . number_format($grand_total, 2) . '</strong></li>
+                </ul>
+
+                <p>Thank you for your order. If you have any questions, please contact our support team.</p>
+            </div>
+        </body>
+        </html>
+    ';
+                    // Send email
+                    $mail->send();
+                    echo 'Email sent successfully';
+                    } catch (Exception $e) {
+                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    }
+
+                    // Update product quantities in the product table
+                    $updateProductQuantities = "UPDATE product p
+                                                INNER JOIN order_items oi ON p.id = oi.product_id
+                                                SET p.quantity = p.quantity + oi.quantity
+                                                WHERE oi.order_id = ?";
+                    $stmt = mysqli_prepare($con, $updateProductQuantities);
+                    mysqli_stmt_bind_param($stmt, "i", $order_id);
+                    $updateProductQuantitiesResult = mysqli_stmt_execute($stmt);
+    
+                    // Update product status in the product table
+                    $updateProductStatus = "UPDATE product p
+                                            INNER JOIN order_items oi ON p.id = oi.product_id
+                                            SET p.status = '1'
+                                            WHERE oi.order_id = ?";
+                    $stmt = mysqli_prepare($con, $updateProductStatus);
+                    mysqli_stmt_bind_param($stmt, "i", $order_id);
+                    $updateProductStatusQuery = mysqli_stmt_execute($stmt);
+    
+                    if ($updateProductQuantitiesResult && $updateProductStatusQuery) {
+                        // Delete from orders and order_items tables
+                        $delete_order_query = "DELETE FROM orders WHERE id = ?";
+                        $stmt = mysqli_prepare($con, $delete_order_query);
+                        mysqli_stmt_bind_param($stmt, "i", $order_id);
+                        $delete_order_query_run = mysqli_stmt_execute($stmt);
+    
+                        $delete_items_query = "DELETE FROM order_items WHERE order_id = ?";
+                        $stmt = mysqli_prepare($con, $delete_items_query);
+                        mysqli_stmt_bind_param($stmt, "i", $order_id);
+                        $delete_items_query_run = mysqli_stmt_execute($stmt);
+    
+                        // Redirect to appropriate page based on action
+                        redirect("cancelledOrders.php", "✔ Order Cancelled Successfully");
+                        exit();
+                    } else {
+                        echo "Failed to update product quantities or status: " . mysqli_error($con);
+                    }
+                } else {
+                    echo "Failed to insert order details into order_transac table: " . mysqli_error($con);
+                }
+            } else {
+                echo "Failed to update order status: " . mysqli_error($con);
+            }
     } elseif ($newStatus === 'Out for Delivery') {
         // Update order status in the orders table
         $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
