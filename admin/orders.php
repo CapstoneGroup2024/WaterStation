@@ -74,14 +74,12 @@ if(mysqli_num_rows($orders) > 0){ // CHECK IF THERE ARE ANY ORDERS
                             <input type="hidden" name="user_id" value="<?= $userDetails['user_id']; ?>">
                             <input type="hidden" name="email" value="<?= $userDetails['email']; ?>">
                             <select name="status" style="padding: 8px; border-radius: 10px;">
-                                <?php foreach ($statusOptions as $option): ?>
-                                    <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
-                                <?php endforeach; ?>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Cancelled">Cancelled</option>
+                                <option value="Completed">Completed</option>
                             </select>
                             <input type="submit" style="margin-top: 10px;" class="btn bg-primary text-white" name="editOrderStatus" value="Update">
                         </form>
-                    </td>
-
                     </td>
                     <td><?= $product['product_name']; ?></td>
                     <td>

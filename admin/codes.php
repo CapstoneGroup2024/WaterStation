@@ -373,14 +373,10 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                                     padding: 10px;
                                                     margin-bottom: 20px;
                                                 }
-                                                h3{
-                                                    color: #6CBDF2;
-                                                }
                                                 .billing-address {
                                                     margin: 0;
                                                     padding: 0;
                                                     list-style-type: none;
-                                                    color: white;
                                                 }
                                             </style>
                                         </head>
@@ -390,12 +386,10 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                                     <h2>Your order is complete</h2>
                                                 </div>
                                                 
-                                                <p style="color: white;">Hi ' . $user_name . ',</p>
-                                                <p style="color: white;">Your recent order on Aqua Flow has been completed. Your order details are shown below for your reference: </p>
+                                                <p>Hi ' . $user_name . ',</p>
+                                                <p>Your recent order on Aqua Flow has been completed. Your order details are shown below for your reference: </p>
  
-                                                <p>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</p>
-                                                
-                                                <h3>Items Ordered:</h3>
+                                                <h3>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
                                                 <table>
                                                     <thead>
                                                         <tr>
@@ -525,6 +519,37 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
             $insertResult = mysqli_stmt_execute($stmt);
 
             if ($insertResult) {
+                $order_query = "SELECT * FROM order_transac WHERE order_id = ?";
+                $stmt = mysqli_prepare($con, $order_query);
+                mysqli_stmt_bind_param($stmt, "i", $order_id);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $order_data = mysqli_fetch_assoc($result);
+                    if ($order_data) {
+                        // Extract necessary variables for email content
+                        $order_id = $order_data['order_id'];
+                        $user_name = $order_data['user_name'];
+                        $phone = $order_data['phone'];
+                        $address = $order_data['address'];
+                        $order_at = $order_data['order_at'];
+                        $status = $order_data['status'];
+                        $subtotal = $order_data['subtotal'];
+                        $additional_fee = $order_data['additional_fee'];
+                        $grand_total = $order_data['grand_total'];
+
+                        // Fetch products related to the order
+                        $products_query = "SELECT product_name, quantity, price, total FROM order_transac WHERE order_id = ?";
+                        $stmt = mysqli_prepare($con, $products_query);
+                        mysqli_stmt_bind_param($stmt, "i", $order_id);
+                        mysqli_stmt_execute($stmt);
+                        $products_result = mysqli_stmt_get_result($stmt);
+
+                        $products = []; // Initialize an empty array to store products
+                        while ($product = mysqli_fetch_assoc($products_result)) {
+                            $products[] = $product; // Store each product in the array
+                        }
                 // Send cancellation email
                 $mail = new PHPMailer(true);
                 try {
@@ -551,98 +576,118 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                     $mail->isHTML(true); // SET EMAIL FORMAT TO HTML
     
                     // SET EMAIL SUBJECT AND BODY CONTENT
-                    $mail->Subject = 'Order Receipt and Status';
+                    $mail->Subject = 'Order Cancelled';
                     $mail->Body = '
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Order Receipt and Status</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-                table, th, td {
-                    border: 1px solid black;
-                }
-                th, td {
-                    padding: 10px;
-                    text-align: left;
-                }
-                th {
-                    background-color: #f2f2f2;
-                }
-                .receipt-container {
-                    max-width: 600px;
-                    margin: auto;
-                    padding: 20px;
-                    border: 1px solid #ccc;
-                }
-                .header {
-                    background-color: #3192D3;
-                    color: white;
-                    text-align: center;
-                    padding: 10px;
-                    margin-bottom: 20px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="receipt-container">
-                <div class="header">
-                    <h2>Order Receipt and Status</h2>
-                </div>
-                
-                <p>Notification to let you know - Order #' . $order_id .' belonging to  </p>
-                <p>Order ID: ' . $order_id . '</p>
-                <p>Order Status: ' . $status . '</p>
-                <p>Order Date: ' . date('Y-m-d H:i:s', strtotime($order_at)) . '</p>
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Order Receipt</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
+                            }
+                            table, th, td {
+                                border: 1px solid black;
+                            }
+                            th, td {
+                                padding: 10px;
+                                text-align: left;
+                            }
+                            th {
+                                background-color: #f2f2f2;
+                            }
+                            .receipt-container {
+                                max-width: 600px;
+                                margin: auto;
+                                padding: 20px;
+                                border: 1px solid #ccc;
+                            }
+                            .header {
+                                background-color: #D33131;
+                                color: white;
+                                text-align: center;
+                                padding: 10px;
+                                margin-bottom: 20px;
+                            }
+                            .billing-address {
+                                margin: 0;
+                                padding: 0;
+                                list-style-type: none;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="receipt-container">
+                            <div class="header">
+                                <h2>Order Cancelled: #' . $order_id . '</h2>
+                            </div>
+                            
+                            <p>Notification to let you know - Order #' . $order_id . ' belonging to ' . $user_name . ' has been <span style="font-weight:bold;">CANCELLED</span>.</p>
+                            <p>Please retain this cancellation information for your records.</p>
 
-                <h3>Items Ordered:</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Total Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+                            <h3>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>';
 
-                    // Loop through products and display them in the table
-                    foreach ($products as $product) {
+                        // Loop through products and display them in the table
+                        foreach ($products as $product) {
+                            $mail->Body .= '
+                            <tr>
+                                <td>' . $product['product_name'] . '</td>
+                                <td>' . $product['quantity'] . '</td>
+                                <td>₱' . number_format($product['price'], 2) . '</td>
+                                <td>₱' . number_format($product['total'], 2) . '</td>
+                            </tr>';
+                        }
+
                         $mail->Body .= '
-                        <tr>
-                            <td>' . $product['product_name'] . '</td>
-                            <td>' . $product['quantity'] . '</td>
-                            <td>₱' . number_format($product['price'], 2) . '</td>
-                            <td>₱' . number_format($product['total'], 2) . '</td>
-                        </tr>';
-                    }
-                    
-                    $mail->Body .= '
-                    </tbody>
-                </table>
+                                    </tbody>
+                                </table>
 
-                <h3>Order Summary:</h3>
-                <ul>
-                    <li>Subtotal: ₱' . number_format($subtotal, 2) . '</li>
-                    <li>Additional Fee: ₱' . number_format($additional_fee, 2) . '</li>
-                    <li><strong>Grand Total: ₱' . number_format($grand_total, 2) . '</strong></li>
-                </ul>
+                                <h3>Order Summary:</h3>
+                                <table>
+                                    <tr>
+                                        <th>Subtotal</th>
+                                        <td>₱' . number_format($subtotal, 2) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Additional Fee</th>
+                                        <td>₱' . number_format($additional_fee, 2) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Grand Total</th>
+                                        <td><strong>₱' . number_format($grand_total, 2) . '</strong></td>
+                                    </tr>
+                                </table>
 
-                <p>Thank you for your order. If you have any questions, please contact our support team.</p>
-            </div>
-        </body>
-        </html>
-    ';
+                                <h3>Billing Address:</h3>
+                                <ul class="billing-address"> 
+                                    <li>' . $user_name . '</li>
+                                    <li>' . $address . '</li>
+                                    <li>' . $phone . '</li>
+                                    <li>' . $email . '</li>
+                                </ul>
+
+                                <p>Your order has been cancelled, if you think this is a mistake, please contact us immediately.</p>
+                            </div>
+                        </body>
+                        </html>
+                        ';
                     // Send email
                     $mail->send();
                     echo 'Email sent successfully';
@@ -684,6 +729,12 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         redirect("cancelledOrders.php", "✔ Order Cancelled Successfully");
                         exit();
                     } else {
+                        echo "No order found with ID: $order_id";
+                    }
+                } else {
+                    echo "Error retrieving order details: " . mysqli_error($con);
+                }
+                    } else {
                         echo "Failed to update product quantities or status: " . mysqli_error($con);
                     }
                 } else {
@@ -692,17 +743,242 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
             } else {
                 echo "Failed to update order status: " . mysqli_error($con);
             }
-    } elseif ($newStatus === 'Out for Delivery') {
+    } else if ($newStatus === 'Out for Delivery') {
         // Update order status in the orders table
-        $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
-        $deliverResult = mysqli_query($con, $updateQuery);
+        $updateQuery = "UPDATE orders SET status = ? WHERE id = ?";
+        $stmt = mysqli_prepare($con, $updateQuery);
+        mysqli_stmt_bind_param($stmt, "si", $newStatus, $order_id);
+        $newResult = mysqli_stmt_execute($stmt);
 
-        if ($deliverResult) {
-            header('Location: deliverOrder.php');
-            exit();
-        } else {
-            echo "Failed to update order status: " . mysqli_error($con);
-        }
+        if ($newResult) {
+            $order_query = "
+            SELECT
+                o.id AS order_id,
+                u.user_id AS user_id,
+                u.name AS user_name,
+                u.phone AS phone,
+                u.address AS address,
+                oi.product_id AS product_id,
+                p.name AS product_name,
+                oi.quantity AS quantity,
+                p.selling_price AS price,
+                (oi.quantity * p.selling_price) AS total,
+                o.status AS status,
+                o.subtotal AS subtotal,
+                o.additional_fee AS additional_fee,
+                o.grand_total AS grand_total,
+                o.order_at AS order_at
+            FROM
+                orders o
+            INNER JOIN
+                order_items oi ON o.id = oi.order_id
+            INNER JOIN
+                users u ON o.user_id = u.user_id
+            INNER JOIN
+                product p ON oi.product_id = p.id
+            WHERE
+                o.id = ?";
+        $stmt = mysqli_prepare($con, $order_query);
+        mysqli_stmt_bind_param($stmt, "i", $order_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        if ($result && mysqli_num_rows($result) > 0) {
+            $order_data = mysqli_fetch_assoc($result);
+            if ($order_data) {
+                // Extract necessary variables for email content
+                $order_id = $order_data['order_id'];
+                $user_name = $order_data['user_name'];
+                $phone = $order_data['phone'];
+                $address = $order_data['address'];
+                $order_at = $order_data['order_at'];
+                $status = $order_data['status'];
+                $subtotal = $order_data['subtotal'];
+                $additional_fee = $order_data['additional_fee'];
+                $grand_total = $order_data['grand_total'];
+        
+                // Fetch products related to the order
+                $products_query = "
+                    SELECT
+                        p.name AS product_name,
+                        oi.quantity,
+                        p.selling_price AS price,
+                        (oi.quantity * p.selling_price) AS total
+                    FROM
+                        orders o
+                    INNER JOIN
+                        order_items oi ON o.id = oi.order_id
+                    INNER JOIN
+                        product p ON oi.product_id = p.id
+                    WHERE
+                        o.id = ?";
+                $stmt = mysqli_prepare($con, $products_query);
+                mysqli_stmt_bind_param($stmt, "i", $order_id);
+                mysqli_stmt_execute($stmt);
+                $products_result = mysqli_stmt_get_result($stmt);
+        
+                $products = []; // Initialize an empty array to store products
+                while ($product = mysqli_fetch_assoc($products_result)) {
+                    $products[] = $product; // Store each product in the array
+                }
+
+                $mail = new PHPMailer(true);
+            
+                    try {
+                        // CONFIGURE SMTP OPTIONS FOR SECURE CONNECTION
+                        $mail->SMTPOptions = [
+                            'ssl' => [
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                                'allow_self_signed' => true,
+                            ],
+                        ];
+                        
+                        $mail->SMTPDebug = SMTP::DEBUG_SERVER; // ENABLE DEBUG OUTPUT
+                        $mail->isSMTP(); // SET MAILER TO USE SMTP
+                        $mail->Host = 'smtp.gmail.com'; // SPECIFY SMTP SERVER
+                        $mail->SMTPAuth = true; // ENABLE SMTP AUTHENTICATION
+                        $mail->Username = 'aquaflow024@gmail.com'; // SMTP USERNAME
+                        $mail->Password = 'pamu swlw fxyj pavq'; // SMTP PASSWORD
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ENABLE TLS ENCRYPTION
+                        $mail->Port = 587; // TCP PORT TO CONNECT TO
+        
+                        // SET EMAIL SENDER AND RECIPIENT
+                        $mail->setFrom('aquaflow024@gmail.com', 'AquaFlow');
+                        $mail->addAddress($email, 'AquaFlow'); // ADD RECIPIENT EMAIL
+                        $mail->isHTML(true); // SET EMAIL FORMAT TO HTML
+        
+                        // SET EMAIL SUBJECT AND BODY CONTENT
+                        $mail->Subject = 'Order #' . $order_id . ' out for Delivery';
+                        $mail->Body = '
+                                        <!DOCTYPE html>
+                                        <html lang="en">
+                                        <head>
+                                            <meta charset="UTF-8">
+                                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                            <title>Order Receipt</title>
+                                            <style>
+                                                body {
+                                                    font-family: Arial, sans-serif;
+                                                }
+                                                table {
+                                                    width: 100%;
+                                                    border-collapse: collapse;
+                                                    margin-bottom: 20px;
+                                                }
+                                                table, th, td {
+                                                    border: 1px solid black;
+                                                }
+                                                th, td {
+                                                    padding: 10px;
+                                                    text-align: left;
+                                                }
+                                                th {
+                                                    background-color: #f2f2f2;
+                                                }
+                                                .receipt-container {
+                                                    max-width: 600px;
+                                                    margin: auto;
+                                                    padding: 20px;
+                                                    border: 1px solid #ccc;
+                                                }
+                                                .header {
+                                                    background-color: #3192D3;
+                                                    color: white;
+                                                    text-align: center;
+                                                    padding: 10px;
+                                                    margin-bottom: 20px;
+                                                }
+                                                .billing-address {
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    list-style-type: none;
+                                                }
+                                            </style>
+                                        </head>
+                                        <body>
+                                            <div class="receipt-container">
+                                                <div class="header">
+                                                    <h2>Your order is on its way.</h2>
+                                                </div>
+                                                
+                                                <p>Hi ' . $user_name . ',</p>
+                                                <p>Your order is now out for delivery. It should arrive soon. Here are your order details for reference:</p>
+ 
+                                                <h3>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Name</th>
+                                                            <th>Quantity</th>
+                                                            <th>Unit Price</th>
+                                                            <th>Total Price</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>';
+
+                                        // Loop through products and display them in the table
+                                        foreach ($products as $product) {
+                                            $mail->Body .= '
+                                            <tr>
+                                                <td>' . $product['product_name'] . '</td>
+                                                <td>' . $product['quantity'] . '</td>
+                                                <td>₱' . number_format($product['price'], 2) . '</td>
+                                                <td>₱' . number_format($product['total'], 2) . '</td>
+                                            </tr>';
+                                        }
+
+                                        $mail->Body .= '
+                                                    </tbody>
+                                                </table>
+
+                                                <h3>Order Summary:</h3>
+                                                <table>
+                                                    <tr>
+                                                        <th>Subtotal</th>
+                                                        <td>₱' . number_format($subtotal, 2) . '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Additional Fee</th>
+                                                        <td>₱' . number_format($additional_fee, 2) . '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Grand Total</th>
+                                                        <td><strong>₱' . number_format($grand_total, 2) . '</strong></td>
+                                                    </tr>
+                                                </table>
+
+                                                <h3>Billing Address:</h3>
+                                                <ul class="billing-address"> 
+                                                    <li>' . $user_name . '</li>
+                                                    <li>' . $address . '</li>
+                                                    <li>' . $phone . '</li>
+                                                    <li>' . $email . '</li>
+                                                </ul>
+
+                                                <p>Thank you for choosing Aqua Flow. Feel free to reach out if you have any questions.</p>
+                                            </div>
+                                        </body>
+                                        </html>
+                                        ';
+
+                        // Send email
+                        $mail->send();
+                        echo 'Email sent successfully';
+                        } catch (Exception $e) {
+                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                        }
+                        redirect("orders.php","✔ Order Out for Delivery!");
+                        exit();
+                    } else {
+                        echo "No order found with ID: $order_id";
+                    }
+                } else {
+                    echo "Error retrieving order details: " . mysqli_error($con);
+                }
+            } else {
+                echo "Failed to retreive order details: " . mysqli_error($con);
+            }
     } else {
         // For any other status change, update the order status
         $updateQuery = "UPDATE orders SET status = '$newStatus' WHERE id = '$order_id'";
