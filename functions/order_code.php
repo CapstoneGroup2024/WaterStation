@@ -2,6 +2,14 @@
 session_start();
 include('../config/dbconnect.php');
 include('../functions/myAlerts.php');
+ob_start();
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+// REQUIRE AUTOMATIC LOADER FOR PHPMAILER AND SET ERROR REPORTING
+require '../vendor/autoload.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 function getItemsCart($userId) {
     global $con; 
@@ -159,9 +167,9 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         exit;
     }
 
+
     // Retrieve userID
     $userId = $_SESSION['user_id'];
-
     // Retrieve order details from POST request (sanitize input)
     $subtotal = $_POST['subtotal'];
     $additionalFee = $_POST['additional_fee'];
@@ -212,43 +220,273 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             }
         }
 
-        // Commit or rollback transaction
-        // Commit or rollback transaction
         if ($orderItemsSuccess) {
+            $email_query = "SELECT email FROM users WHERE user_id = '$userId'";
+            $email_query_run = mysqli_query($con, $email_query);
         
-            // Delete cart items after successfully adding to order items
-            $deleteCartItemsQuery = "DELETE FROM cart_items WHERE user_id = ?";
-            $stmt = mysqli_prepare($con, $deleteCartItemsQuery);
-            mysqli_stmt_bind_param($stmt, "i", $userId);
-            $deleteCartItemsSuccess = mysqli_stmt_execute($stmt);
-        
-            // If deletion fails, rollback
-            if (!$deleteCartItemsSuccess) {
-                mysqli_rollback($con);
-                $_SESSION['message'] = "Failed to delete cart items.";
-                header('Location: ../cart.php');
-                exit;
-            }
-        
-            mysqli_commit($con);
-            $_SESSION['message'] = "Order placed successfully. Order ID: $orderId, Subtotal: $subtotal, Additional Fee: $additionalFee, Grand Total: $grandTotal";
-            unset($_SESSION['cart']); // Clear the cart after successful order placement
-            header('Location: ../payment.php?id=' . $orderId);
-            exit;
-        } else {
-            mysqli_rollback($con);
-            $_SESSION['message'] = "Failed to add order items.";
-            header('Location: ../cart.php');
-            exit;
-        }
-        
+            if ($email_query_run) {
+                // Fetch the email address from the result
+                $row = mysqli_fetch_assoc($email_query_run);
+                $email = $row['email'];
+                
+                $order_query = "
+                SELECT
+                    o.id AS order_id,
+                    u.user_id AS user_id,
+                    u.name AS user_name,
+                    u.phone AS phone,
+                    u.address AS address,
+                    oi.product_id AS product_id,
+                    p.name AS product_name,
+                    oi.quantity AS quantity,
+                    p.selling_price AS price,
+                    (oi.quantity * p.selling_price) AS total,
+                    o.status AS status,
+                    o.subtotal AS subtotal,
+                    o.additional_fee AS additional_fee,
+                    o.grand_total AS grand_total,
+                    o.order_at AS order_at
+                FROM
+                    orders o
+                INNER JOIN
+                    order_items oi ON o.id = oi.order_id
+                INNER JOIN
+                    users u ON o.user_id = u.user_id
+                INNER JOIN
+                    product p ON oi.product_id = p.id
+                WHERE
+                    o.id = ?";
+            $stmt = mysqli_prepare($con, $order_query);
+            mysqli_stmt_bind_param($stmt, "i", $orderId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            
+            if ($result && mysqli_num_rows($result) > 0) {
+                $order_data = mysqli_fetch_assoc($result);
+                if ($order_data) {
+                    // Extract necessary variables for email content
+                    $orderId = $order_data['order_id'];
+                    $user_name = $order_data['user_name'];
+                    $phone = $order_data['phone'];
+                    $address = $order_data['address'];
+                    $order_at = $order_data['order_at'];
+                    $status = $order_data['status'];
+                    $subtotal = $order_data['subtotal'];
+                    $additional_fee = $order_data['additional_fee'];
+                    $grand_total = $order_data['grand_total'];
+            
+                    // Fetch products related to the order
+                    $products_query = "
+                        SELECT
+                            p.name AS product_name,
+                            oi.quantity,
+                            p.selling_price AS price,
+                            (oi.quantity * p.selling_price) AS total
+                        FROM
+                            orders o
+                        INNER JOIN
+                            order_items oi ON o.id = oi.order_id
+                        INNER JOIN
+                            product p ON oi.product_id = p.id
+                        WHERE
+                            o.id = ?";
+                    $stmt = mysqli_prepare($con, $products_query);
+                    mysqli_stmt_bind_param($stmt, "i", $orderId);
+                    mysqli_stmt_execute($stmt);
+                    $products_result = mysqli_stmt_get_result($stmt);
+            
+                    $products = []; // Initialize an empty array to store products
+                    while ($product = mysqli_fetch_assoc($products_result)) {
+                        $products[] = $product; // Store each product in the array
+                    }
 
+                    $mail = new PHPMailer(true);
+                    try {
+                        // CONFIGURE SMTP OPTIONS FOR SECURE CONNECTION
+                        $mail->SMTPOptions = [
+                            'ssl' => [
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                                'allow_self_signed' => true,
+                            ],
+                        ];
+                        
+                        $mail->SMTPDebug = SMTP::DEBUG_SERVER; // ENABLE DEBUG OUTPUT
+                        $mail->isSMTP(); // SET MAILER TO USE SMTP
+                        $mail->Host = 'smtp.gmail.com'; // SPECIFY SMTP SERVER
+                        $mail->SMTPAuth = true; // ENABLE SMTP AUTHENTICATION
+                        $mail->Username = 'aquaflow024@gmail.com'; // SMTP USERNAME
+                        $mail->Password = 'pamu swlw fxyj pavq'; // SMTP PASSWORD
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ENABLE TLS ENCRYPTION
+                        $mail->Port = 587; // TCP PORT TO CONNECT TO
+            
+                        // SET EMAIL SENDER AND RECIPIENT
+                        $mail->setFrom('aquaflow024@gmail.com', 'AquaFlow');
+                        $mail->addAddress($email, 'AquaFlow'); // ADD RECIPIENT EMAIL
+                        $mail->isHTML(true); // SET EMAIL FORMAT TO HTML
+            
+                        // SET EMAIL SUBJECT AND BODY CONTENT
+                        $mail->Subject = 'Order Received';
+                        $mail->Body = '
+                                            <!DOCTYPE html>
+                                            <html lang="en">
+                                            <head>
+                                                <meta charset="UTF-8">
+                                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                                <title>Order Receipt</title>
+                                                <style>
+                                                    body {
+                                                        font-family: Arial, sans-serif;
+                                                    }
+                                                    table {
+                                                        width: 100%;
+                                                        border-collapse: collapse;
+                                                        margin-bottom: 20px;
+                                                    }
+                                                    table, th, td {
+                                                        border: 1px solid black;
+                                                    }
+                                                    th, td {
+                                                        padding: 10px;
+                                                        text-align: left;
+                                                    }
+                                                    th {
+                                                        background-color: #f2f2f2;
+                                                    }
+                                                    .receipt-container {
+                                                        max-width: 600px;
+                                                        margin: auto;
+                                                        padding: 20px;
+                                                        border: 1px solid #ccc;
+                                                    }
+                                                    .header {
+                                                        background-color: #3192D3;
+                                                        color: white;
+                                                        text-align: center;
+                                                        padding: 10px;
+                                                        margin-bottom: 20px;
+                                                    }
+                                                    .billing-address {
+                                                        margin: 0;
+                                                        padding: 0;
+                                                        list-style-type: none;
+                                                    }
+                                                </style>
+                                            </head>
+                                            <body>
+                                                <div class="receipt-container">
+                                                    <div class="header">
+                                                        <h2>Thank you for your order!</h2>
+                                                    </div>
+                                                    
+                                                    <p>Hi ' . $user_name . ',</p>
+                                                    <p>Your order has been received and is now being prepared. Your order details are shown below for your reference: </p>
+    
+                                                    <h3>[Order ID: #' . $orderId . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Product Name</th>
+                                                                <th>Quantity</th>
+                                                                <th>Unit Price</th>
+                                                                <th>Total Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>';
+
+                                            // Loop through products and display them in the table
+                                            foreach ($products as $product) {
+                                                $mail->Body .= '
+                                                <tr>
+                                                    <td>' . $product['product_name'] . '</td>
+                                                    <td>' . $product['quantity'] . '</td>
+                                                    <td>₱' . number_format($product['price'], 2) . '</td>
+                                                    <td>₱' . number_format($product['total'], 2) . '</td>
+                                                </tr>';
+                                            }
+
+                                            $mail->Body .= '
+                                                        </tbody>
+                                                    </table>
+
+                                                    <h3>Order Summary:</h3>
+                                                    <table>
+                                                        <tr>
+                                                            <th>Subtotal</th>
+                                                            <td>₱' . number_format($subtotal, 2) . '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Additional Fee</th>
+                                                            <td>₱' . number_format($additional_fee, 2) . '</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Grand Total</th>
+                                                            <td><strong>₱' . number_format($grand_total, 2) . '</strong></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <h3>Billing Address:</h3>
+                                                    <ul class="billing-address"> 
+                                                        <li>' . $user_name . '</li>
+                                                        <li>' . $address . '</li>
+                                                        <li>' . $phone . '</li>
+                                                        <li>' . $email . '</li>
+                                                    </ul>
+
+                                                    <p>We will send another email when your order is out for delivery. Thank you for choosing us!</p>
+                                                </div>
+                            </body>
+                            </html>
+                            ';
+
+                        $mail->send(); // SEND THE EMAIL
+                        // Delete cart items after successfully adding to order items
+                        $deleteCartItemsQuery = "DELETE FROM cart_items WHERE user_id = ?";
+                        $stmt = mysqli_prepare($con, $deleteCartItemsQuery);
+                        mysqli_stmt_bind_param($stmt, "i", $userId);
+                        $deleteCartItemsSuccess = mysqli_stmt_execute($stmt);
+                    
+                        // If deletion fails, rollback
+                        if (!$deleteCartItemsSuccess) {
+                            mysqli_rollback($con);
+                            $_SESSION['message'] = "Failed to delete cart items.";
+                            header('Location: ../cart.php');
+                            exit;
+                        }
+                    
+                        mysqli_commit($con);
+                        $_SESSION['message'] = "Order placed successfully. Order ID: $orderId, Subtotal: $subtotal, Additional Fee: $additionalFee, Grand Total: $grandTotal";
+                        unset($_SESSION['cart']); // Clear the cart after successful order placement
+                        header('Location: ../payment.php?id=' . $orderId);
+                        exit;
+                    } catch (Exception $e) {
+                        // HANDLE MAIL SENDING ERROR
+                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    } finally {
+                        $con->close(); // CLOSE THE DATABASE CONNECTION
+                    }
+                } else {
+                    echo "No order found with ID: $order_id";
+                }
+            } else {
+                echo "Error retrieving order details: " . mysqli_error($con);
+            }
+            } else {
+                echo "Failed to retreive order details: " . mysqli_error($con);
+            }
+                
+        } else {
+            $_SESSION['message'] = "Cannot find email";
+            header("Location: ../manageAccount.php?email=" . urlencode($email));
+            exit();
+        }
     } else {
-        // Order insertion failed
-        $_SESSION['message'] = "Failed to place order.";
+        mysqli_rollback($con);
+        $_SESSION['message'] = "Failed to add order items.";
         header('Location: ../cart.php');
         exit;
     }
+
 } else if(isset($_POST['cancelOrderBtn'])){
     $order_id = $_POST['order_id'];
 
@@ -325,3 +563,5 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
     }
 }
 
+ob_end_flush();
+?>
