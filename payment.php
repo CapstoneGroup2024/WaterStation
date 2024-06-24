@@ -16,37 +16,6 @@ include('functions/userFunctions.php');
 // GET USER ID FROM SESSION
 $userId = $_SESSION['user_id'];
 
-// FUNCTION TO GET USER DETAILS
-function getUserDetails($userId) {
-    global $con;
-
-    // Check if $con is a valid MySQLi connection
-    if (!$con) {
-        return false; // Better error handling should be implemented here
-    }
-
-    // QUERY TO SELECT USER DETAILS FOR A SPECIFIC USER
-    $query = "SELECT * FROM users WHERE user_id = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $userId);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    // Check if the query executed successfully
-    if (!$result) {
-        return false; // Better error handling should be implemented here
-    }
-
-    // Check if any rows were returned
-    if (mysqli_num_rows($result) > 0) {
-        $userDetails = mysqli_fetch_assoc($result);
-        return $userDetails;
-    } else {
-       echo "No user details found for user ID: $userId";
-        return false;
-    }
-}
-
 // Reconnect to the database if necessary
 if (mysqli_connect_errno()) {
     include('config/dbconnect.php'); // Assuming dbconnect.php contains the connection code
@@ -61,7 +30,6 @@ if ($userDetails) {
 
         // Call getOrderDetails to fetch order details
         $orderDetails = getOrderDetails($con, $order_id);
-
         $orderStatus = $orderDetails['orderStatus'];
         $subtotal = $orderDetails['orderSubTotal'];
         $additional_fee = $orderDetails['orderAddFee'];
@@ -89,6 +57,9 @@ if ($userDetails) {
             <div class="col-md-3 text-center">
                 <!-- Delivery Details Card -->
                 <div class="card shadow-sm rounded-3 p-3 mt-4">
+                    <h4>Order ID #<?= $order_id ?></h4>
+                </div>
+                <div class="card shadow-sm rounded-3 p-3 mt-2">
                     <h4>Order Status</h4>
                     <div class="p-1">
                         <h6><?= $orderStatus ?></h6>
@@ -128,7 +99,7 @@ if ($userDetails) {
 
                 <!-- Cart Items -->
                 <?php
-                $cartItems = getProductsByOrderId($order_id);
+                $cartItems = getProductsByOrderId('order_items', $order_id);
                 foreach ($cartItems as $cartItem) {
                     // Check if product exists
                     if (!isset($cartItem['product_id'])) {

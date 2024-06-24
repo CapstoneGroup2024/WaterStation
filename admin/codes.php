@@ -241,7 +241,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
         if ($newResult) {
             // Insert order details into 'order_transac' table
-            $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
+            $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, product_image, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
                             SELECT
                                 o.id AS order_id,
                                 u.user_id AS user_id,
@@ -250,6 +250,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                 u.address AS address,
                                 oi.product_id AS product_id,
                                 p.name AS product_name,
+                                p.image AS product_image,
                                 oi.quantity AS quantity,
                                 p.selling_price AS price,
                                 (oi.quantity * p.selling_price) AS total,
@@ -487,7 +488,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
         if ($newResult) {
             // Insert order details into 'order_transac' table
-            $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
+            $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, product_image, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
                             SELECT
                                 o.id AS order_id,
                                 u.user_id AS user_id,
@@ -496,6 +497,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                 u.address AS address,
                                 oi.product_id AS product_id,
                                 p.name AS product_name,
+                                p.image AS product_image,
                                 oi.quantity AS quantity,
                                 p.selling_price AS price,
                                 (oi.quantity * p.selling_price) AS total,

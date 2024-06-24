@@ -75,10 +75,10 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
                                 <div class="card shadow-sm mb-3 cart_data text-center">
                                     <div class="row align-items-center p-3">
                                         <div class="col-md-1">
-                                            <h5><?= $order['order_id']; ?></h5>
+                                            <h5><?= $order['order_transac_id']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <h5><?= $order['product_name']; ?></h5>
+                                            <h5><?= $order['product_name']; ?><?= $order['order_id']; ?></h5>
                                         </div>
                                         <div class="col-md-3">
                                             <h5><?= $order['status']; ?></h5>
@@ -90,7 +90,7 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
                                             <h5><?= $order['order_at']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="transaction_details.php?id=<?= $order['order_transac_id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                            <a href="transaction_details.php?id=<?= $order['order_id']; ?>" class="btn bg-primary text-white">View Details</a>
                                         </div>
                                     </div>
                                 </div>

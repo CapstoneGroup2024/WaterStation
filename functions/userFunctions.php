@@ -154,13 +154,13 @@ function getOrderDetails($con, $order_id) {
 }
 
 // Function to fetch products based on order ID from the database
-function getProductsByOrderId($order_id) {
+function getProductsByOrderId($table, $order_id) {
     global $con;
     // Initialize an empty array to store products
     $products = array();
 
     // Prepare and execute the SQL query to fetch products based on order ID
-    $query = "SELECT * FROM order_items WHERE order_id = ?";
+    $query = "SELECT * FROM $table WHERE order_id = ?";
     $statement = $con->prepare($query);
     $statement->bind_param("i", $order_id);
     $statement->execute();
@@ -210,8 +210,6 @@ function getProductsByOrderId($order_id) {
     return $products;
 }
 
-
-
 function getFirstProductByOrderId($orderId) {
     global $con;
 
@@ -245,5 +243,35 @@ function getFirstProductByOrderId($orderId) {
     } else {
         // If no order item found, return null
         return null;
+    }
+}
+
+function getUserDetails($userId) {
+    global $con;
+
+    // Check if $con is a valid MySQLi connection
+    if (!$con) {
+        return false; // Better error handling should be implemented here
+    }
+
+    // QUERY TO SELECT USER DETAILS FOR A SPECIFIC USER
+    $query = "SELECT * FROM users WHERE user_id = ?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    // Check if the query executed successfully
+    if (!$result) {
+        return false; // Better error handling should be implemented here
+    }
+
+    // Check if any rows were returned
+    if (mysqli_num_rows($result) > 0) {
+        $userDetails = mysqli_fetch_assoc($result);
+        return $userDetails;
+    } else {
+       echo "No user details found for user ID: $userId";
+        return false;
     }
 }

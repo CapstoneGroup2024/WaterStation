@@ -96,7 +96,7 @@
                                             <h5><?= $order['order_at']; ?></h5>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="payment.php?id=<?= $order['order_id']; ?>" class="btn bg-primary text-white">View Details</a>
+                                            <a href="transaction_details.php?id=<?= $order['order_id']; ?>" class="btn bg-primary text-white">View Details</a>
                                         </div>
                                     </div>
                                 </div>
