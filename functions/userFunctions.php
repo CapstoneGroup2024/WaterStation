@@ -168,13 +168,28 @@ function getProductsByOrderId($order_id) {
 
     // Fetch products and add them to the products array
     while ($row = $result->fetch_assoc()) {
-        // Assuming you have a products table where you can retrieve product details based on product ID
+        // Retrieve product details based on product ID
         $product_id = $row['product_id'];
         $product_query = "SELECT * FROM product WHERE id = ?";
         $product_statement = $con->prepare($product_query);
         $product_statement->bind_param("i", $product_id);
         $product_statement->execute();
         $product_result = $product_statement->get_result();
+
+        // Check if product ID exists in the product table
+        if ($product_result->num_rows == 0) {
+            // Product not found, handle error or skip
+            $products[] = array(
+                'product_id' => null, // Or any placeholder value for product_id
+                'product_name' => "Product not available",
+                'product_image' => "placeholder.jpg", // Or any placeholder image path
+                'quantity' => $row['quantity'],
+                'price' => $row['price']
+            );
+            continue; // Skip this product and move to the next one
+        }
+
+        // Fetch product details
         $product = $product_result->fetch_assoc();
 
         // Add product details to the products array
@@ -186,6 +201,7 @@ function getProductsByOrderId($order_id) {
             'price' => $row['price']
         );
     }
+
     // Close the statement and database connection
     $statement->close();
     $con->close();
@@ -193,6 +209,8 @@ function getProductsByOrderId($order_id) {
     // Return the array of products
     return $products;
 }
+
+
 
 function getFirstProductByOrderId($orderId) {
     global $con;

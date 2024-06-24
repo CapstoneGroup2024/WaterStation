@@ -27,59 +27,12 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
-    <link rel="stylesheet" href="assets/css/transac.css">
-    <style>
-        /* Tablet (768px to 991px) */
-        @media (min-width: 768px) and (max-width: 991px) {
-            .list-group {
-                flex-direction: column;
-            }
-            .list-group-item {
-                width: 100%;
-                text-align: center;
-            }
-            .card-body .row .col-md-2 {
-                flex: 0 0 25%;
-                max-width: 25%;
-            }
-            .card-body h6 {
-                font-size: 18px; /* Adjust font size for tablets */
-            }
-            .card-body h5 {
-                font-size: 16px; /* Adjust font size for tablets */
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 767px) {
-            .list-group-item {
-                text-align: center;
-            }
-            .card-body .row .col-md-2 {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-            .card-body h6 {
-                font-size: 16px; /* Adjust font size for smaller screens */
-            }
-            .card-body h5 {
-                font-size: 14px; /* Adjust font size for smaller screens */
-            }
-        }
-    </style>
-</head>
-<body>
+<link rel="stylesheet" href="assets/css/transac.css">
     <section class="p-5 p-md-5 text-sm-start" id="Purchases" style="margin-bottom: 100px;">
         <div class="container" style="margin-top: 60px;">
             <div class="row">
                 <div class="col-md-10">
-                    <h1 style="font-family: 'suez one'; color: #013D67;"><i class="fas fa-shopping-cart"></i> Orders</h1>
+                    <h1 style="font-family: 'suez one'; color: #013D67;"><i class="fas fa-chart-line"></i> Transactions</h1>
                 </div>
             </div>
             <div class="list-group list-group-horizontal-md text-center">
@@ -196,5 +149,3 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
             <?php unset($_SESSION['message']); ?>
         <?php endif; ?>
     </script>
-</body>
-</html>

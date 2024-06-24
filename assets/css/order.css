@@ -14,7 +14,6 @@ body{
 }
 /* ------------------- PRODUCT ------------------- */
 #sizes{
-    margin-top: 50px;
     text-align: center;
     font: bolder;
     font-size: larger;
@@ -28,20 +27,14 @@ p#category-card-texxt-header{
     font-size: 18px;
     padding-top: 4px;
 }
-#category-header h3{
-    text-align: center;
-    font-weight: bolder;
-    margin-bottom: 10px;
-}
 .category{
     margin-top: 50px;
-    text-align: center;
     font: bolder;
     font-size: larger;
     padding-top: 90px;
 }
 #categ.category{
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 
@@ -135,30 +128,11 @@ input:disabled{
     background-color: #AAD7F6;
 }
 
-#quantitybox{
-    margin-top: 100px;
-   
-    
-}
-
 .addqty{
     padding-top: 10px;
     padding-bottom: 10px;
     box-shadow: #000000;
 }
-
-#quantityhead{
-    margin-top: 200px;
-    margin-left: 190px;
-}
-
-#textqty{
-    margin-left: 40px;
-}
-
-/* ------------------- Submit ------------------- */
-
-
 .submit{
     color: white;
     font-weight: bolder;

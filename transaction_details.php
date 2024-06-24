@@ -17,6 +17,49 @@ include('functions/userFunctions.php');
 $userId = $_SESSION['user_id'];
 
 // FUNCTION TO GET USER DETAILS
+function getOrderDetaild($con, $order_id) {
+    // Prepare the SQL query
+    $query = "SELECT * FROM order_transac WHERE order_id = ?";
+    $stmt = $con->prepare($query);
+
+    // Bind parameters and execute the statement
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+
+    // Get result
+    $orderResult = $stmt->get_result();
+
+    // Check if the query executed successfully
+    if ($orderResult && $orderResult->num_rows > 0) {
+        // Fetch the order details
+        $orderDetails = $orderResult->fetch_assoc();
+
+        // Extract the required fields
+        $orderId = $orderDetails['id'];
+        $orderStatus = $orderDetails['status'];
+        $orderSubTotal = $orderDetails['subtotal'];
+        $orderAddFee = $orderDetails['additional_fee'];
+        $orderGrandTotal = $orderDetails['grand_total'];
+    } else {
+        // If no results found, set default values
+        $orderId = "Not available";
+        $orderStatus = "Not available";
+        $orderSubTotal = "Not available";
+        $orderAddFee = "Not available";
+        $orderGrandTotal = "Not available";
+    }
+
+    $stmt->close(); // Close the statement
+
+    // Return all variables as an associative array
+    return array(
+        'orderId' => $orderId,
+        'orderStatus' => $orderStatus,
+        'orderSubTotal' => $orderSubTotal,
+        'orderAddFee' => $orderAddFee,
+        'orderGrandTotal' => $orderGrandTotal
+    );
+}
 function getUserDetails($userId) {
     global $con;
 
@@ -60,12 +103,12 @@ if ($userDetails) {
         $order_id = $_GET['id'];
 
         // Call getOrderDetails to fetch order details
-        $orderDetails = getOrderDetails($con, $order_id);
+        $orderDetails = getOrderDetaild($con, $order_id);
 
-        $orderStatus = $orderDetails['orderStatus'];
-        $subtotal = $orderDetails['orderSubTotal'];
-        $additional_fee = $orderDetails['orderAddFee'];
-        $grandtotal = $orderDetails['orderGrandTotal'];
+        $orderStatus = $orderDetails['status'];
+        $subtotal = $orderDetails['subtotal'];
+        $additional_fee = $orderDetails['additional_fee'];
+        $grandtotal = $orderDetails['grand_total'];
 
         // Check if the status is available
         if ($orderStatus !== "Not available") {
