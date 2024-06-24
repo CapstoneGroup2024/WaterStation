@@ -58,7 +58,7 @@
                 <div class="card-body p-4">
                     <div class="row">
                         <div class="col-lg-8">
-                                <h2 class="font-weight-bolder mb-0 mt-4">General Statistics</h2>
+                                <h2 class="font-weight-bold mb-0 mt-4" style="font-size: 30px">General Statistics</h2>
                             </div>
                         </div>
                     </div>  
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+            <div id="curve_chart" style="margin-left: 40px; margin-top: 40px; margin-bottom: 20px; width: 900px; height: 500px"></div>
         </div>
     </div>
 </div>

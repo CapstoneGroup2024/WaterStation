@@ -16,7 +16,7 @@
         </li>
         <!--------------- DASHBOARD --------------->
         <li class="nav-item">
-          <a class="nav-link text-dark-blue" href="index.php">
+          <a class="nav-link text-dark-blue" href="index.php" id="side-bar-link-box">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10" id="side-bar-icon">dashboard</i>
             </div>

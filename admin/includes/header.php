@@ -60,6 +60,42 @@
     }
     #side-bar-link-box:hover{
       background-color: #6DB9F0; 
+      transition: color 0.3s;
+    }
+    .offcanvas-body .navbar-nav #side-bar-link-box {
+    position: relative;
+    text-decoration: none;
+    color: #013D67;
+    transition: color 0.3s;
+    }
+
+    .offcanvas-body .navbar-nav #side-bar-link-box::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #013D67;
+        transition: width 0.3s ease-out;
+    }
+
+    .offcanvas-body .navbar-nav #side-bar-link-box:hover {
+        background-color: #6DB9F0;
+        color: white; /* Optional: Change text color on hover */
+    }
+
+    .offcanvas-body .navbar-nav #side-bar-link-box:hover::after {
+        width: 100%;
+    }
+
+    /* Active link styles (optional) */
+    .offcanvas-body .navbar-nav #side-bar-link-box.active {
+        color: #013D67;
+    }
+
+    .offcanvas-body .navbar-nav #side-bar-link-box.active::after {
+        width: 100%;
     }
 
   </style>
