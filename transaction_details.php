@@ -47,6 +47,7 @@ function getOrderDetaild($con, $order_id) {
         $orderDetails['user_name'] = $row['user_name'];
         $orderDetails['phone'] = $row['phone'];
         $orderDetails['address'] = $row['address'];
+        $orderDetails['order_at'] = $row['order_at'];
 
         // Loop through the result to fetch product details
         do {
@@ -105,8 +106,9 @@ if (isset($_GET['id'])) {
         <div class="row">
             <div class="col-md-3 text-center">
                 <!-- Delivery Details Card -->
-                <div class="card shadow-sm rounded-3 p-3 mt-4">
+                <div class="card shadow-sm rounded-3 p-2 mt-4">
                     <h4>Order ID #<?= $orderDetails['order_transac_id'] ?></h4>
+                    <h6><?= formatDate($orderDetails['order_at']); ?></h6>
                 </div>
                 <div class="card shadow-sm rounded-3 p-3 mt-2">
                     <h4>Order Status</h4>

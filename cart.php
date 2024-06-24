@@ -27,22 +27,22 @@
                         <div class="card shadow-sm rounded-3 p-3 mt-3 text-center">
                             <div class="row align-items-center">
                                 <div class="col-md-2 col-4">
-                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
+                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 20px;">Items</h6>
                                 </div>
                                 <div class="col-md-2 d-none d-md-block">
-                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 22px;">Category</h6>
+                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 20px;">Category</h6>
                                 </div>
                                 <div class="col-md-2 col-3">
-                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 22px;">Price</h6>
+                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 20px;">Price</h6>
                                 </div>
                                 <div class="col-md-2 col-5">
-                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 22px;">Quantity</h6>
+                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 20px;">Quantity</h6>
                                 </div>
                                 <div class="col-md-2 d-none d-md-block">
-                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 22px;">Total</h6>
+                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 20px;">Total</h6>
                                 </div>
                                 <div class="col-md-2 d-none d-md-block">
-                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 22px;">Remove</h6>
+                                    <h6 class="text-center" style="font-family: 'Poppins'; font-size: 20px;">Remove</h6>
                                 </div>
                             </div>
 

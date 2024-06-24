@@ -31,6 +31,7 @@ if ($userDetails) {
         // Call getOrderDetails to fetch order details
         $orderDetails = getOrderDetails($con, $order_id);
         $orderStatus = $orderDetails['orderStatus'];
+        $order_at = $orderDetails['order_at'];
         $subtotal = $orderDetails['orderSubTotal'];
         $additional_fee = $orderDetails['orderAddFee'];
         $grandtotal = $orderDetails['orderGrandTotal'];
@@ -56,8 +57,9 @@ if ($userDetails) {
         <div class="row">
             <div class="col-md-3 text-center">
                 <!-- Delivery Details Card -->
-                <div class="card shadow-sm rounded-3 p-3 mt-4">
+                <div class="card shadow-sm rounded-3 p-2 mt-4">
                     <h4>Order ID #<?= $order_id ?></h4>
+                    <h6><?= formatDate($order_at) ?></h6>
                 </div>
                 <div class="card shadow-sm rounded-3 p-3 mt-2">
                     <h4>Order Status</h4>

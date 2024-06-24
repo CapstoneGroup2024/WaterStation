@@ -28,113 +28,144 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
 }
 ?>
 <link rel="stylesheet" href="assets/css/transac.css">
-    <section class="p-5 p-md-5 text-sm-start" id="Purchases" style="margin-bottom: 100px;">
-        <div class="container" style="margin-top: 60px;">
-            <div class="row">
-                <div class="col-md-10">
-                    <h1 style="font-family: 'suez one'; color: #013D67;"><i class="fas fa-chart-line"></i> Transactions</h1>
-                </div>
-            </div>
-            <div class="list-group list-group-horizontal-md text-center">
-                <a class="list-group-item list-group-item-action act" href="#">Pending Orders</a>
-                <a class="list-group-item list-group-item-action" href="deliverOrder.php">Orders for Delivery</a>
-                <a class="list-group-item list-group-item-action" href="completedOrder.php">Completed Orders</a>
-                <a class="list-group-item list-group-item-action" href="cancelOrder.php">Cancelled Orders</a>
-            </div>
-            <!--------------- ONGOING ORDERS --------------->
-            <div class="card-body shadow-sm">
-                <h2 style="padding: 20px;">Pending Orders</h2>
-                <div class="row align-items-center p-2 text-center">
-                    <div class="col-md-1">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">No.</h6>
-                    </div>
-                    <div class="col-md-2">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Items</h6>
-                    </div>
-                    <div class="col-md-2">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Status</h6>
-                    </div>
-                    <div class="col-md-1">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Total</h6>
-                    </div>
-                    <div class="col-md-2">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Date</h6>
-                    </div>
-                    <div class="col-md-2">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">View Details</h6>
-                    </div>
-                    <div class="col-md-2">
-                        <h6 style="font-family: 'Poppins'; font-size: 22px;">Cancel Order</h6>
-                    </div>
-                </div>
-                <?php
-                $orderItems = getOrderData('orders', $userId); // GET ORDERS BASED ON USER ID
-
-                if (mysqli_num_rows($orderItems) > 0) { // ITERATE THROUGH EACH ORDER
-                    foreach ($orderItems as $order) {
-                        if ($order['status'] == 'Ongoing') {
-                            // Fetch the first product for this order
-                            $productItem = getFirstProductByOrderId($order['id']);
-
-                            // Check if productItem is not null before accessing its elements
-                            if ($productItem !== null) {
-                ?>
-                                <!--------------- CART ITEMS --------------->
-                                <div class="card shadow-sm mb-3 cart_data text-center">
-                                    <div class="row align-items-center p-3">
-                                        <div class="col-md-1">
-                                            <h5><?= $order['id']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $productItem['product_name']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $order['status']; ?></h5>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <h5>₱<?= $order['grand_total']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h5><?= $order['order_at']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-primary text-white">View Details</a>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <form action="functions/order_code.php" method="POST">
-                                                <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                                                <input type="submit" class="btn btn-danger text-white" name="cancelOrderBtn" value="Cancel Order">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                <?php
-                            } else {
-                                ?>
-                                <div class="card mb-3 cart_data text-center">
-                                    <div class="row align-items-center p-3">
-                                        <div class="col-md-10">
-                                            <h5 style="color: red;">No product found for order ID: <?= $order['id']; ?></h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <form action="functions/order_code.php" method="POST">
-                                                <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                                                <input type="submit" class="btn btn-danger text-white" name="cancelOrderBtn" value="Cancel Order">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-                        }
-                    }
-                } else {
-                    echo "<p>No ongoing orders found</p>";
-                }
-                ?>
+<section class="p-5 p-md-5 text-sm-start" id="Purchases" style="margin-bottom: 100px;">
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-md-10">
+                <h1 style="font-family: 'suez one'; color: #013D67;"><i class="fas fa-chart-line"></i> Transactions</h1>
             </div>
         </div>
-    </section>
+        <div class="row">
+    <div class="col-md-12 text-center">
+        <div class="card shadow-sm rounded-3 p-3 mt-2 text-center link-body">
+            <div class="row align-items-center options ">
+            <div class="links col-md-3">
+                    <a class="main-link active" href="#">Pending Orders</a>
+                </div>
+                <div class="links col-md-3">
+                    <a class="main-link" href="deliverOrder.php">Orders for Delivery</a>
+                </div>
+                <div class="links col-md-3">
+                    <a class="main-link" href="completedOrder.php">Completed Orders</a>
+                </div>
+                <div class="links col-md-3">
+                    <a class="main-link" href="cancelOrder.php">Cancelled Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="card shadow-sm rounded-3 p-4 mt-3 text-center">
+                    <div class="row align-items-center">
+                                <div class="col-md-1 d-none d-md-block">
+                                    <h6>No.</h6>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <h6>Items</h6>
+                                </div>
+                                <div class="col-md-2 d-none d-md-block">
+                                    <h6>Status</h6>
+                                </div>
+                                <div class="col-md-1 d-none d-md-block">
+                                    <h6>Total</h6>
+                                </div>
+                                <div class="col-md-2 d-none d-md-block">
+                                    <h6>Date</h6>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <h6>View Details</h6>
+                                </div>
+                                <div class="col-md-2 d-none d-md-block">
+                                    <h6>Cancel Order</h6>
+                                </div>
+                            </div>
+                            <?php
+    $orderItems = getOrderData('orders', $userId); // GET ORDERS BASED ON USER ID
+
+    // Flag to check if any orders out for delivery are found
+    $ordersOngoingFound = false;
+
+    // Iterate through each order
+    foreach ($orderItems as $order) {
+        if ($order['status'] == 'Ongoing') {
+            // Set flag to true if at least one order is found
+            $ordersOngoingFound = true;
+
+            // Fetch the first product for this order
+            $productItem = getFirstProductByOrderId($order['id']);
+
+            // Check if productItem is not null before accessing its elements
+            if ($productItem !== null) {
+?>
+                <!-- Display Cart Items -->
+                <div class="card mt-4 cart_data cartpage text-center" style="border:none;">
+                    <div class="row align-items-center p-1">
+                        <div class="col-md-1 d-none d-md-block">
+                            <h5><?= $order['id']; ?></h5>
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <h5><?= $productItem['product_name']; ?></h5>
+                        </div>
+                        <div class="col-md-2 d-none d-md-block">
+                            <h5><?= $order['status']; ?></h5>
+                        </div>
+                        <div class="col-md-1 d-none d-md-block">
+                            <h5><span class="price" style="font-family: 'Poppins', sans-serif;">₱<?= $order['grand_total']; ?></span></h5>
+                        </div>
+                        <div class="col-md-2 d-none d-md-block">
+                            <h5 class="orderDate"><?= formatDate($order['order_at']); ?></h5>
+                        </div>
+                        <div class="col-md-2 align-items-center col-6">
+                            <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-blue">View Details</a>
+                        </div>
+                        <div class="col-md-2 d-none d-md-block">
+                            <form action="functions/order_code.php" method="POST">
+                                <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                                <input type="submit" class="btn bg-red" name="cancelOrderBtn" value="Cancel Order">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+<?php
+            } else {
+?>
+                <!-- No Product Found Message -->
+                <div class="card mt-4 cart_data cartpage text-center" style="border:none;">
+                    <div class="row align-items-center p-1">
+                        <div class="col-md-10">
+                            <h5 class="errorMessage">No product found for order ID #<?= $order['id']; ?></h5>
+                        </div>
+                        <div class="col-md-2">
+                            <form action="functions/order_code.php" method="POST">
+                                <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                                <input type="submit" class="btn bg-red" name="cancelOrderBtn" value="Cancel Order">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+<?php
+            }
+        }
+    }
+
+    // If no orders out for delivery are found, display message
+    if (!$ordersOngoingFound) {
+?>
+        <!-- No Orders Out for Delivery Message -->
+        <div class="card rounded-3 p-3 mt-3 text-center" style="font-family: 'Poppins'; border:none;">
+            <span>No ongoing orders.</span>
+        </div>
+<?php
+    }
+?>
+
+            </div>
+        </div>
+    </div>
+</section>
     <!--------------- FOOTER --------------->
     <?php include('includes/footer.php'); ?>
     <!--------------- ALERTIFY JS --------------->

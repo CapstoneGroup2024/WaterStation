@@ -132,6 +132,7 @@ function getOrderDetails($con, $order_id) {
         $orderSubTotal = $orderDetails['subtotal'];
         $orderAddFee = $orderDetails['additional_fee'];
         $orderGrandTotal = $orderDetails['grand_total'];
+        $order_at = $orderDetails['order_at'];
     } else {
         // If no results found, set default values
         $orderId = "Not available";
@@ -139,6 +140,7 @@ function getOrderDetails($con, $order_id) {
         $orderSubTotal = "Not available";
         $orderAddFee = "Not available";
         $orderGrandTotal = "Not available";
+        $order_at = "Not available";
     }
 
     $stmt->close(); // Close the statement
@@ -149,7 +151,8 @@ function getOrderDetails($con, $order_id) {
         'orderStatus' => $orderStatus,
         'orderSubTotal' => $orderSubTotal,
         'orderAddFee' => $orderAddFee,
-        'orderGrandTotal' => $orderGrandTotal
+        'orderGrandTotal' => $orderGrandTotal,
+        'order_at' => $order_at
     );
 }
 
@@ -274,4 +277,16 @@ function getUserDetails($userId) {
        echo "No user details found for user ID: $userId";
         return false;
     }
+}
+
+function formatDate($date) {
+    // Convert date string to a Unix timestamp
+    $timestamp = strtotime($date);
+    
+    // Format the timestamp into desired date format
+    $formattedDate = date('F j, Y', $timestamp);
+    $formattedTime = date('g:i a', $timestamp);
+    
+    // Return formatted date and time with a line break in between
+    return $formattedDate . "<br> " . $formattedTime;
 }

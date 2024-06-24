@@ -1,39 +1,80 @@
-/* To remove bullets and default list styles */
-.list-group {
+.link-body .main-link {
+    padding: .5rem 1rem; /* Adjust padding as needed */
+    position: relative;
+    text-decoration: none;
+    font-weight: 600;
+    color: #013D67; /* Adjust link color */
+    transition: color 0.3s; /* Smooth transition for text color */
+}
+
+/* Underline pseudo-element */
+.link-body .main-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px; /* Thickness of the underline */
+    bottom: 0;
+    left: 0;
+    background-color: #013D67; /* Color of the underline */
+    transition: width 0.3s ease-out; /* Smooth transition for underline width */
+}
+
+/* Hover effect */
+.link-body .main-link:hover::after {
+    width: 100%; /* Full width on hover */
+}
+
+/* Active link styles (optional) */
+.link-body .main-link.active {
+    color: #013D67; /* Active link text color */
+}
+
+.link-body .main-link.active::after {
+    width: 100%; /* Full width for active link */
+}
+
+.options {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    font-size: 20px;
+    font-family: 'Poppins'; 
 }
 
-/* To align list items horizontally */
-.list-group .list-group-item {
-    display: inline-block;
+/* Media query for small screens */
+@media (max-width: 767.98px) {
+    .links {
+        margin: 10px; /* Remove top margin on small screens */
+    }
 }
 
-/* To style active list item */
-.list-group .list-group-item.act {
-    background-color: #f8f9fa; /* Change as needed */
-    border: 1px solid #dee2e6; /* Change as needed */
-    border-bottom-color: transparent; /* To prevent double border at the bottom */
-    border-radius: 0.25rem 0.25rem 0 0; /* Rounded corners for the top */
-    position: relative; /* Positioning for pseudo-element */
+h6{
+    font-family: 'Poppins'; 
+    font-size: 20px;
 }
 
-/* To style active list item's link */
-.list-group .list-group-item.act a {
-    color: #000; /* Change as needed */
-    text-decoration: none; /* Remove underline */
-    padding: 0.5rem 1rem; /* Adjust padding */
-    display: block; /* Make link take full width of list item */
+h5{
+    font-family: 'Poppins'; 
+    font-size: 18px;
+}
+.bg-blue{
+    background-color: #AAD7F6;
+    color: #013D67;
+    font-family: 'Poppins'; 
+    font-size: 16px;
+    font-weight: 500;
 }
 
-/* To add indicator for active list item */
-.list-group .list-group-item.act::after {
-    content: ''; /* Required for pseudo-element */
-    position: absolute; /* Positioning */
-    bottom: -1px; /* Position below the list item */
-    left: 0; /* Align with left edge of list item */
-    width: 100%; /* Full width */
-    height: 2px; /* Height of indicator */
-    background-color: #007bff; /* Color of indicator */
+.orderDate{
+    font-size: 15px;
+}
+
+.bg-red{
+    background-color: #f43737;
+    color: white;
+    font-family: 'Poppins'; 
+    font-size: 16px;
+    font-weight: 500;
+}
+.errorMessage{
+    color: red;
+    font-size: 17px;
 }
