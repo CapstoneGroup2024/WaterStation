@@ -156,7 +156,7 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
 ?>
         <!-- No Orders Out for Delivery Message -->
         <div class="card rounded-3 p-3 mt-3 text-center" style="font-family: 'Poppins'; border:none;">
-            <span>No orders out for delivery.</span>
+            <span>No ongoing orders for delivery.</span>
         </div>
 <?php
     }

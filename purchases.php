@@ -150,7 +150,6 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
             }
         }
     }
-
     // If no orders out for delivery are found, display message
     if (!$ordersOngoingFound) {
 ?>

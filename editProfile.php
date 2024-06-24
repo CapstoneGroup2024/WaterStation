@@ -15,41 +15,45 @@
     }
 ?>
 <link rel="stylesheet" href="assets/css/profile.css">   
-<section class="p-5 p-md-5 text-sm-start mt-4">
-    <div class="Register mt-4">
-        <div class="heading">Profile Form</div>
-        <div class="profile-card">
-            <img src="assets/images/user.png" alt="Profile Picture">
-
-            <h2 contenteditable="true"><?= isset($data['name']) ? $data['name'] : 'Your Name' ?></h2>
-            <form class="regform" action="functions/updateprofile.php" method="POST">
-                <div class="text-dark">
-                <div class="row ">
-                        <div class="col-md-6">
-                        <div class="input-wrapper ">
-                            Name: <input type="text" id="username" name="name" class="full-width" placeholder="Enter your name" style="margin-left: 10px" value="<?= isset($data['name']) ? $data['name'] : '' ?>">
-                        </div>
-                        </div>
-                        <div class="col-md-6">
+<section class="p-5 p-md-5 text-sm-start" id="Purchases">
+    <div class="container">
+        <div class="Register">
+            <div class="heading">Profile Form</div>
+            <div class="profile-card">
+                <img src="assets/images/user.png" alt="Profile Picture">
+                <h2><?= isset($data['name']) ? $data['name'] : 'Your Name' ?></h2>
+                <form class="regform" action="functions/updateprofile.php" method="POST">
+                    <ul class="text-dark">
+                        <li>
+                            <label for="username">Name:</label>
+                            <div class="input-wrapper mt-2">
+                                <input type="text" id="username" name="name" class="full-width" placeholder="Enter your name" value="<?= isset($data['name']) ? $data['name'] : '' ?>">
+                            </div>
+                        </li>
+                        <li>
+                            <label for="phone">Phone:</label>
                             <div class="input-wrapper">
-                                Phone: <input type="text" id="phone" name="phone" class="us" placeholder="Enter your phone number"  style="margin-left: 10px" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>">
+                                <input type="text" id="phone" name="phone" class="full-width" placeholder="Enter your phone number" value="<?= isset($data['phone']) ? $data['phone'] : '' ?>">
                             </div>
-                        </div>
-                    </div>
-                        <div class="input-wrapper mt-3">
-                                Address: <input type="text" id="address" name="address" class="us" placeholder="Enter your address"   style="margin-left: 10px" value="<?= isset($data['address']) ? $data['address'] : '' ?>">
+                        </li>
+                        <li>
+                            <label for="address">Address:</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="address" name="address" class="full-width" placeholder="Enter your address" value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
-                    <li>
-                        <input type="hidden" name="confirmUpdate" value="1">
-                        <button type="submit" id="submitbtn" name="profileUpdateBtn" class="button-text mt-4">Submit</button>
-                    </li>
-                </div>
-            </form>
+                        </li>
+                        <li>
+                            <input type="hidden" name="confirmUpdate" value="1">
+                            <button type="submit" id="submitbtn" name="profileUpdateBtn" class="button-text">Submit</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
     </div>
 </section>
 
-<!--------------- ALERTIFY JS --------------->
+<!-- ALERTIFY JS -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
     <?php
@@ -62,5 +66,5 @@
     ?>
 </script>
 
-<!--------------- FOOTER --------------->
-<?php include('includes/footer.php');?>
+<!-- FOOTER -->
+<?php include('includes/footer.php'); ?>

@@ -15,13 +15,12 @@ body {
 }
 
 .Register {
-    max-width: 800px; /* Adjusted maximum width */
+    max-width: 1000px; /* Adjusted maximum width */
     background-color: #ffffff;
     border: none;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     padding: 10px;
-    padding-bottom: 0px;
 }
 
 .heading {
@@ -29,7 +28,6 @@ body {
     color: #013d67;
     font-family: 'Suez One', serif;
     font-size: 24px;
-    margin-bottom: 20px;
 }
 
 .profile-card {
@@ -40,14 +38,7 @@ body {
     backdrop-filter: blur(50px);
     max-width: 1000px;
     margin: auto;
-    padding: 20px;
-}
-
-.profile-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 20px;
+    padding: 40px;
 }
 
 .profile-card h2 {
@@ -64,7 +55,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
 }
 
 .regform label {
@@ -72,12 +62,6 @@ body {
     text-align: right;
     margin-right: 20px;
     color: #013d67;
-}
-
-.regform .input-wrapper {
-    flex: 2;
-    display: flex;
-    align-items: center;
 }
 
 .regform input {
@@ -89,16 +73,6 @@ body {
     transition: border-color 0.3s ease;
 }
 
-.regform input:focus {
-    border-color: #61a5c2;
-    outline: none;
-}
-
-.regform .edit-icon {
-    margin-left: 10px;
-    font-size: 18px;
-    cursor: pointer;
-}
 
 .button-text {
     background-color: #61a5c2;
@@ -110,19 +84,13 @@ body {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%; /* Added to center the button */
-    display: block; /* Added for block-level display */
-    margin: 0 auto; 
+    width: 100%;
+    display: block;
+    margin: 0 auto;
 }
 
 .button-text:hover {
     background-color: #013d67;
-}
-
-@media (min-width: 1200px) {
-    .Register {
-        width: 100%;
-    }
 }
 
 @media (max-width: 768px) {
@@ -134,27 +102,36 @@ body {
         padding: 10px;
     }
 }
-.editLink a {
-    padding: .5rem 1rem; /* Adjust padding as needed */
+
+.editLink a, button {
     position: relative;
     text-decoration: none;
-    color: #013D67; /* Adjust link color */
-    transition: color 0.3s; /* Smooth transition for text color */
+    color: #013D67;
+    transition: color 0.3s;
+    overflow: hidden; /* Ensures the overflow of the underline is hidden */
+    margin-top: 10px;
 }
 
-/* Underline pseudo-element */
-.editLink a::after {
+.editLink a::after, button::after {
     content: '';
     position: absolute;
-    width: 0;
-    height: 2px; /* Thickness of the underline */
-    bottom: 0;
+    width: 100%;
+    height: 2px;
+    bottom: 0px;
     left: 0;
-    background-color: #013D67; /* Color of the underline */
-    transition: width 0.3s ease-out; /* Smooth transition for underline width */
+    background-color: #013D67;
+    transform: scaleX(0); /* Initially, hide the underline */
+    transform-origin: bottom right; /* Set the origin to start from bottom right */
+    transition: transform 0.3s ease-out;
 }
 
-/* Hover effect */
-.editLink a:hover::after {
-    width: 100%; /* Full width on hover */
+.editLink a:hover::after, button:hover::after {
+    transform: scaleX(1); /* Expand the underline on hover */
+    transform-origin: bottom left; /* Change the origin to bottom left for expanding effect */
 }
+
+button {
+    border: none;
+    background-color: white;
+}
+
