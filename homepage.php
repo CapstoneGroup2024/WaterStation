@@ -10,13 +10,16 @@
 <!--------------- HOME PAGE --------------->
 <section class="homepage" id="Home" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
   <div class="quote" style="position: absolute; top: 120px; right: 100px;">
-    <div class="d-sm-flex align-items-center justify-content-between" style="margin-top: 10px;">
-      <div>
-        <h1 class="aquaflow-text" style="font-family: 'Suez One', sans-serif; font-weight: bold; color: #013D67; font-size: 80px; letter-spacing: 5px;">Hydrate Daily!</h1>
-        <h5 class="aquaflow-text" style="font-family:  sans-serif; font-weight: bold; color: #2B7AB8; font-size: 21px; text-align: right; margin-right: 10px; margin-top: 20px;">Where every drop counts, we hydrate the world</h5>
-        <h5 class="aquaflow-text" style="font-family:  sans-serif; font-weight: bold; color: #013D67; font-size: 21px; text-align: right; margin-right: 10px;">From source to glass, our commitment flows.</h5>
-      </div>
+    <div class= "d-sm-flex align-items-center justify-content-between" style="margin-top: 10px;">
+    
+        
+        <div class="d-none d-lg-block">
+          <h1 class="aquaflow-text" style="font-family: 'Suez One', sans-serif; font-weight: bold; color: #013D67; font-size: 80px; letter-spacing: 5px;">Hydrate Daily!</h1>
+          <h5 class="aquaflow-text" style="font-family:  sans-serif; font-weight: bold; color: #2B7AB8; font-size: 21px; text-align: right; margin-right: 10px; margin-top: 20px;">Where every drop counts, we hydrate the world</h5>
+          <h5 class="aquaflow-text" style="font-family:  sans-serif; font-weight: bold; color: #013D67; font-size: 21px; text-align: right; margin-right: 10px;">From source to glass, our commitment flows.</h5>
+        </div>
     </div>
+    
   </div>
   <div class="water_drop" style="position: absolute; top: 120px; left: 230px; background-color: rgba(175, 214, 229, 0); box-shadow: inset 17px 30px 26px 0px rgba(25, 25, 112, 0.7), inset 1px 4px 32px 4px rgba(65, 105, 225, 0.7), 15px 20px 25px 1px #c9d8e0;">
     <h2 class="order"><a href="order.php" class="ordernow-btn" style="color: white; text-decoration: none; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Order Now</a></h2>

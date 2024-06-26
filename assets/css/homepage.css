@@ -458,41 +458,122 @@ a.contact-link:hover{
    
 }
 /* ------------------- Medium Screens ------------------- */
-@media all and (min-width: 768px){
-    #contact-container-box {
-        padding-left: 50px;
-        padding-right: 0px;
-        margin-top: 0px;
-        flex: 1;
-    }
-    #paragraph-text {
-        margin-top: 0px;
-        font-size: 16px;
-        text-align: left;
-    }
-    #contact-header {
-        font-size: 19px;
-        text-align: left;
-    }
-    hr {
-        opacity: 0.9;
-        border: 1px solid #432054;
-        margin-top: 25px;
-    }
-    .footer-logo {
-        font-size: 20px;
-        margin-left: -90px;
+@media all and (max-width: 1024px) {
+    .water_drop {
+        width: 120px; /* Adjusted size for medium screens */
+        height: 120px; /* Adjusted size for medium screens */
+        margin-left: -80px; /* Adjusted negative margin to move the water_drop more to the left */
+        margin-top: -30px; /* Adjusted negative margin to move the water_drop higher */
+        position: relative;
     }
 
+    h1.aquaflow-text {
+        font-size: 80px; /* Reduced font size for h1 on medium screens */
+    }
 
-    .form-container {
-        width: 300px!important;
-        height: 400px;
-        margin-top: 20px;
-        margin-left: 30%!important;
-        padding: 20px 25px;
+    h5.aquaflow-text {
+        font-size: 10px; /* Reduced font size for h5 on medium screens */
+    }
+
+    a.ordernow-btn {
+        display: block;
+        position: absolute;
+        width: auto; /* Adjust button width automatically */
+        height: 60px; /* Adjust button height as needed */
+        border-radius: 15px; /* Adjust button border radius */
+        bottom: 10%; /* Adjust button position vertically */
+        left: 50%; /* Center button horizontally */
+        transform: translateX(-50%);
+        text-align: center;
+        line-height: 25px; /* Vertical alignment of text */
+        font-size: 18px; /* Increase button text font size */
+        color: #013D67; /* Adjust button text color */
+        text-decoration: none; /* Remove underline */
+    }
+
+    a.ordernow-btn span {
+        display: block;
+        font-weight: bold;
+    }
+
+    h5.aquaflow-text {
+        font-size: 90px; /* Reduced font size for h5 on medium screens */
     }
 }
+
+
+@media only screen and (max-width: 768px) {
+    h1.aquaflow-text {
+        font-size: 14px; /* Baguhin ang font-size base sa iyong preference */
+        /* Mga iba pang mga property na gusto mong baguhin sa tablet screen */
+        float: right; /* Ilagay sa kanan ng screen */
+        margin-left: 310px; /* Dagdagan ang margin sa kanang bahagi, depende sa gusto mong layout */
+    }
+
+    h5.aquaflow-text {
+        font-size: 7px; /* Baguhin ang font-size base sa iyong preference */
+        /* Mga iba pang mga property na gusto mong baguhin sa tablet screen */
+        float: right; /* Ilagay sa kanan ng screen */
+        margin-left: 300px; /* Dagdagan ang margin sa kanang bahagi, depende sa gusto mong layout */
+    }
+}
+
+
+
+@media all and (max-width: 425px) {
+    .water_drop {
+        width: 50px; /* Adjusted size for smaller screens */
+        height: 50px; /* Adjusted size for smaller screens */
+        margin-left: -75px; /* Adjusted negative margin to move the water_drop more to the left */
+        margin-top: 450px; /* Increased margin-top to move the water_drop lower */
+        position: relative;
+    }
+    
+    h1.aquaflow-text {
+        font-size: 18px; /* Slightly increased font size for better readability */
+        margin-left: 0px; /* Center align */
+        margin-top: 10px; /* Adjusted margin to move h1 slightly higher */
+        text-align: center; /* Centered text */
+    }
+
+    h5.aquaflow-text {
+        font-size: 12px; /* Slightly increased font size for better readability */
+        margin-left: 0px; /* Center align */
+        margin-top: 5px; /* Adjusted margin to move h5 slightly higher */
+        text-align: center; /* Centered text */
+    }
+
+    a.ordernow-btn {
+        display: block;
+        position: fixed; /* Fixed positioning for better visibility */
+        width: 80%; /* Adjusted button width */
+        max-width: 300px; /* Maximum width to ensure button doesn't become too wide */
+        height: 50px; /* Adjusted button height */
+        border-radius: 12px; /* Rounded corners for button */
+        bottom: 5%; /* Positioned button slightly higher on the screen */
+        left: 50%; /* Centered button horizontally */
+        transform: translateX(-50%);
+        text-align: center;
+        line-height: 50px; /* Centered text vertically */
+        font-size: 16px; /* Font size for button text */
+        color: #013D67; /* Button text color */
+        background-color: #ffffff; /* Button background color */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+        text-decoration: none; /* Remove underline */
+    }
+
+    a.ordernow-btn span {
+        font-weight: bold; /* Bold text for button */
+    }
+}
+
+
+
+
+
+
+
+
 @media all and (min-width: 992px){
     footer {
         border-top-left-radius: 200px;
@@ -699,3 +780,6 @@ a.contact-link:hover{
 .copyright i{
     color: #f8f7f7;
 }
+
+
+
